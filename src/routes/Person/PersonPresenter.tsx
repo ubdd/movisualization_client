@@ -6,6 +6,8 @@ import { Loader } from "../../components/Loader";
 import { websiteTitle } from "../../config/_mixin";
 import Helmet from "react-helmet";
 import Avatar from "../../static/avatar.png";
+import PersonStat from "../../components/PersonCharts/PersonStat";
+import PersonGenrePref from "../../components/PersonCharts/PersonGenrePref";
 
 const Container = styled.div`
   display: flex;
@@ -18,6 +20,7 @@ const Container = styled.div`
 
 const ProfileContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
   align-self: flex-start;
   margin-bottom: 2rem;
@@ -36,6 +39,11 @@ const ProfileInfo = styled.div`
   flex-direction: column;
   margin: 1rem;
   font-size: 1rem;
+  width: 440px;
+`;
+
+const ChartContainer = styled.div`
+  width: 250px;
 `;
 
 const Name = styled.div`
@@ -171,8 +179,16 @@ export const PersonPresenter: React.SFC<Props> = ({
             </Popularity>
           )}
         </ProfileInfo>
+        <ChartContainer>
+          <PersonStat
+            person={person}
+            id={personId}
+            getAPI={moviesApi.filmography}
+          />
+        </ChartContainer>
       </ProfileContainer>
       <SectionContainer>
+        <PersonGenrePref id={personId} getAPI={moviesApi.filmography} />
         <FilmoSection id={personId} getAPI={moviesApi.filmography} />
       </SectionContainer>
     </Container>
