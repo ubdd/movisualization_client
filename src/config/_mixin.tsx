@@ -5,13 +5,24 @@ const sizes = {
   phone: 576
 };
 
+const posterWidth = 6;
+
 export const fontSize = {
   smallFontSize: "9px",
   normalFontSize: "12px",
   largeFontSize: "15px"
 };
 
-export const color = { bgColor: "#141414", fontColor: "#000" };
+export const posterSize = {
+  width: `${posterWidth}rem`,
+  height: `${posterWidth * 1.4375}rem`
+};
+
+export const websiteTitle = "👀 Movisualization";
+
+export const headerHeight = "6rem";
+
+export const color = { bgColor: "#14181C", fontColor: "#FFF" };
 
 const customMediaQuery = (maxWidth: number) =>
   `@media (max-width: ${maxWidth}px)`;
