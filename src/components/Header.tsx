@@ -122,10 +122,6 @@ class Header extends React.Component<Props, State> {
   };
 
   render() {
-    const {
-      // location: { pathname },
-      // isLoggedIn
-    } = this.props;
     const { darken } = this.state;
     return (
       <Container>

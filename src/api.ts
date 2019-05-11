@@ -27,8 +27,17 @@ export const moviesApi = {
       }
     }),
   credit: (movieId: number) => api.get(`movie/${movieId}/credits`),
-  search: (query: string, page: number) =>
+  searchMovie: (query: string, page: number) =>
     api.get("search/movie", {
+      params: {
+        query,
+        include_adult: true,
+        region,
+        page
+      }
+    }),
+  searchPerson: (query: string, page: number) =>
+    api.get("search/person", {
       params: {
         query,
         include_adult: true,

@@ -22,7 +22,6 @@ export default class PersonContainer extends React.Component<Props, State> {
   }
 
   componentDidMount = async () => {
-    console.log(`didmount`);
     try {
       const {
         match: {

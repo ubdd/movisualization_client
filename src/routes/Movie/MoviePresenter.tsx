@@ -118,7 +118,7 @@ const WatchTitle = styled.div`
   letter-spacing: 0.075em;
 `;
 
-const WatchPanel = styled.p`
+const WatchPanel = styled.div`
   color: #9ab;
   margin: 0.3rem 0.6rem;
   line-height: 1.5;
@@ -429,6 +429,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                     margin: "0.3rem 0"
                   }}
                   target="_blank"
+                  rel="noopener noreferrer"
                   href={result.homepage}
                 >
                   <TrailerIcon className="fas fa-home" />
@@ -444,6 +445,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                     margin: "0.3rem 0"
                   }}
                   target="_blank"
+                  rel="noopener noreferrer"
                   href={
                     video.site === "YouTube"
                       ? `https://www.youtube.com/watch?v=${video.key}`
@@ -464,6 +466,7 @@ export const MoviePresenter: React.SFC<Props> = ({
               {result.imdb_id && (
                 <a
                   target="_blank"
+                  rel="noopener noreferrer"
                   href={`https://www.imdb.com/title/${result.imdb_id}`}
                   style={{
                     display: "flex",
@@ -476,6 +479,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                     src={
                       "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/800px-IMDB_Logo_2016.svg.png"
                     }
+                    alt="IMDB"
                     style={{ width: "2rem", marginRight: "0.4rem" }}
                   />{" "}
                   {`${result.title} IMDb`}
@@ -547,25 +551,6 @@ export const MoviePresenter: React.SFC<Props> = ({
               <Divider>•</Divider>
               {`${Math.floor(result.runtime / 60)}시간 ${result.runtime %
                 60}분`}
-              {/* <Divider>•</Divider>
-              감독
-              {directors.map((director: any, index: number) => {
-                console.log(director, index);
-                return (
-                  <>
-                    <Link
-                      style={{
-                        marginLeft: "0.3rem",
-                        textDecoration: "underline"
-                      }}
-                      to={`/person/${director.id}/`}
-                    >
-                      {director.name}
-                    </Link>
-                    {directors.length - 1 !== index && <span>,</span>}
-                  </>
-                );
-              })} */}
             </Subtitle>
           </TitleSection>
           <SideInfoSection>

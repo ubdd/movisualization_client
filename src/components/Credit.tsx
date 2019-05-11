@@ -183,7 +183,6 @@ export default class Credit extends React.Component<Props, IState> {
       handleCreditIndexChange
     } = this.props;
     const { castMore, crewMore } = this.state;
-    console.log(this.props);
     return (
       <Container>
         <Header>

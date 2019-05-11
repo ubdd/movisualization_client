@@ -36,7 +36,7 @@ const ExecuteSearchIcon = styled.i`
 `;
 
 const SearchTerm = styled.input<{ open: boolean }>`
-  width: ${props => (props.open ? "10rem" : "0px")};
+  width: ${props => (props.open ? "12rem" : "0px")};
   height: 1.7rem;
   transition: 0.5s ease;
   border: 0.5px solid rgba(0, 0, 0, 0.5);
@@ -58,7 +58,6 @@ const HeaderSearch = ({ history }: RouteComponentProps) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleClickOutside = (e: any) => {
-    console.log("clicking anywhere");
     if (node.current.contains(e.target)) {
       // inside click
       return;
@@ -77,7 +76,6 @@ const HeaderSearch = ({ history }: RouteComponentProps) => {
       setOpen(!open);
     } else {
       if (inputRef !== undefined && inputRef.current !== undefined) {
-        console.log(inputRef);
         inputRef.current.focus();
       }
       setOpen(!open);
@@ -85,14 +83,18 @@ const HeaderSearch = ({ history }: RouteComponentProps) => {
   };
 
   const handleOnClickExecuteSearchIcon = (e: React.MouseEvent<HTMLElement>) => {
-    history.push({
-      pathname: `/search/${searchTerm}`
-    });
-    setOpen(false);
+    if (searchTerm && searchTerm.trim()) {
+      history.push({
+        pathname: `/search/${searchTerm}`
+      });
+      setOpen(false);
+    } else {
+      setOpen(false);
+    }
   };
 
   const handleOnKeyDown = (e: any) => {
-    if (e.keyCode === 13) {
+    if (searchTerm && searchTerm.trim() && e.keyCode === 13) {
       history.push({
         pathname: `/search/${searchTerm}`
       });
@@ -127,6 +129,7 @@ const HeaderSearch = ({ history }: RouteComponentProps) => {
         value={searchTerm}
         onChange={handleOnChange}
         onKeyDown={handleOnKeyDown}
+        placeholder="영화 제목, 영화 배우"
       />
       <ExecuteSearchIcon
         onClick={

@@ -4,6 +4,7 @@ import { Router } from "./Router";
 import { GlobalStyle } from "./global-styles";
 import { ToastContainer } from "react-toastify";
 import styled from "styled-components";
+import ScrollToTop from "./components/ScrollToTop";
 
 const AppContainer = styled.div``;
 
@@ -19,9 +20,11 @@ const App: React.FC = () => {
         pauseOnHover={true}
       />
       <BrowserRouter>
-        <AppContainer className="app">
-          <Router />
-        </AppContainer>
+        <ScrollToTop>
+          <AppContainer className="app">
+            <Router />
+          </AppContainer>
+        </ScrollToTop>
       </BrowserRouter>
     </>
   );

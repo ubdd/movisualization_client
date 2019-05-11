@@ -108,6 +108,7 @@ export const PersonPresenter: React.SFC<Props> = ({
             {`${person.name} `}
             <a
               target="_blank"
+              rel="noopener noreferrer"
               href={`https://www.imdb.com/name/${person.imdb_id}`}
               style={{
                 margin: "0.3rem 0"
@@ -117,6 +118,7 @@ export const PersonPresenter: React.SFC<Props> = ({
                 src={
                   "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/800px-IMDB_Logo_2016.svg.png"
                 }
+                alt={person.name}
                 style={{ width: "2rem", marginRight: "0.4rem" }}
               />{" "}
             </a>

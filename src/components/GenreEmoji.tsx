@@ -25,9 +25,6 @@ const GenreEmoji = ({ genre }: Props) => {
     case "애니메이션":
       emoji = "👀";
       break;
-    case "코미디":
-      emoji = "🤣";
-      break;
     case "가족":
       emoji = "👪";
       break;
@@ -60,9 +57,6 @@ const GenreEmoji = ({ genre }: Props) => {
       break;
     case "다큐멘터리":
       emoji = "📹";
-      break;
-    case "역사":
-      emoji = "📚";
       break;
     case "서부":
       emoji = "🌵";

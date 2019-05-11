@@ -6,6 +6,7 @@ import Home from "./routes/Home";
 import BoxOffice from "./routes/BoxOffice";
 import Movie from "./routes/Movie";
 import Person from "./routes/Person";
+import Search from "./routes/Search";
 import Header from "./components/Header";
 import { headerHeight } from "./config/_mixin";
 
@@ -21,7 +22,9 @@ const SectionContainer = styled.section`
   width: 60rem;
 `;
 
-export const Router: React.SFC<{}> = ({}) => (
+interface Props {}
+
+export const Router: React.SFC<Props> = () => (
   <>
     <BackTop />
     <MainContainer>
@@ -31,6 +34,7 @@ export const Router: React.SFC<{}> = ({}) => (
           <Route path="/boxOffice" component={BoxOffice} />
           <Route path="/film/:movieId" component={Movie} />
           <Route path="/person/:personId" component={Person} />
+          <Route path="/search/:term" exact component={Search} />
           <Route path="/" component={Home} />
         </Switch>
       </SectionContainer>

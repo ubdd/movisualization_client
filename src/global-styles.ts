@@ -5,7 +5,7 @@ export const GlobalStyle = createGlobalStyle`
 ${reset};
 @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.6/antd.min.css");
-@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Nanum+Myeongjo|Nanum+Pen+Script');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Playfair+Display|Do+Hyeon|Song+Myung|Thasadith|Nanum+Myeongjo|Nanum+Pen+Script');
   * {
       box-sizing: border-box;
   }
@@ -18,11 +18,14 @@ ${reset};
   }
 
   a{
-    color: unset;
-    &:hover{
-      color: unset;
+        color: white;
+        text-decoration: none !important;
+
+        &:hover{
+            color: MediumTurquoise;
+        }
     }
-  }
+
 
   strong{
     font-weight: 700;
