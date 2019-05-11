@@ -10,11 +10,15 @@ import Header from "./components/Header";
 import { headerHeight } from "./config/_mixin";
 
 const MainContainer = styled.main`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 `;
 
 const SectionContainer = styled.section`
   margin: ${headerHeight} 0;
+  width: 60rem;
 `;
 
 export const Router: React.SFC<{}> = ({}) => (

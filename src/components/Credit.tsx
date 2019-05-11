@@ -6,6 +6,14 @@ import Company from "./Company";
 import Section from "./Section";
 import { moviesApi } from "../api";
 
+const creditSection = [
+  "출연",
+  "제작진",
+  "세부사항",
+  "같이 보면 좋은 영화",
+  "비슷한 영화"
+];
+
 const Container = styled.div`
   position: relative;
   margin-top: 2rem;
@@ -180,36 +188,15 @@ export default class Credit extends React.Component<Props, IState> {
       <Container>
         <Header>
           <List>
-            <Item
-              onClick={() => handleCreditIndexChange(0)}
-              selected={creditIndex === 0}
-            >
-              출연
-            </Item>
-            <Item
-              onClick={() => handleCreditIndexChange(1)}
-              selected={creditIndex === 1}
-            >
-              제작진
-            </Item>
-            <Item
-              onClick={() => handleCreditIndexChange(2)}
-              selected={creditIndex === 2}
-            >
-              세부사항
-            </Item>
-            <Item
-              onClick={() => handleCreditIndexChange(3)}
-              selected={creditIndex === 3}
-            >
-              같이 보면 좋은 영화
-            </Item>
-            <Item
-              onClick={() => handleCreditIndexChange(4)}
-              selected={creditIndex === 4}
-            >
-              비슷한 영화
-            </Item>
+            {creditSection.map((sectionName: string, idx: number) => (
+              <Item
+                key={idx}
+                onClick={() => handleCreditIndexChange(idx)}
+                selected={creditIndex === idx}
+              >
+                {sectionName}
+              </Item>
+            ))}
           </List>
         </Header>
         {creditIndex === 0 && (

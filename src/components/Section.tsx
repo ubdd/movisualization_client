@@ -79,10 +79,9 @@ export default class Section extends React.Component<Props, State> {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     const { getAPI, term, id } = this.props;
     try {
-      console.log(this.props);
       if (term !== undefined) {
         const {
           data: { results: movies }
@@ -120,7 +119,7 @@ export default class Section extends React.Component<Props, State> {
         loading: false
       });
     }
-  }
+  };
 
   componentDidUpdate = async (prevProps: any) => {
     if (this.props.term !== prevProps.term) {
