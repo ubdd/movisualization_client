@@ -25,7 +25,7 @@ export const Router: React.SFC<{}> = ({}) => (
       <SectionContainer>
         <Switch>
           <Route path="/boxOffice" component={BoxOffice} />
-          <Route path="/movie/:movieId" component={Movie} />
+          <Route path="/film/:movieId" component={Movie} />
           <Route path="/person/:personId" component={Person} />
           <Route path="/" component={Home} />
         </Switch>
