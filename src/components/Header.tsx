@@ -2,6 +2,7 @@ import React from "react";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import HeaderSearch from "./HeaderSearch";
+import { headerHeight } from "../config/_mixin";
 
 interface IGradientBackgroundProps {
   darken: boolean;
@@ -46,7 +47,7 @@ const Container = styled.header`
 
 const List = styled.ul`
   margin: 0 auto;
-  height: 6rem;
+  height: ${headerHeight};
   min-width: 60rem;
   display: flex;
   align-items: center;

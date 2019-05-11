@@ -7,12 +7,15 @@ import BoxOffice from "./routes/BoxOffice";
 import Movie from "./routes/Movie";
 import Person from "./routes/Person";
 import Header from "./components/Header";
+import { headerHeight } from "./config/_mixin";
 
 const MainContainer = styled.main`
   position: relative;
 `;
 
-const SectionContainer = styled.section``;
+const SectionContainer = styled.section`
+  margin: ${headerHeight} 0;
+`;
 
 export const Router: React.SFC<{}> = ({}) => (
   <>

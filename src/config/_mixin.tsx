@@ -11,6 +11,8 @@ export const fontSize = {
   largeFontSize: "15px"
 };
 
+export const headerHeight = "6rem";
+
 export const color = { bgColor: "#14181C", fontColor: "#FFF" };
 
 const customMediaQuery = (maxWidth: number) =>
