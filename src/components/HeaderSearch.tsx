@@ -27,12 +27,13 @@ const SearchToggleIcon = styled.i`
   cursor: pointer;
 `;
 
-const ExecuteSearchIcon = styled.i`
+const ExecuteSearchIcon = styled.i<{ open: boolean }>`
   font-size: 1.2rem;
   cursor: pointer;
   position: absolute;
   right: 0.5rem;
-  color: #aaa;
+  transition: 0.5s ease-in-out;
+  color: ${props => (props.open ? "#AAA" : "#FFF")};
 `;
 
 const SearchTerm = styled.input<{ open: boolean }>`
@@ -135,6 +136,7 @@ const HeaderSearch = ({ history }: RouteComponentProps) => {
         onClick={
           open ? handleOnClickExecuteSearchIcon : handleOnClickToggleIcon
         }
+        open={open}
         className={"fas fa-search"}
       />
     </Container>

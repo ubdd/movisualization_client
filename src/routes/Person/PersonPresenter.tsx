@@ -3,6 +3,9 @@ import styled from "styled-components";
 import { moviesApi } from "../../api";
 import FilmoSection from "../../components/FilmoSection";
 import { Loader } from "../../components/Loader";
+import { websiteTitle } from "../../config/_mixin";
+import Helmet from "react-helmet";
+import Avatar from "../../static/avatar.png";
 
 const Container = styled.div`
   display: flex;
@@ -94,14 +97,23 @@ export const PersonPresenter: React.SFC<Props> = ({
   error,
   loading
 }) => {
-  console.log(person);
   return loading ? (
     <Loader />
   ) : (
     <Container>
+      <Helmet>
+        <title>
+          {person.name} | {websiteTitle}
+        </title>
+      </Helmet>
       <ProfileContainer>
         <Profile
-          src={`https://image.tmdb.org/t/p/w500${person.profile_path}`}
+          title={person.name}
+          src={
+            person.profile_path
+              ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
+              : Avatar
+          }
         />
         <ProfileInfo>
           <Name>
@@ -120,7 +132,7 @@ export const PersonPresenter: React.SFC<Props> = ({
                 }
                 alt={person.name}
                 style={{ width: "2rem", marginRight: "0.4rem" }}
-              />{" "}
+              />
             </a>
           </Name>
           {person.gender !== 0 && (

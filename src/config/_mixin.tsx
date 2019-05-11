@@ -5,11 +5,20 @@ const sizes = {
   phone: 576
 };
 
+const posterWidth = 6;
+
 export const fontSize = {
   smallFontSize: "9px",
   normalFontSize: "12px",
   largeFontSize: "15px"
 };
+
+export const posterSize = {
+  width: `${posterWidth}rem`,
+  height: `${posterWidth * 1.4375}rem`
+};
+
+export const websiteTitle = "Movisualization";
 
 export const headerHeight = "6rem";
 

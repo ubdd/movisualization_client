@@ -8,6 +8,7 @@ import { Loader } from "../../components/Loader";
 import Credit from "../../components/Credit";
 import GenreEmoji from "../../components/GenreEmoji";
 import NoImage from "../../static/popcorn.png";
+import { websiteTitle } from "../../config/_mixin";
 const numeral = require("numeral");
 
 const Container = styled.div`
@@ -358,7 +359,9 @@ export const MoviePresenter: React.SFC<Props> = ({
   ) : (
     <Container>
       <Helmet>
-        <title>{result.title} | Cinephile</title>
+        <title>
+          {result.title} | {websiteTitle}
+        </title>
       </Helmet>
       <Backdrop
         bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
@@ -387,15 +390,17 @@ export const MoviePresenter: React.SFC<Props> = ({
                 </SLink>
               </FilmStat>
             )}
-            {/* <FilmStat>
+            <FilmStat>
               <Link to={`/film/${result.id}/lists/by/popular/`}>
                 <FilmStatIcon
                   style={{ color: "skyblue" }}
-                  className="fas fa-th-list"
+                  className="fas fa-dollar-sign"
                 />
-                <FilmStatText>{result.revenue}</FilmStatText>
+                <FilmStatText>
+                  {numeral(result.revenue).format("0.000a")}
+                </FilmStatText>
               </Link>
-            </FilmStat> */}
+            </FilmStat>
             <FilmStat title="인기도">
               <SLink to={`/film/${result.id}/likes/`}>
                 <FilmStatIcon

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import Section from "../../components/Section";
+import MovieGrid from "../../components/MovieGrid";
 import { moviesApi } from "../../api";
+import PersonGrid from "../../components/PersonGrid";
 
 const Container = styled.div``;
 
@@ -11,10 +12,11 @@ interface IProps {
 
 export const SearchPresenter: React.SFC<IProps> = ({ term }) => (
   <Container>
-    <Section
-      title={`'${term}'에 대한 검색결과`}
+    <MovieGrid
+      title={`🎥 '${term}'에 대한 영화명 검색결과`}
       getAPI={moviesApi.searchMovie}
       term={term}
     />
+    <PersonGrid title={`🎭 '${term}'에 대한 영화인 검색결과`} term={term} />
   </Container>
 );

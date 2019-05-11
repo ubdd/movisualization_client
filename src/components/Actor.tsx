@@ -71,7 +71,7 @@ export default class Actor extends React.Component<Props> {
       people: { id: personId, character, name, profile_path }
     } = this.props;
     return (
-      <Link to={`/person/${personId}`}>
+      <Link to={`/person/${personId}`} title={name}>
         <Container>
           {profile_path ? (
             <ProfileImage

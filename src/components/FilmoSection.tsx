@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Poster } from "./Poster";
+import { MovieCard } from "./MovieCard";
+import { posterSize } from "../config/_mixin";
 
 const Container = styled.div`
   position: relative;
@@ -22,9 +23,10 @@ interface IGridProps {
 const Grid = styled("div")<IGridProps>`
   margin-top: 1.5rem;
   display: grid;
+  justify-content: space-between;
   transition: 0.5s ease-in-out;
-  grid-template-columns: repeat(auto-fill, 8rem);
-  grid-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, ${posterSize.width});
+  grid-gap: 0.5rem;
 `;
 
 interface IProps {
@@ -75,17 +77,18 @@ export default class Section extends React.Component<IProps, IState> {
 
   render() {
     const { cast, crew, loading } = this.state;
+    console.log(crew);
     return (
       <>
-        <Container>
-          <Title>출연</Title>
-          <Grid loading={loading}>
-            {cast &&
-              cast.map((movie: any, index: number) => (
-                <Poster
+        {cast && cast.length !== 0 && (
+          <Container>
+            <Title>🎭 출연</Title>
+            <Grid loading={loading}>
+              {cast.map((movie: any, index: number) => (
+                <MovieCard
                   key={index}
                   title={movie.title}
-                  id={movie.id}
+                  movieId={movie.id}
                   imageUrl={movie.poster_path}
                   rating={movie.vote_average}
                   additionalInfo={`${movie.character} 역`}
@@ -94,17 +97,18 @@ export default class Section extends React.Component<IProps, IState> {
                   }
                 />
               ))}
-          </Grid>
-        </Container>
-        <Container>
-          <Title>제작</Title>
-          <Grid loading={loading}>
-            {crew &&
-              crew.map((movie: any, index: number) => (
-                <Poster
+            </Grid>
+          </Container>
+        )}
+        {crew && crew.length !== 0 && (
+          <Container>
+            <Title>🎥 제작</Title>
+            <Grid loading={loading}>
+              {crew.map((movie: any, index: number) => (
+                <MovieCard
                   key={index}
                   title={movie.title}
-                  id={movie.id}
+                  movieId={movie.id}
                   imageUrl={movie.poster_path}
                   rating={movie.vote_average}
                   additionalInfo={`${movie.job}`}
@@ -113,8 +117,9 @@ export default class Section extends React.Component<IProps, IState> {
                   }
                 />
               ))}
-          </Grid>
-        </Container>
+            </Grid>
+          </Container>
+        )}
       </>
     );
   }

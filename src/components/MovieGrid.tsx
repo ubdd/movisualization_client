@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Poster } from "./Poster";
+import { MovieCard } from "./MovieCard";
+import { posterSize } from "../config/_mixin";
 
 const Container = styled.div`
   position: relative;
@@ -22,9 +23,10 @@ interface IGridProps {
 const Grid = styled("div")<IGridProps>`
   margin-top: 1.5rem;
   display: grid;
+  justify-content: space-between;
   transition: 0.5s ease-in-out;
-  grid-template-columns: repeat(auto-fill, 8rem);
-  grid-gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, ${posterSize.width});
+  grid-gap: 0.5rem;
 `;
 
 const MoreIcon = styled.i<{ noMore: boolean }>`
@@ -35,8 +37,8 @@ const MoreIcon = styled.i<{ noMore: boolean }>`
 `;
 
 const More = styled.div<{ noMore: boolean }>`
-  width: 8rem;
-  height: 11.5rem;
+  width: ${posterSize.width};
+  height: ${posterSize.height};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +76,7 @@ interface State {
   noMoreMovie: boolean;
 }
 
-export default class Section extends React.Component<Props, State> {
+export default class MovieGrid extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -125,7 +127,7 @@ export default class Section extends React.Component<Props, State> {
   };
 
   componentDidUpdate = async (prevProps: any, prevState: any) => {
-    if (this.props.term !== prevProps.term) {
+    if (this.props.term && this.props.term !== prevProps.term) {
       console.log(this.props.term, prevProps.term);
       const { getAPI, term, id } = this.props;
       try {
@@ -215,10 +217,10 @@ export default class Section extends React.Component<Props, State> {
         <Grid loading={loading}>
           {movies &&
             movies.map((movie: any, index: number) => (
-              <Poster
+              <MovieCard
                 key={index}
                 title={movie.title}
-                id={movie.id}
+                movieId={movie.id}
                 imageUrl={movie.poster_path}
                 rating={movie.vote_average}
                 year={movie.release_date && movie.release_date.substring(0, 4)}
@@ -227,7 +229,7 @@ export default class Section extends React.Component<Props, State> {
           {noMoreMovie ? (
             <More noMore={true}>
               <MoreIcon noMore={true} className="fas fa-plus" />
-              <span>마지막 페이지</span>
+              {/* <span>마지막 페이지</span> */}
             </More>
           ) : (
             <More noMore={false} onClick={() => this.handleOnClickMore()}>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Actor from "./Actor";
 import Crew from "./Crew";
 import Company from "./Company";
-import Section from "./Section";
+import MovieGrid from "./MovieGrid";
 import { moviesApi } from "../api";
 
 const creditSection = [
@@ -324,9 +324,9 @@ export default class Credit extends React.Component<Props, IState> {
           </CastInfoContainer>
         )}
         {creditIndex === 3 && (
-          <Section getAPI={moviesApi.recommendation} id={id} />
+          <MovieGrid getAPI={moviesApi.recommendation} id={id} />
         )}
-        {creditIndex === 4 && <Section getAPI={moviesApi.similar} id={id} />}
+        {creditIndex === 4 && <MovieGrid getAPI={moviesApi.similar} id={id} />}
       </Container>
     );
   }

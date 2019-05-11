@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import NoImage from "../static/popcorn.png";
+import { posterSize } from "../config/_mixin";
 
 const Container = styled.div`
   font-size: 0.8rem;
@@ -13,8 +14,8 @@ interface IImageProps {
 
 const Image = styled("div")<IImageProps>`
   background: url(${props => props.bgUrl});
-  width: 8rem;
-  height: 11.5rem;
+  width: ${posterSize.width};
+  height: ${posterSize.height};
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(221, 238, 255, 0.35);
   background-size: cover;
@@ -75,7 +76,7 @@ const SLink = styled(Link)`
 `;
 
 interface Props {
-  id: number;
+  movieId: number;
   imageUrl: string;
   title: string;
   rating: number;
@@ -83,15 +84,15 @@ interface Props {
   additionalInfo?: string;
 }
 
-export const Poster: React.SFC<Props> = ({
-  id,
+export const MovieCard: React.SFC<Props> = ({
+  movieId,
   imageUrl,
   title,
   rating,
   year,
   additionalInfo
 }) => (
-  <SLink to={`/film/${id}`} title={title}>
+  <SLink to={`/film/${movieId}`} title={title}>
     <Container>
       <ImageContainer>
         <Image
@@ -111,9 +112,7 @@ export const Poster: React.SFC<Props> = ({
           <span>{rating}/10</span>
         </Rating>
       </ImageContainer>
-      <Title>
-        {title.length > 11 ? `${title.substring(0, 11)}...` : title}
-      </Title>
+      <Title>{title.length > 8 ? `${title.substring(0, 8)}...` : title}</Title>
       <Year>
         {year} {additionalInfo && `/ ${additionalInfo}`}
       </Year>
