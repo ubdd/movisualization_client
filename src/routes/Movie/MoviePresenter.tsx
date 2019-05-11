@@ -396,8 +396,8 @@ export const MoviePresenter: React.SFC<Props> = ({
                   style={{ color: "skyblue" }}
                   className="fas fa-dollar-sign"
                 />
-                <FilmStatText>
-                  {numeral(result.revenue).format("0.000a")}
+                <FilmStatText title="매출액">
+                  {numeral(result.revenue).format("0.00a")}
                 </FilmStatText>
               </Link>
             </FilmStat>

@@ -18,14 +18,13 @@ ${reset};
   }
 
   a{
-        color: white;
-        text-decoration: none !important;
+    color: white;
+    text-decoration: none !important;
 
-        &:hover{
-            color: MediumTurquoise;
-        }
+    &:hover{
+        color: MediumTurquoise;
     }
-
+  }
 
   strong{
     font-weight: 700;
@@ -40,6 +39,33 @@ ${reset};
       outline: none;
       border: none;
     }
+  }
+  
+  .ant-btn-sm{
+        font-size: 0.8rem;
+  }
+
+  .ant-dropdown-menu-item{
+      font-size: 0.8rem;
+  }
+
+  .ant-carousel{
+    width: 1200px;
+    height: 675px;
+    position: absolute;
+    top: -1rem;   
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(20, 24, 28, 1);
+  }
+  .slick-slider {
+      height: 100%;
+  }
+  .slick-list {
+      height: 100%;
+  }
+  .ant-carousel .slick-vertical .slick-slide{
+      border: none;
   }
 
 `;

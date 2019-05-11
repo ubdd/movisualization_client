@@ -18,7 +18,7 @@ export const posterSize = {
   height: `${posterWidth * 1.4375}rem`
 };
 
-export const websiteTitle = "Movisualization";
+export const websiteTitle = "👀 Movisualization";
 
 export const headerHeight = "6rem";
 
