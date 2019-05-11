@@ -13,6 +13,7 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
+    "react-toastify": "^5.1.0",
     "request": "^2.88.0",
     "styled-components": "^4.2.0",
     "styled-reset": "^2.0.10",
@@ -29,6 +30,7 @@
     "@types/react": "^16.8.16",
     "@types/react-dom": "^16.8.4",
     "@types/react-router-dom": "^4.3.3",
+    "@types/react-toastify": "^4.0.2",
     "@types/styled-components": "^4.1.14"
   },
   "scripts": {

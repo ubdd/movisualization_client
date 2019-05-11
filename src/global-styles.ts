@@ -1,6 +1,6 @@
 import reset from "styled-reset";
 import { createGlobalStyle } from "./typed-components";
-
+import { fontSize, color } from "./config/_mixin";
 export const GlobalStyle = createGlobalStyle`
 ${reset};
 @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
@@ -12,6 +12,9 @@ ${reset};
 
   body{
     font-family: 'Nanum Gothic', sans-serif;
+    font-size: ${fontSize.normalFontSize};
+    background-color: ${color.bgColor};
+    color: ${color.fontColor};
   }
 
   a{

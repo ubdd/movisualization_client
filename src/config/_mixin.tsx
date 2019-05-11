@@ -11,7 +11,7 @@ export const fontSize = {
   largeFontSize: "15px"
 };
 
-export const color = { bgColor: "#141414", fontColor: "#000" };
+export const color = { bgColor: "#14181C", fontColor: "#FFF" };
 
 const customMediaQuery = (maxWidth: number) =>
   `@media (max-width: ${maxWidth}px)`;
