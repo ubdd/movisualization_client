@@ -29,6 +29,8 @@ interface State {
   creditIndex: number;
   error: string | null;
   loading: boolean;
+  activeVideo: boolean;
+  videoKey: string;
 }
 
 export default class MovieDetailContainer extends React.Component<
@@ -52,7 +54,9 @@ export default class MovieDetailContainer extends React.Component<
       costumes: null,
       creditIndex: 0,
       error: null,
-      loading: true
+      loading: true,
+      activeVideo: false,
+      videoKey: ""
     };
   }
 
@@ -108,7 +112,6 @@ export default class MovieDetailContainer extends React.Component<
           productionDesigns,
           composers,
           costumes,
-
           loading: true
         });
       } catch (error) {
@@ -124,7 +127,7 @@ export default class MovieDetailContainer extends React.Component<
     }
   }
 
-  async componentDidUpdate(prevProps: any) {
+  componentDidUpdate = async (prevProps: any) => {
     if (this.props.match.params.movieId !== prevProps.match.params.movieId) {
       try {
         const {
@@ -192,10 +195,19 @@ export default class MovieDetailContainer extends React.Component<
         this.setState({ loading: false });
       }
     }
-  }
+  };
 
   handleCreditIndexChange = (creditIndex: number) => {
     this.setState({ creditIndex });
+  };
+
+  onClickToggleActiveVideo = (videoKey: string = "") => {
+    if (!this.state.activeVideo) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    this.setState({ activeVideo: !this.state.activeVideo, videoKey });
   };
 
   render() {
@@ -218,7 +230,9 @@ export default class MovieDetailContainer extends React.Component<
       costumes,
       creditIndex,
       error,
-      loading
+      loading,
+      activeVideo,
+      videoKey
     } = this.state;
     console.log(this.state.result);
     return (
@@ -237,7 +251,10 @@ export default class MovieDetailContainer extends React.Component<
         creditIndex={creditIndex}
         error={error}
         loading={loading}
+        activeVideo={activeVideo}
+        videoKey={videoKey}
         handleCreditIndexChange={this.handleCreditIndexChange}
+        onClickToggleActiveVideo={this.onClickToggleActiveVideo}
       />
     );
   }
