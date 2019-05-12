@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Helmet from "react-helmet";
 import MovieGrid from "../../components/MovieGrid";
-import { moviesApi } from "../../api";
+import { tmdbApis } from "../../api";
 import { Carousel } from "antd";
 import { Loader } from "../../components/Loader";
 import { websiteTitle } from "../../config/_mixin";
@@ -90,10 +90,10 @@ export const HomePresenter: React.SFC<Props> = ({ movies, error, loading }) =>
             ))}
         </Carousel>
         <SectionContainer>
-          <MovieGrid title="현재 상영중" getAPI={moviesApi.nowPlaying} />
-          <MovieGrid title="인기 작품" getAPI={moviesApi.popular} />
-          <MovieGrid title="개봉 예정작" getAPI={moviesApi.upcoming} />
-          <MovieGrid title="최고 평점작" getAPI={moviesApi.topRated} />
+          <MovieGrid title="현재 상영중" getAPI={tmdbApis.nowPlaying} />
+          <MovieGrid title="인기 작품" getAPI={tmdbApis.popular} />
+          <MovieGrid title="개봉 예정작" getAPI={tmdbApis.upcoming} />
+          <MovieGrid title="최고 평점작" getAPI={tmdbApis.topRated} />
         </SectionContainer>
       </Container>
     </>

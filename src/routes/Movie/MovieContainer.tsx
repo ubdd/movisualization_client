@@ -1,6 +1,6 @@
 import React from "react";
 import { MoviePresenter } from "./MoviePresenter";
-import { moviesApi } from "../../api";
+import { tmdbApis } from "../../api";
 import { ICrew } from "../../shared-interfaces";
 
 interface Props {
@@ -74,8 +74,8 @@ export default class MovieDetailContainer extends React.Component<
       }
       try {
         console.log(parsedId);
-        const { data: result } = await moviesApi.detail(parsedId);
-        const { data: credit } = await moviesApi.credit(parsedId);
+        const { data: result } = await tmdbApis.detail(parsedId);
+        const { data: credit } = await tmdbApis.credit(parsedId);
         const { cast, crew } = credit;
         const directors = crew.filter(
           (people: ICrew) => people.department === "Directing"
@@ -141,8 +141,8 @@ export default class MovieDetailContainer extends React.Component<
           return push("/");
         }
         try {
-          const { data: result } = await moviesApi.detail(parsedId);
-          const { data: credit } = await moviesApi.credit(parsedId);
+          const { data: result } = await tmdbApis.detail(parsedId);
+          const { data: credit } = await tmdbApis.credit(parsedId);
           const { cast } = credit;
           const { crew } = credit;
           const directors = crew.filter(

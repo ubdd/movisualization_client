@@ -43,7 +43,7 @@ ${reset};
     width: 75rem;
     height: 42.2rem;
     position: absolute;
-    top: -1rem;   
+    top: -2rem;   
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(20, 24, 28, 1);
@@ -66,7 +66,7 @@ ${reset};
     }
   }
   @keyframes fadeIn {
-    0% {
+    /* 0% {
       opacity: 0;
       transform: scale(0);
     }
@@ -79,6 +79,12 @@ ${reset};
     100% {
       opacity: 1;
       transform: scale(1);
+    } */
+    0%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 1;
     }
   }
 `;

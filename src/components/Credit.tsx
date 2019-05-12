@@ -4,7 +4,7 @@ import Actor from "./Actor";
 import Crew from "./Crew";
 import Company from "./Company";
 import MovieGrid from "./MovieGrid";
-import { moviesApi } from "../api";
+import { tmdbApis } from "../api";
 import { color } from "../config/_mixin";
 
 const creditSection = [
@@ -325,9 +325,9 @@ export default class Credit extends React.Component<Props, IState> {
           </CastInfoContainer>
         )}
         {creditIndex === 3 && (
-          <MovieGrid getAPI={moviesApi.recommendation} id={id} />
+          <MovieGrid getAPI={tmdbApis.recommendation} id={id} />
         )}
-        {creditIndex === 4 && <MovieGrid getAPI={moviesApi.similar} id={id} />}
+        {creditIndex === 4 && <MovieGrid getAPI={tmdbApis.similar} id={id} />}
       </Container>
     );
   }

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { moviesApi } from "../../api";
+import { tmdbApis } from "../../api";
 import FilmoSection from "../../components/FilmoSection";
 import { Loader } from "../../components/Loader";
 import { websiteTitle } from "../../config/_mixin";
@@ -173,7 +173,7 @@ export const PersonPresenter: React.SFC<Props> = ({
         </ProfileInfo>
       </ProfileContainer>
       <SectionContainer>
-        <FilmoSection id={personId} getAPI={moviesApi.filmography} />
+        <FilmoSection id={personId} getAPI={tmdbApis.filmography} />
       </SectionContainer>
     </Container>
   );

@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from "react";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
 import { media } from "../config/_mixin";
+import { youtubeApis } from "../api";
 
 interface Props {
   activeVideo: boolean;
@@ -121,6 +122,13 @@ export const VideoModal = ({
   useEffect(() => {
     if (activeVideo) {
       document.addEventListener("mousedown", handleClickOutside);
+      const fetchData = async () => {
+        const {
+          data: { items }
+        } = await youtubeApis.videos(videoKey);
+        console.log(items[0]);
+      };
+      fetchData();
     } else {
       document.removeEventListener("mousedown", handleClickOutside);
     }
@@ -128,7 +136,7 @@ export const VideoModal = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, [videoKey]);
 
   return (
     <Section activeVideo={activeVideo}>

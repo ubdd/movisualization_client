@@ -1,6 +1,6 @@
 import React from "react";
 import { HomePresenter } from "./HomePresenter";
-import { moviesApi } from "../../api";
+import { tmdbApis } from "../../api";
 
 interface Props {}
 
@@ -21,7 +21,7 @@ export default class extends React.Component<Props, State> {
     try {
       const {
         data: { results: movies }
-      } = await moviesApi.popular(1);
+      } = await tmdbApis.popular(1);
       this.setState({
         movies: movies.slice(0, 10),
         loading: true
