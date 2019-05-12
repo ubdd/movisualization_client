@@ -36,7 +36,6 @@ export default class PersonContainer extends React.Component<Props, State> {
         if (0xac00 <= c && c <= 0xd7a3) return true;
         return false;
       });
-      console.log(person.also_known_as);
       if (person.also_known_as.length > 0) {
         person.name = person.also_known_as[0];
       }
@@ -55,7 +54,6 @@ export default class PersonContainer extends React.Component<Props, State> {
       }
     } = this.props;
     const { person, error, loading } = this.state;
-    console.log(this.props, this.state);
     return (
       <>
         <PersonPresenter

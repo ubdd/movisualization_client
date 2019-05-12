@@ -58,7 +58,6 @@ export default class Section extends React.Component<IProps, IState> {
       const {
         data: { cast, crew }
       } = await getAPI(id);
-      console.log(cast, crew);
       this.setState({
         cast,
         crew,
@@ -77,12 +76,16 @@ export default class Section extends React.Component<IProps, IState> {
 
   render() {
     const { cast, crew, loading } = this.state;
-    console.log(crew);
     return (
       <>
         {cast && cast.length !== 0 && (
           <Container>
-            <Title>🎭 출연</Title>
+            <Title role="img" aria-label="cast">
+              <span role="img" aria-label="crew">
+                🎭
+              </span>{" "}
+              출연
+            </Title>
             <Grid loading={loading}>
               {cast.map((movie: any, index: number) => (
                 <MovieCard
@@ -102,7 +105,12 @@ export default class Section extends React.Component<IProps, IState> {
         )}
         {crew && crew.length !== 0 && (
           <Container>
-            <Title>🎥 제작</Title>
+            <Title>
+              <span role="img" aria-label="crew">
+                🎥
+              </span>{" "}
+              제작
+            </Title>
             <Grid loading={loading}>
               {crew.map((movie: any, index: number) => (
                 <MovieCard
