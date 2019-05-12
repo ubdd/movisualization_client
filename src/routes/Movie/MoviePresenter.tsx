@@ -143,12 +143,32 @@ const VideoThumbnail = styled.img`
   filter: brightness(0.4);
 `;
 
+const VideoInfo = styled.div`
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 0;
+  left: 0;
+  transform: translate(0, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 2rem;
+  opacity: 1;
+  transition: 0.5s ease-in-out;
+`;
+
 const VideoContainer = styled.div`
   position: relative;
   cursor: pointer;
   &:hover {
     ${VideoThumbnail} {
       filter: brightness(1);
+    }
+    ${VideoInfo} {
+      opacity: 0;
     }
   }
 `;
@@ -166,27 +186,12 @@ const WatchPanel = styled.div`
   }
 `;
 
-const VideoInfo = styled.div`
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin: 0 2rem;
-`;
-
 const TrailerIcon = styled.i`
   display: inline-block;
   vertical-align: top;
   position: relative;
   top: auto;
   left: auto;
-  /* width: 1.2rem;
-  height: 1.2rem; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -520,36 +525,42 @@ export const MoviePresenter: React.SFC<Props> = ({
                   )}
                 </SymbolicIcons>
               </WatchTitle>
-              <WatchPanel>
-                {result.videos.results
-                  .filter((video: TMDbMovieVideo) => video.site == "YouTube")
-                  .map((video: TMDbMovieVideo, index: number) => (
-                    <VideoContainer
-                      onClick={() => onClickToggleActiveVideo(video.key)}
-                      key={index}
-                      title={video.name}
-                    >
-                      <VideoInfo>
-                        <TrailerIcon
-                          style={{ marginBottom: "0.4rem" }}
-                          className="fas fa-play-circle"
+              {result.videos.results.filter(
+                (video: TMDbMovieVideo) => video.site === "YouTube"
+              ).length !== 0 && (
+                <WatchPanel>
+                  {result.videos.results
+                    .filter((video: TMDbMovieVideo) => video.site === "YouTube")
+                    .map((video: TMDbMovieVideo, index: number) => (
+                      <VideoContainer
+                        onClick={() => onClickToggleActiveVideo(video.key)}
+                        key={index}
+                      >
+                        <VideoInfo>
+                          <TrailerIcon
+                            style={{
+                              fontSize: "1.5rem",
+                              marginBottom: "0.4rem"
+                            }}
+                            className="fas fa-play-circle"
+                          />
+                          <TrailerText>
+                            {video.type === "Trailer"
+                              ? `${video.name}`
+                              : video.type === "Teaser"
+                              ? `${video.name}`
+                              : video.type === "Featurette"
+                              ? `${video.name}`
+                              : `${video.name}`}
+                          </TrailerText>
+                        </VideoInfo>
+                        <VideoThumbnail
+                          src={`https://img.youtube.com/vi/${video.key}/0.jpg`}
                         />
-                        <TrailerText>
-                          {video.type === "Trailer"
-                            ? `${video.name}`
-                            : video.type === "Teaser"
-                            ? `${video.name}`
-                            : video.type === "Featurette"
-                            ? `${video.name}`
-                            : `${video.name}`}
-                        </TrailerText>
-                      </VideoInfo>
-                      <VideoThumbnail
-                        src={`https://img.youtube.com/vi/${video.key}/0.jpg`}
-                      />
-                    </VideoContainer>
-                  ))}
-              </WatchPanel>
+                      </VideoContainer>
+                    ))}
+                </WatchPanel>
+              )}
               {/* <MoreService>
                 <Link to={"/"}>
                   <MoreServiceText>더 많은 서비스</MoreServiceText>

@@ -17,8 +17,7 @@ export default class extends React.Component<Props, State> {
     loading: false
   };
 
-  async componentDidMount() {
-    console.log("didmount");
+  componentDidMount = async () => {
     try {
       const {
         data: { results: movies }
@@ -36,10 +35,9 @@ export default class extends React.Component<Props, State> {
         loading: false
       });
     }
-  }
+  };
   render() {
     const { movies, error, loading } = this.state;
-    console.log(this.state);
     return <HomePresenter movies={movies} error={error} loading={loading} />;
   }
 }

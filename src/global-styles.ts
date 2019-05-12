@@ -20,9 +20,8 @@ ${reset};
   a{
     color: white;
     text-decoration: none !important;
-
     &:hover{
-        color: MediumTurquoise;
+        color: ${color.mainColor};
     }
   }
 
@@ -40,18 +39,9 @@ ${reset};
       border: none;
     }
   }
-  
-  .ant-btn-sm{
-        font-size: 0.8rem;
-  }
-
-  .ant-dropdown-menu-item{
-      font-size: 0.8rem;
-  }
-
   .ant-carousel{
-    width: 1200px;
-    height: 675px;
+    width: 75rem;
+    height: 42.2rem;
     position: absolute;
     top: -1rem;   
     left: 50%;
@@ -67,5 +57,28 @@ ${reset};
   .ant-carousel .slick-vertical .slick-slide{
       border: none;
   }
-
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50%{
+      transform: scale(1.05);
+    }
+    75%{
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 `;

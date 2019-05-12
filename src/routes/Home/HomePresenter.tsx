@@ -73,9 +73,14 @@ export const HomePresenter: React.SFC<Props> = ({ movies, error, loading }) =>
         <title>Home | {websiteTitle}</title>
       </Helmet>
       <Container>
-        <Carousel effect="fade" vertical easing={"ease-in-out"} autoplay={true}>
+        <Carousel
+          effect="fade"
+          dotPosition={"right"}
+          easing={"ease-in-out"}
+          autoplay={true}
+        >
           {movies &&
-            movies.map((movie: any, index: number) => (
+            movies.map((movie: any) => (
               <Backdrop
                 key={movie.id}
                 bgImage={`https://image.tmdb.org/t/p/original${
@@ -84,9 +89,6 @@ export const HomePresenter: React.SFC<Props> = ({ movies, error, loading }) =>
               />
             ))}
         </Carousel>
-        {/* <Backdrop
-        bgImage={`https://image.tmdb.org/t/p/original/nadTlnTE6DdgmYsN4iWc2a2wiaI.jpg`}
-      /> */}
         <SectionContainer>
           <MovieGrid title="현재 상영중" getAPI={moviesApi.nowPlaying} />
           <MovieGrid title="인기 작품" getAPI={moviesApi.popular} />

@@ -22,7 +22,11 @@ export const websiteTitle = "👀 Movisualization";
 
 export const headerHeight = "6rem";
 
-export const color = { bgColor: "#14181C", fontColor: "#FFF" };
+export const color = {
+  bgColor: "#14181C",
+  fontColor: "#FFF",
+  mainColor: "#f6e58d"
+};
 
 const customMediaQuery = (maxWidth: number) =>
   `@media (max-width: ${maxWidth}px)`;

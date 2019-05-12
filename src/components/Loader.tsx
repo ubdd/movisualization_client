@@ -12,18 +12,7 @@ const Container = styled.i`
 `;
 
 const Loading = styled.div`
-  @keyframes rotating {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  animation-name: rotating;
-  animation-duration: 1s;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
+  animation: spin 1s ease-in-out infinite;
   font-size: 3.5rem;
 `;
 
