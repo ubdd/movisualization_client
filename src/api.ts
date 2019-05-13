@@ -63,5 +63,7 @@ export const moviesApi = {
         page
       }
     }),
-  filmography: (personId: number) => api.get(`person/${personId}/movie_credits`)
+  filmography: (personId: number) =>
+    api.get(`person/${personId}/movie_credits`),
+  genres: () => api.get(`genre/movie/list`)
 };

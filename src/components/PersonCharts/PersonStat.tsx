@@ -50,7 +50,6 @@ class PersonStat extends React.Component<IProps, IState> {
   componentDidUpdate = (prevProps: IProps, prevState: IState) => {
     if (prevState !== this.state) {
       this._renderChart();
-      console.log(this.state.avgRate);
     }
   };
 

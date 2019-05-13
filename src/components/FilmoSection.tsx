@@ -58,7 +58,6 @@ export default class Section extends React.Component<IProps, IState> {
       const {
         data: { cast, crew }
       } = await getAPI(id);
-      console.log(cast, crew);
       this.setState({
         cast,
         crew,
@@ -77,7 +76,6 @@ export default class Section extends React.Component<IProps, IState> {
 
   render() {
     const { cast, crew, loading } = this.state;
-    console.log(crew);
     return (
       <>
         {cast && cast.length !== 0 && (

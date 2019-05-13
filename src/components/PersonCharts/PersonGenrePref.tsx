@@ -1,6 +1,13 @@
 import React from "react";
 import chart from "billboard.js";
 import "billboard.js/dist/billboard.css";
+import { moviesApi } from "../../api";
+
+interface Genres {
+  id: number;
+  name: string;
+  count: number;
+}
 
 interface IProps {
   id: string;
@@ -8,37 +15,52 @@ interface IProps {
 }
 
 interface IState {
-  genres: object;
+  genreName: Genres[];
 }
 
 class PersonGenrePref extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      genres: {}
+      genreName: []
     };
   }
 
   componentDidMount = () => {
+    // this._getGenreNamebyId();
     this._getGenres();
   };
+
+  // _getGenreNamebyId = async () => {
+  //   this.setState({ genreName: genres });
+  // };
 
   _getGenres = async () => {
     const { id, getAPI } = this.props;
     const { data: cast } = await getAPI(id);
-    let genres: object = {};
+    const { data: genreRes } = await moviesApi.genres();
+    const { genres: genres } = genreRes;
     cast.cast.map((cast: any) => {
       cast.genre_ids.map((genre_id: any) => {
-        genres[genre_id] ? (genres[genre_id] += 1) : (genres[genre_id] = 1);
+        let genreIndex = genres.findIndex((x: any) => x.id == genre_id);
+        if (!genres[genreIndex].count) {
+          genres[genreIndex].count = 1;
+        } else {
+          genres[genreIndex].count += 1;
+        }
       });
     });
-    this.setState({ genres });
+    genres.map((genre: any) => delete genre.id);
+    genres.sort((a: any, b: any) => (a.count > b.count ? -1 : 1));
+    this.setState({
+      genreName: genres.filter((genre: any) => genre.count)
+    });
   };
 
   componentDidUpdate = (prevProps: IProps, prevState: IState) => {
     if (prevState !== this.state) {
-      console.log(this.state.genres);
       this._renderChart();
+      console.log(this.state);
     }
   };
 
@@ -46,8 +68,11 @@ class PersonGenrePref extends React.Component<IProps, IState> {
     chart.generate({
       bindto: "#personGenrePref",
       data: {
-        columns: Object.entries(this.state.genres),
+        columns: this.state.genreName.map(genre => Object.values(genre)),
         type: "pie"
+      },
+      pie: {
+        padding: 0
       }
     });
   };
