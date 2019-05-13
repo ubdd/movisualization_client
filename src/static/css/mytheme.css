@@ -27,17 +27,6 @@
   stroke: #8c8c8c;
 }
 
-.bb text,
-.bb .bb-button {
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  fill: #555;
-  font-size: 12px;
-  letter-spacing: -0.3px;
-}
-
 .bb-legend-item-title,
 .bb-xgrid-focus,
 .bb-ygrid,
@@ -49,11 +38,6 @@
 /*-- Axis --*/
 .bb-axis {
   shape-rendering: crispEdges;
-}
-
-.bb-axis-y text,
-.bb-axis-y2 text {
-  fill: #8c8c8c;
 }
 
 .bb-event-rects {
@@ -82,11 +66,6 @@
 .bb-xgrid-focus line {
   stroke: #ffb6b6;
   stroke-dasharray: 3px;
-}
-
-/*-- Text on Chart --*/
-.bb-text.bb-empty {
-  fill: #767676;
 }
 
 /*-- Line --*/
@@ -141,7 +120,8 @@ use.bb-circle._expanded_ {
 
 /*-- Zoom region --*/
 .bb-zoom-brush {
-  fill-opacity: 0.1;
+  fill: white;
+  fill-opacity: 0.2;
 }
 
 /*-- Brush --*/
@@ -169,14 +149,6 @@ use.bb-circle._expanded_ {
 /*-- Title --*/
 .bb-title {
   font-size: 14px;
-}
-
-/*-- Tooltip --*/
-.bb-tooltip-container {
-  z-index: 10;
-  font-family: Helvetica, "Apple SD Gothic Neo", Arial, sans-serif,
-    "nanumgothic", "Dotum";
-  position: absolute;
 }
 
 .bb-tooltip {
@@ -231,7 +203,7 @@ use.bb-circle._expanded_ {
 }
 .bb-tooltip .bb-tooltip-title {
   display: inline-block;
-  color: #aaa;
+  color: #ddd;
   line-height: 20px;
 }
 .bb-tooltip .bb-tooltip-detail table {
@@ -337,6 +309,7 @@ use.bb-circle._expanded_ {
   position: absolute;
   top: 10px;
   right: 10px;
+  color: black;
 }
 .bb-button .bb-zoom-reset {
   border: solid 1px #ccc;

@@ -6,6 +6,11 @@ import Company from "./Company";
 import MovieGrid from "./MovieGrid";
 import { tmdbApis } from "../api";
 import { color } from "../config/_mixin";
+import {
+  SpokenLanguage,
+  ProductionCountry,
+  ProductionCompany
+} from "../shared-interfaces";
 
 const creditSection = [
   "출연",
@@ -300,24 +305,32 @@ export default class Credit extends React.Component<Props, IState> {
               <DetailOption>
                 <DetailOptionText>스튜디오</DetailOptionText>
                 <DetailItemContainer>
-                  {result.production_companies.map((company: any) => (
-                    <Company company={company} />
-                  ))}
+                  {result.production_companies.map(
+                    (company: ProductionCompany) => (
+                      <Company key={company.id} company={company} />
+                    )
+                  )}
                 </DetailItemContainer>
               </DetailOption>
               <DetailOption>
                 <DetailOptionText>국가</DetailOptionText>
                 <DetailItemContainer>
-                  {result.production_countries.map((country: any) => (
-                    <DetailItemText>{country.name}</DetailItemText>
-                  ))}
+                  {result.production_countries.map(
+                    (country: ProductionCountry) => (
+                      <DetailItemText key={country.iso_3166_1}>
+                        {country.name}
+                      </DetailItemText>
+                    )
+                  )}
                 </DetailItemContainer>
               </DetailOption>
               <DetailOption>
                 <DetailOptionText>언어</DetailOptionText>
                 <DetailItemContainer>
-                  {result.spoken_languages.map((language: any) => (
-                    <DetailItemText>{language.name}</DetailItemText>
+                  {result.spoken_languages.map((language: SpokenLanguage) => (
+                    <DetailItemText key={language.iso_639_1}>
+                      {language.name}
+                    </DetailItemText>
                   ))}
                 </DetailItemContainer>
               </DetailOption>

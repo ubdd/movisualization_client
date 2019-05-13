@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { posterSize } from "../config/_mixin";
-import NoPerson from "../static/popcorn.png";
+import NoPerson from "../static/image/popcorn.png";
 
 const Container = styled.div`
   font-size: 0.8rem;

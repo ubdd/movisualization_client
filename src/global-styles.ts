@@ -1,15 +1,12 @@
 import reset from "styled-reset";
 import { createGlobalStyle } from "./typed-components";
 import { fontSize, color } from "./config/_mixin";
-import "./static/mytheme.css";
-// import "billboard.js/dist/billboard.css";
-// import "billboard.js/dist/theme/insight.css";
-import "billboard.js/dist/theme/graph.css";
+import "./static/css/mytheme.css";
 export const GlobalStyle = createGlobalStyle`
-${reset};
-@import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.6/antd.min.css");
-@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Playfair+Display|Do+Hyeon|Song+Myung|Thasadith|Nanum+Myeongjo|Nanum+Pen+Script');
+  ${reset};
+  @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.6/antd.min.css");
+  @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Playfair+Display|Do+Hyeon|Song+Myung|Thasadith|Nanum+Myeongjo|Nanum+Pen+Script');
   * {
       box-sizing: border-box;
   }
@@ -22,7 +19,7 @@ ${reset};
   }
 
   a{
-    color: white;
+    color: ${color.fontColor};
     text-decoration: none !important;
     &:hover{
         color: ${color.mainColor};
@@ -62,10 +59,36 @@ ${reset};
     border: none;
   }
 
-  /* billboard.js style */
-  /* .bb-axis line, .bb-axis .domain {
-    stroke: white
-  } */
+  /* billboard style */
+  .bb-axis-y text,
+  .bb-axis-y2 text {
+    fill: ${color.fontColor};
+  }
+
+  /*-- Text on Chart --*/
+  .bb-text.bb-empty {
+    fill: ${color.fontColor};
+  }
+
+  /*-- Tooltip --*/
+  .bb-tooltip-container {
+    z-index: 10;
+    font-family: Helvetica, "Apple SD Gothic Neo", Arial, sans-serif,
+      "nanumgothic", "Dotum";
+    position: absolute;
+    color: black;
+  }
+
+  .bb text,
+  .bb .bb-button {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    fill: ${color.fontColor};
+    font-size: 12px;
+    letter-spacing: -0.3px;
+  }
 
   /* animations */
   @keyframes spin {

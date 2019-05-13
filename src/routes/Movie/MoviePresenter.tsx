@@ -4,14 +4,12 @@ import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 import { Rate } from "antd";
 import ReactCountryFlag from "react-country-flag";
-// import ReactPlayer from "react-player";
 import { Loader } from "../../components/Loader";
 import Credit from "../../components/Credit";
-import GenreEmoji from "../../components/GenreEmoji";
-import NoImage from "../../static/popcorn.png";
-import { websiteTitle } from "../../config/_mixin";
+import NoImage from "../../static/image/popcorn.png";
+import { websiteTitle, genreWithEmoji } from "../../config/_mixin";
 import { VideoModal } from "../../components/VideoModal";
-import { TMDbMovieVideo } from "../../shared-interfaces";
+import { TMDbMovieVideo, DailyRandAudiCnt } from "../../shared-interfaces";
 import BoxOfficeChart from "../../components/BoxOfficeChart";
 const numeral = require("numeral");
 
@@ -393,6 +391,7 @@ interface Props {
   loading: boolean;
   activeVideo: boolean;
   videoKey: string;
+  dailyRankAudiCnt: DailyRandAudiCnt | null;
   handleCreditIndexChange: (creditIndex: number) => void;
   onClickToggleActiveVideo: (videoKey?: string) => void;
 }
@@ -414,6 +413,7 @@ export const MoviePresenter: React.SFC<Props> = ({
   loading,
   activeVideo,
   videoKey,
+  dailyRankAudiCnt,
   handleCreditIndexChange,
   onClickToggleActiveVideo
 }) =>
@@ -466,7 +466,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                     className="fas fa-dollar-sign"
                   />
                   <FilmStatText title="매출액">
-                    {numeral(result.revenue).format("0.00a")}
+                    {numeral(result.revenue).format("0.0a")}
                   </FilmStatText>
                 </Link>
               </FilmStat>
@@ -608,7 +608,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                 {result.genres.map((genre: any, index: number) => {
                   return (
                     <React.Fragment key={genre.id}>
-                      <GenreEmoji genre={genre.name} />
+                      <span>{genreWithEmoji(genre.name)}</span>
                       {result.genres.length - 1 !== index && <span>, </span>}
                     </React.Fragment>
                   );
@@ -638,7 +638,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                 </Tagline>
               )}
               {result.overview && <Overview>{result.overview}</Overview>}
-              <BoxOfficeChart />
+              <BoxOfficeChart dailyRankAudiCnt={dailyRankAudiCnt} />
               <Credit
                 id={id}
                 creditIndex={creditIndex}

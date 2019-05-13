@@ -5,7 +5,7 @@ import FilmoSection from "../../components/FilmoSection";
 import { Loader } from "../../components/Loader";
 import { websiteTitle } from "../../config/_mixin";
 import Helmet from "react-helmet";
-import Avatar from "../../static/avatar.png";
+import Avatar from "../../static/image/avatar.png";
 import PersonStat from "../../components/PersonCharts/PersonStat";
 import PersonGenrePref from "../../components/PersonCharts/PersonGenrePref";
 
