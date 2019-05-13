@@ -1,6 +1,5 @@
 import React from "react";
 import chart from "billboard.js";
-import "billboard.js/dist/theme/insight.css";
 
 interface Props {
   person: any;

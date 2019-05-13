@@ -1,8 +1,9 @@
 import React from "react";
 import { MoviePresenter } from "./MoviePresenter";
 import { tmdbApis } from "../../api";
-import { ICrew } from "../../shared-interfaces";
+import { ICrew, DailyRandAudiCnt, Movie } from "../../shared-interfaces";
 import { normalize } from "../../config/_mixin";
+import { usDailyRankAudiCnt } from "../../static/dummy/us";
 
 interface Props {
   match: {
@@ -15,7 +16,7 @@ interface Props {
   };
 }
 interface State {
-  result: any;
+  result: Movie | null;
   recommendation: any;
   similar: any;
   cast: any;
@@ -112,22 +113,17 @@ export default class MovieDetailContainer extends React.Component<
           productionDesigns,
           composers,
           costumes,
-          loading: true
+          loading: false
         });
       } catch (error) {
         this.setState({ error: error.message });
-      } finally {
-        this.setState({ loading: false });
       }
-      this.setState({ loading: true });
     } catch (error) {
       this.setState({ error: error.message });
-    } finally {
-      this.setState({ loading: false });
     }
   };
 
-  componentDidUpdate = async (prevProps: any) => {
+  componentDidUpdate = async (prevProps: any, prevState: any) => {
     if (this.props.match.params.movieId !== prevProps.match.params.movieId) {
       try {
         const {
@@ -141,6 +137,7 @@ export default class MovieDetailContainer extends React.Component<
           return push("/");
         }
         try {
+          this.setState({ loading: true });
           const { data: result } = await tmdbApis.detail(parsedId);
           const { data: credit } = await tmdbApis.credit(parsedId);
           const { cast } = credit;
@@ -188,11 +185,8 @@ export default class MovieDetailContainer extends React.Component<
         } finally {
           this.setState({ loading: false });
         }
-        this.setState({ loading: true });
       } catch (error) {
         this.setState({ error: error.message });
-      } finally {
-        this.setState({ loading: false });
       }
     }
   };
@@ -234,8 +228,15 @@ export default class MovieDetailContainer extends React.Component<
       activeVideo,
       videoKey
     } = this.state;
-    console.log(this.state.result);
+    console.log(this.state);
     console.log(result && normalize(result.vote_average, 0, 10, 0, 5, 3));
+    let dailyRankAudiCnt: DailyRandAudiCnt | null = null;
+    if (result) {
+      dailyRankAudiCnt = {
+        movieNm: result.title,
+        data: usDailyRankAudiCnt.data
+      };
+    }
     return (
       <MoviePresenter
         id={parsedId}
@@ -254,6 +255,7 @@ export default class MovieDetailContainer extends React.Component<
         loading={loading}
         activeVideo={activeVideo}
         videoKey={videoKey}
+        dailyRankAudiCnt={dailyRankAudiCnt}
         handleCreditIndexChange={this.handleCreditIndexChange}
         onClickToggleActiveVideo={this.onClickToggleActiveVideo}
       />

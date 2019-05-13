@@ -2,13 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import chart from "billboard.js";
 import moment from "moment";
-import { endgameDailyRankAudiCnt } from "../static/dummy/endgame";
-import { usDailyRankAudiCnt } from "../static/dummy/us";
-import { moneyDailyRankAudiCnt } from "../static/dummy/money";
+import { DailyRandAudiCnt } from "../shared-interfaces";
 
-const tick = 4000;
+// const tick: number = 4000;
 
-interface Props {}
+interface Props {
+  dailyRankAudiCnt: DailyRandAudiCnt | null;
+}
 
 interface State {
   myChart: any;
@@ -30,22 +30,22 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
     };
   }
   componentDidMount = async () => {
-    this._renderChart(endgameDailyRankAudiCnt);
-    setTimeout(() => {
-      this._rerenderChart(usDailyRankAudiCnt);
-    }, tick);
-    setTimeout(() => {
-      this._rerenderChart(moneyDailyRankAudiCnt);
-    }, tick * 2);
-    setInterval(() => {
-      this._rerenderChart(endgameDailyRankAudiCnt);
-      setTimeout(() => {
-        this._rerenderChart(usDailyRankAudiCnt);
-      }, tick);
-      setTimeout(() => {
-        this._rerenderChart(moneyDailyRankAudiCnt);
-      }, tick * 2);
-    }, tick * 3);
+    this._renderChart(this.props.dailyRankAudiCnt);
+    // setTimeout(() => {
+    //   this._rerenderChart(usDailyRankAudiCnt);
+    // }, tick);
+    // setTimeout(() => {
+    //   this._rerenderChart(moneyDailyRankAudiCnt);
+    // }, tick * 2);
+    // setInterval(() => {
+    //   this._rerenderChart(endgameDailyRankAudiCnt);
+    //   setTimeout(() => {
+    //     this._rerenderChart(usDailyRankAudiCnt);
+    //   }, tick);
+    //   setTimeout(() => {
+    //     this._rerenderChart(moneyDailyRankAudiCnt);
+    //   }, tick * 2);
+    // }, tick * 3);
   };
 
   _rerenderChart = (api: any) => {
@@ -54,7 +54,7 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
     this.state.myChart.load({
       names: {
         rank: `《${movieNm}》 순위`,
-        audiCnt: `《${movieNm}》 누적 관객수`
+        audiCnt: `《${movieNm}》 당일 관객수`
       },
       json
     });
@@ -73,7 +73,7 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
     // json.date = json.date.slice(0, 10);
     const myChart = chart.generate({
       title: {
-        text: `Daily box office rank & audience count`
+        text: `박스오피스 순위 & 당일 관객수`
       },
       bindto: "#chart1",
       data: {
@@ -90,7 +90,7 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
         },
         names: {
           rank: `《${movieNm}》 순위`,
-          audiCnt: `《${movieNm}》 누적 관객수`
+          audiCnt: `《${movieNm}》 당일 관객수`
         }
       },
       axis: {
@@ -99,7 +99,7 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
           inverted: true
         },
         y2: {
-          label: "누적 관객수",
+          label: "당일 관객수",
           show: true
         },
         x: {
@@ -137,6 +137,7 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
   };
 
   render() {
+    console.log(this.props);
     return <ChartContainer id="chart1" />;
   }
 }

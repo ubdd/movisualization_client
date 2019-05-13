@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import NoImage from "../static/popcorn.png";
+import NoImage from "../static/image/popcorn.png";
 import { posterSize } from "../config/_mixin";
 
 const Container = styled.div`
