@@ -94,5 +94,6 @@ export const tmdbApis = {
       }
     }),
   filmography: (personId: number) =>
-    tmdbBaseApi.get(`person/${personId}/movie_credits`)
+    tmdbBaseApi.get(`person/${personId}/movie_credits`),
+  genres: () => tmdbBaseApi.get(`genre/movie/list`)
 };
