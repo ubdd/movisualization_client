@@ -37,3 +37,40 @@ export const media: any = {
   tablet: customMediaQuery(sizes.tablet),
   phone: customMediaQuery(sizes.phone)
 };
+
+/*
+
+  rawValue: raw value
+  minEntry: minimum raw value
+  maxEntry: maximum, raw value
+  normalizedMin: minimum normalized value
+  normalizedMax: maximum normalized value
+  fixed: fixed point
+
+  */
+export const normalize = (
+  rawValue: number,
+  minEntry: number,
+  maxEntry: number,
+  normalizedMin: number,
+  normalizedMax: number,
+  fixed: number
+) => {
+  const mx =
+    Math.log(rawValue - minEntry + 1) / Math.log(maxEntry - minEntry + 1);
+  const preshiftNormalized = mx * (normalizedMax - normalizedMin);
+  const shiftedNormalized = preshiftNormalized + normalizedMin;
+  if (shiftedNormalized === NaN) {
+    console.error(
+      "Raw value is lower than min entry or entered wrong raw value."
+    );
+    return minEntry.toFixed(fixed);
+  }
+  if (shiftedNormalized > normalizedMax) {
+    console.error(
+      "Raw value exceeds max entry.\n you should increase max entry."
+    );
+    return normalizedMax.toFixed(fixed);
+  }
+  return shiftedNormalized.toFixed(fixed);
+};

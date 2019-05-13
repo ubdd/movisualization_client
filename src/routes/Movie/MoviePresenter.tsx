@@ -12,6 +12,7 @@ import NoImage from "../../static/popcorn.png";
 import { websiteTitle } from "../../config/_mixin";
 import { VideoModal } from "../../components/VideoModal";
 import { TMDbMovieVideo } from "../../shared-interfaces";
+import BoxOfficeChart from "../../components/BoxOfficeChart";
 const numeral = require("numeral");
 
 const Container = styled.div`
@@ -637,6 +638,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                 </Tagline>
               )}
               {result.overview && <Overview>{result.overview}</Overview>}
+              <BoxOfficeChart />
               <Credit
                 id={id}
                 creditIndex={creditIndex}

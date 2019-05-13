@@ -1,6 +1,9 @@
 import reset from "styled-reset";
 import { createGlobalStyle } from "./typed-components";
 import { fontSize, color } from "./config/_mixin";
+// import "billboard.js/dist/billboard.css";
+// import "billboard.js/dist/theme/insight.css";
+import "billboard.js/dist/theme/graph.css";
 export const GlobalStyle = createGlobalStyle`
 ${reset};
 @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
@@ -49,14 +52,21 @@ ${reset};
     background-color: rgba(20, 24, 28, 1);
   }
   .slick-slider {
-      height: 100%;
+    height: 100%;
   }
   .slick-list {
-      height: 100%;
+    height: 100%;
   }
   .ant-carousel .slick-vertical .slick-slide{
-      border: none;
+    border: none;
   }
+
+  /* billboard.js style */
+  /* .bb-axis line, .bb-axis .domain {
+    stroke: white
+  } */
+
+  /* animations */
   @keyframes spin {
     0% {
       transform: rotate(0deg);

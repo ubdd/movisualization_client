@@ -2,6 +2,7 @@ import React from "react";
 import { MoviePresenter } from "./MoviePresenter";
 import { tmdbApis } from "../../api";
 import { ICrew } from "../../shared-interfaces";
+import { normalize } from "../../config/_mixin";
 
 interface Props {
   match: {
@@ -60,7 +61,7 @@ export default class MovieDetailContainer extends React.Component<
     };
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     try {
       const {
         match: {
@@ -73,7 +74,6 @@ export default class MovieDetailContainer extends React.Component<
         return push("/");
       }
       try {
-        console.log(parsedId);
         const { data: result } = await tmdbApis.detail(parsedId);
         const { data: credit } = await tmdbApis.credit(parsedId);
         const { cast, crew } = credit;
@@ -125,7 +125,7 @@ export default class MovieDetailContainer extends React.Component<
     } finally {
       this.setState({ loading: false });
     }
-  }
+  };
 
   componentDidUpdate = async (prevProps: any) => {
     if (this.props.match.params.movieId !== prevProps.match.params.movieId) {
@@ -235,6 +235,7 @@ export default class MovieDetailContainer extends React.Component<
       videoKey
     } = this.state;
     console.log(this.state.result);
+    console.log(result && normalize(result.vote_average, 0, 10, 0, 5, 3));
     return (
       <MoviePresenter
         id={parsedId}
