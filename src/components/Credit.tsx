@@ -4,7 +4,8 @@ import Actor from "./Actor";
 import Crew from "./Crew";
 import Company from "./Company";
 import MovieGrid from "./MovieGrid";
-import { moviesApi } from "../api";
+import { tmdbApis } from "../api";
+import { color } from "../config/_mixin";
 
 const creditSection = [
   "출연",
@@ -41,14 +42,14 @@ const Item = styled("li")<IItemProps>`
   font-size: 1rem;
   font-weight: 300;
   letter-spacing: 0.075rem;
-  color: ${props => (props.selected ? "white" : "MediumTurquoise")};
+  color: ${props => (props.selected ? "white" : color.mainColor)};
   transition: 0.5s ease-in-out;
   cursor: pointer;
   border-bottom: ${props =>
     props.selected ? "2px solid white" : "2px solid transparent"};
   &:hover {
     border-bottom: ${props =>
-      props.selected ? "2px solid white" : "2px solid MediumTurquoise"};
+      props.selected ? "2px solid white" : `2px solid ${color.mainColor}`};
   }
 `;
 
@@ -324,9 +325,9 @@ export default class Credit extends React.Component<Props, IState> {
           </CastInfoContainer>
         )}
         {creditIndex === 3 && (
-          <MovieGrid getAPI={moviesApi.recommendation} id={id} />
+          <MovieGrid getAPI={tmdbApis.recommendation} id={id} />
         )}
-        {creditIndex === 4 && <MovieGrid getAPI={moviesApi.similar} id={id} />}
+        {creditIndex === 4 && <MovieGrid getAPI={tmdbApis.similar} id={id} />}
       </Container>
     );
   }

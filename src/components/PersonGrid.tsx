@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { posterSize } from "../config/_mixin";
-import { moviesApi } from "../api";
+import { tmdbApis } from "../api";
 import { PersonCard } from "./PersonCard";
 
 const Container = styled.div`
@@ -94,7 +94,7 @@ export default class PersonGrid extends React.Component<Props, State> {
       if (term && term.trim()) {
         const {
           data: { results }
-        } = await moviesApi.searchPerson(term, this.state.page);
+        } = await tmdbApis.searchPerson(term, this.state.page);
         people = results;
       }
       if (people.length !== 20) {
@@ -123,7 +123,7 @@ export default class PersonGrid extends React.Component<Props, State> {
         if (term && term.trim()) {
           const {
             data: { results }
-          } = await moviesApi.searchPerson(term, 1);
+          } = await tmdbApis.searchPerson(term, 1);
           people = results;
         }
         this.setState({
@@ -154,7 +154,7 @@ export default class PersonGrid extends React.Component<Props, State> {
       if (term && term.trim()) {
         const {
           data: { results }
-        } = await moviesApi.searchPerson(term, page + 1);
+        } = await tmdbApis.searchPerson(term, page + 1);
         people = results;
       }
       if (people.length !== 20) {
