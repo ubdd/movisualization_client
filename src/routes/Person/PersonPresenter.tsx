@@ -183,13 +183,13 @@ export const PersonPresenter: React.SFC<Props> = ({
           <PersonStat
             person={person}
             id={personId}
-            getAPI={moviesApi.filmography}
+            getAPI={tmdbApis.filmography}
           />
         </ChartContainer>
       </ProfileContainer>
       <SectionContainer>
-        <PersonGenrePref id={personId} getAPI={moviesApi.filmography} />
-        <FilmoSection id={personId} getAPI={moviesApi.filmography} />
+        <PersonGenrePref id={personId} getAPI={tmdbApis.filmography} />
+        <FilmoSection id={personId} getAPI={tmdbApis.filmography} />
       </SectionContainer>
     </Container>
   );
