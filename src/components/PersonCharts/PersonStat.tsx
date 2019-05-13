@@ -2,21 +2,21 @@ import React from "react";
 import chart from "billboard.js";
 import "billboard.js/dist/theme/insight.css";
 
-interface IProps {
+interface Props {
   person: any;
   id: string;
   getAPI: any;
 }
 
-interface IState {
+interface State {
   audieAcc: number;
   avgRate: number;
   trend: number;
   filmoCnt: number;
 }
 
-class PersonStat extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+class PersonStat extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       audieAcc: 4.6,
@@ -47,7 +47,7 @@ class PersonStat extends React.Component<IProps, IState> {
     });
   };
 
-  componentDidUpdate = (prevProps: IProps, prevState: IState) => {
+  componentDidUpdate = (prevProps: Props, prevState: State) => {
     if (prevState !== this.state) {
       this._renderChart();
     }
