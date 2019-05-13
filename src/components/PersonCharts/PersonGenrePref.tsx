@@ -1,7 +1,15 @@
 import React from "react";
 import chart from "billboard.js";
-import "billboard.js/dist/billboard.css";
+import styled from "styled-components";
+// import "billboard.js/dist/theme/insight.css";
+// import "billboard.js/dist/theme/mytheme.css";
 import { moviesApi } from "../../api";
+
+const LegendContainer = styled.div`
+  width: 500px;
+  height: 250px;
+  text-align: left;
+`;
 
 interface Genres {
   id: number;
@@ -73,12 +81,19 @@ class PersonGenrePref extends React.Component<IProps, IState> {
       },
       pie: {
         padding: 0
+      },
+      legend: {
+        position: "right"
       }
     });
   };
 
   render() {
-    return <div id="personGenrePref" />;
+    return (
+      <React.Fragment>
+        <LegendContainer id="personGenrePref" />
+      </React.Fragment>
+    );
   }
 }
 

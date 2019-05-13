@@ -1,6 +1,7 @@
 import reset from "styled-reset";
 import { createGlobalStyle } from "./typed-components";
 import { fontSize, color } from "./config/_mixin";
+import "./static/mytheme.css";
 // import "billboard.js/dist/billboard.css";
 // import "billboard.js/dist/theme/insight.css";
 import "billboard.js/dist/theme/graph.css";
