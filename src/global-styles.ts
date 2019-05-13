@@ -2,6 +2,9 @@ import reset from "styled-reset";
 import { createGlobalStyle } from "./typed-components";
 import { fontSize, color } from "./config/_mixin";
 import "./static/mytheme.css";
+// import "billboard.js/dist/billboard.css";
+// import "billboard.js/dist/theme/insight.css";
+import "billboard.js/dist/theme/graph.css";
 export const GlobalStyle = createGlobalStyle`
 ${reset};
 @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
@@ -21,9 +24,8 @@ ${reset};
   a{
     color: white;
     text-decoration: none !important;
-
     &:hover{
-        color: MediumTurquoise;
+        color: ${color.mainColor};
     }
   }
 
@@ -41,32 +43,59 @@ ${reset};
       border: none;
     }
   }
-  
-  .ant-btn-sm{
-        font-size: 0.8rem;
-  }
-
-  .ant-dropdown-menu-item{
-      font-size: 0.8rem;
-  }
-
   .ant-carousel{
-    width: 1200px;
-    height: 675px;
+    width: 75rem;
+    height: 42.2rem;
     position: absolute;
-    top: -1rem;   
+    top: -2rem;   
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(20, 24, 28, 1);
   }
   .slick-slider {
-      height: 100%;
+    height: 100%;
   }
   .slick-list {
-      height: 100%;
+    height: 100%;
   }
   .ant-carousel .slick-vertical .slick-slide{
-      border: none;
+    border: none;
   }
 
+  /* billboard.js style */
+  /* .bb-axis line, .bb-axis .domain {
+    stroke: white
+  } */
+
+  /* animations */
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes fadeIn {
+    /* 0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50%{
+      transform: scale(1.05);
+    }
+    75%{
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    } */
+    0%{
+      opacity: 0;
+    }
+    100%{
+      opacity: 1;
+    }
+  }
 `;
