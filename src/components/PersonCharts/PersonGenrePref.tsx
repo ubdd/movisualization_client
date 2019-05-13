@@ -3,7 +3,7 @@ import chart from "billboard.js";
 import styled from "styled-components";
 // import "billboard.js/dist/theme/insight.css";
 // import "billboard.js/dist/theme/mytheme.css";
-import { moviesApi } from "../../api";
+import { tmdbApis } from "../../api";
 
 const LegendContainer = styled.div`
   width: 500px;
@@ -46,7 +46,7 @@ class PersonGenrePref extends React.Component<IProps, IState> {
   _getGenres = async () => {
     const { id, getAPI } = this.props;
     const { data: cast } = await getAPI(id);
-    const { data: genreRes } = await moviesApi.genres();
+    const { data: genreRes } = await tmdbApis.genres();
     const { genres: genres } = genreRes;
     cast.cast.map((cast: any) => {
       cast.genre_ids.map((genre_id: any) => {
