@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: Movisualization
+  datasource:
+    url: jdbc:mysql://localhost/naverhackday?autoReconnect=true&useSSL=false
+    username: hackday
+    password: 2019hackday_2
+    driver-class-name: com.mysql.jdbc.Driver
