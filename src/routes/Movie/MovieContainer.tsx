@@ -1,7 +1,8 @@
 import React from "react";
 import { MoviePresenter } from "./MoviePresenter";
-import { moviesApi } from "../../api";
+import { tmdbApis } from "../../api";
 import { ICrew } from "../../shared-interfaces";
+import { normalize } from "../../config/_mixin";
 
 interface Props {
   match: {
@@ -29,6 +30,8 @@ interface State {
   creditIndex: number;
   error: string | null;
   loading: boolean;
+  activeVideo: boolean;
+  videoKey: string;
 }
 
 export default class MovieDetailContainer extends React.Component<
@@ -52,11 +55,13 @@ export default class MovieDetailContainer extends React.Component<
       costumes: null,
       creditIndex: 0,
       error: null,
-      loading: true
+      loading: true,
+      activeVideo: false,
+      videoKey: ""
     };
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     try {
       const {
         match: {
@@ -69,9 +74,8 @@ export default class MovieDetailContainer extends React.Component<
         return push("/");
       }
       try {
-        console.log(parsedId);
-        const { data: result } = await moviesApi.detail(parsedId);
-        const { data: credit } = await moviesApi.credit(parsedId);
+        const { data: result } = await tmdbApis.detail(parsedId);
+        const { data: credit } = await tmdbApis.credit(parsedId);
         const { cast, crew } = credit;
         const directors = crew.filter(
           (people: ICrew) => people.department === "Directing"
@@ -108,7 +112,6 @@ export default class MovieDetailContainer extends React.Component<
           productionDesigns,
           composers,
           costumes,
-
           loading: true
         });
       } catch (error) {
@@ -122,9 +125,9 @@ export default class MovieDetailContainer extends React.Component<
     } finally {
       this.setState({ loading: false });
     }
-  }
+  };
 
-  async componentDidUpdate(prevProps: any) {
+  componentDidUpdate = async (prevProps: any) => {
     if (this.props.match.params.movieId !== prevProps.match.params.movieId) {
       try {
         const {
@@ -138,8 +141,8 @@ export default class MovieDetailContainer extends React.Component<
           return push("/");
         }
         try {
-          const { data: result } = await moviesApi.detail(parsedId);
-          const { data: credit } = await moviesApi.credit(parsedId);
+          const { data: result } = await tmdbApis.detail(parsedId);
+          const { data: credit } = await tmdbApis.credit(parsedId);
           const { cast } = credit;
           const { crew } = credit;
           const directors = crew.filter(
@@ -192,10 +195,19 @@ export default class MovieDetailContainer extends React.Component<
         this.setState({ loading: false });
       }
     }
-  }
+  };
 
   handleCreditIndexChange = (creditIndex: number) => {
     this.setState({ creditIndex });
+  };
+
+  onClickToggleActiveVideo = (videoKey: string = "") => {
+    if (!this.state.activeVideo) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    this.setState({ activeVideo: !this.state.activeVideo, videoKey });
   };
 
   render() {
@@ -218,9 +230,12 @@ export default class MovieDetailContainer extends React.Component<
       costumes,
       creditIndex,
       error,
-      loading
+      loading,
+      activeVideo,
+      videoKey
     } = this.state;
     console.log(this.state.result);
+    console.log(result && normalize(result.vote_average, 0, 10, 0, 5, 3));
     return (
       <MoviePresenter
         id={parsedId}
@@ -237,7 +252,10 @@ export default class MovieDetailContainer extends React.Component<
         creditIndex={creditIndex}
         error={error}
         loading={loading}
+        activeVideo={activeVideo}
+        videoKey={videoKey}
         handleCreditIndexChange={this.handleCreditIndexChange}
+        onClickToggleActiveVideo={this.onClickToggleActiveVideo}
       />
     );
   }

@@ -22,6 +22,7 @@ const Image = styled("div")<IImageProps>`
   border-radius: 0.3rem;
   background-position: center center;
   transition: 0.1s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
 `;
 
 const Rating = styled.span`
@@ -92,7 +93,7 @@ export const MovieCard: React.SFC<Props> = ({
   year,
   additionalInfo
 }) => (
-  <SLink to={`/film/${movieId}`} title={title}>
+  <SLink to={`/film/${movieId}`}>
     <Container>
       <ImageContainer>
         <Image
@@ -112,7 +113,9 @@ export const MovieCard: React.SFC<Props> = ({
           <span>{rating}/10</span>
         </Rating>
       </ImageContainer>
-      <Title>{title.length > 8 ? `${title.substring(0, 8)}...` : title}</Title>
+      <Title title={title}>
+        {title.length > 8 ? `${title.substring(0, 8)}...` : title}
+      </Title>
       <Year>
         {year} {additionalInfo && `/ ${additionalInfo}`}
       </Year>

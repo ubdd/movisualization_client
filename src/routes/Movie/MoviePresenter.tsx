@@ -4,11 +4,15 @@ import Helmet from "react-helmet";
 import { Link } from "react-router-dom";
 import { Rate } from "antd";
 import ReactCountryFlag from "react-country-flag";
+// import ReactPlayer from "react-player";
 import { Loader } from "../../components/Loader";
 import Credit from "../../components/Credit";
 import GenreEmoji from "../../components/GenreEmoji";
 import NoImage from "../../static/popcorn.png";
 import { websiteTitle } from "../../config/_mixin";
+import { VideoModal } from "../../components/VideoModal";
+import { TMDbMovieVideo } from "../../shared-interfaces";
+import BoxOfficeChart from "../../components/BoxOfficeChart";
 const numeral = require("numeral");
 
 const Container = styled.div`
@@ -110,23 +114,77 @@ const Watch = styled.div`
 `;
 
 const WatchTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #242c34;
   color: #9ab;
-  margin: 0;
-  padding: 9px 12px;
-  font-size: 1rem;
+  padding: 0.25rem 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.075em;
 `;
 
+const MediaLink = styled.a`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.3rem 0;
+`;
+
+const SymbolicIcons = styled.div`
+  display: flex;
+`;
+
+const VideoThumbnail = styled.img`
+  width: 100%;
+  border-radius: 0.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: 0.5s ease-in-out;
+  filter: brightness(0.4);
+`;
+
+const VideoInfo = styled.div`
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  right: 0;
+  left: 0;
+  transform: translate(0, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0 2rem;
+  opacity: 1;
+  transition: 0.5s ease-in-out;
+`;
+
+const VideoContainer = styled.div`
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    ${VideoThumbnail} {
+      filter: brightness(1);
+    }
+    ${VideoInfo} {
+      opacity: 0;
+    }
+  }
+`;
+
 const WatchPanel = styled.div`
-  color: #9ab;
-  margin: 0.3rem 0.6rem;
-  line-height: 1.5;
+  color: #fff;
+  background-color: #131313;
+  padding: 0.6rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  ${VideoContainer}:not(:last-child) {
+    margin-bottom: 0.3rem;
+  }
 `;
 
 const TrailerIcon = styled.i`
@@ -135,35 +193,34 @@ const TrailerIcon = styled.i`
   position: relative;
   top: auto;
   left: auto;
-  width: 1.2rem;
-  height: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  margin-right: 0.4rem;
 `;
 
 const TrailerText = styled.div`
+  word-break: keep-all;
   display: inline-block;
   vertical-align: middle;
-  font-size: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
   line-height: 1.66666667;
-  min-width: 75px;
+  min-width: 5rem;
 `;
 
-const MoreService = styled.div`
-  display: block;
-  padding: 6px 10px 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.075em;
-  font-size: 0.76923077rem;
-  line-height: 1.3;
-  border-top: 1px solid #303840;
-  color: #678;
-`;
+// const MoreService = styled.div`
+//   display: block;
+//   padding: 6px 10px 4px;
+//   text-transform: uppercase;
+//   letter-spacing: 0.075em;
+//   font-size: 0.76923077rem;
+//   line-height: 1.3;
+//   border-top: 1px solid #303840;
+//   color: #678;
+// `;
 
-const MoreServiceText = styled.div``;
+// const MoreServiceText = styled.div``;
 
 const TextInfo = styled.div`
   position: relative;
@@ -334,7 +391,10 @@ interface Props {
   creditIndex: number;
   error: string | null;
   loading: boolean;
+  activeVideo: boolean;
+  videoKey: string;
   handleCreditIndexChange: (creditIndex: number) => void;
+  onClickToggleActiveVideo: (videoKey?: string) => void;
 }
 
 export const MoviePresenter: React.SFC<Props> = ({
@@ -352,238 +412,251 @@ export const MoviePresenter: React.SFC<Props> = ({
   creditIndex,
   error,
   loading,
-  handleCreditIndexChange
+  activeVideo,
+  videoKey,
+  handleCreditIndexChange,
+  onClickToggleActiveVideo
 }) =>
   loading ? (
     <Loader />
   ) : (
-    <Container>
-      <Helmet>
-        <title>
-          {result.title} | {websiteTitle}
-        </title>
-      </Helmet>
-      <Backdrop
-        bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
+    <>
+      <VideoModal
+        onClickToggleActiveVideo={onClickToggleActiveVideo}
+        activeVideo={activeVideo}
+        videoKey={videoKey}
       />
-      <Content>
-        <MediaInfo>
-          <Cover
-            title={result.title}
-            src={
-              result.poster_path
-                ? `https://image.tmdb.org/t/p/original${result.poster_path}`
-                : NoImage
-            }
-          />
-          <FilmStats>
-            {result.budget !== 0 && (
-              <FilmStat title="흥행도">
-                <SLink to={`/movie/${result.id}/members/`}>
+      <Container>
+        <Helmet>
+          <title>
+            {result.title} | {websiteTitle}
+          </title>
+        </Helmet>
+        <Backdrop
+          bgImage={`https://image.tmdb.org/t/p/original${result.backdrop_path}`}
+        />
+        <Content>
+          <MediaInfo>
+            <Cover
+              title={result.title}
+              src={
+                result.poster_path
+                  ? `https://image.tmdb.org/t/p/original${result.poster_path}`
+                  : NoImage
+              }
+            />
+            <FilmStats>
+              {result.budget !== 0 && (
+                <FilmStat title="흥행도">
+                  <SLink to={`/movie/${result.id}/members/`}>
+                    <FilmStatIcon
+                      style={{ color: "#e74c3c" }}
+                      className="fas fa-burn"
+                    />
+                    <FilmStatText>
+                      {Math.round((result.revenue / result.budget) * 100)}%
+                    </FilmStatText>
+                  </SLink>
+                </FilmStat>
+              )}
+              <FilmStat>
+                <Link to={`/film/${result.id}/lists/by/popular/`}>
                   <FilmStatIcon
-                    style={{ color: "#e74c3c" }}
-                    className="fas fa-burn"
+                    style={{ color: "skyblue" }}
+                    className="fas fa-dollar-sign"
+                  />
+                  <FilmStatText title="매출액">
+                    {numeral(result.revenue).format("0.00a")}
+                  </FilmStatText>
+                </Link>
+              </FilmStat>
+              <FilmStat title="인기도">
+                <SLink to={`/film/${result.id}/likes/`}>
+                  <FilmStatIcon
+                    style={{ color: "orange" }}
+                    className="fas fa-heart"
                   />
                   <FilmStatText>
-                    {Math.round((result.revenue / result.budget) * 100)}%
+                    {numeral(result.popularity).format("0 a")}
                   </FilmStatText>
                 </SLink>
               </FilmStat>
-            )}
-            <FilmStat>
-              <Link to={`/film/${result.id}/lists/by/popular/`}>
-                <FilmStatIcon
-                  style={{ color: "skyblue" }}
-                  className="fas fa-dollar-sign"
-                />
-                <FilmStatText title="매출액">
-                  {numeral(result.revenue).format("0.00a")}
-                </FilmStatText>
-              </Link>
-            </FilmStat>
-            <FilmStat title="인기도">
-              <SLink to={`/film/${result.id}/likes/`}>
-                <FilmStatIcon
-                  style={{ color: "orange" }}
-                  className="fas fa-heart"
-                />
-                <FilmStatText>
-                  {numeral(result.popularity).format("0 a")}
-                </FilmStatText>
-              </SLink>
-            </FilmStat>
-            <FilmStat title="평점">
-              <SLink to={`/best`}>
-                <FilmStatIcon
-                  style={{ color: "yellow" }}
-                  className="fas fa-star"
-                />
-                <FilmStatText>{result.vote_average}</FilmStatText>
-              </SLink>
-            </FilmStat>
-          </FilmStats>
-          <Watch>
-            <WatchTitle>관련 미디어</WatchTitle>
-            <WatchPanel>
-              {result.homepage && (
-                <a
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    margin: "0.3rem 0"
-                  }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={result.homepage}
-                >
-                  <TrailerIcon className="fas fa-home" />
-                  <TrailerText>{`${result.title} 홈페이지`}</TrailerText>
-                </a>
+              <FilmStat title="평점">
+                <SLink to={`/best`}>
+                  <FilmStatIcon
+                    style={{ color: "yellow" }}
+                    className="fas fa-star"
+                  />
+                  <FilmStatText>{result.vote_average}</FilmStatText>
+                </SLink>
+              </FilmStat>
+            </FilmStats>
+            <Watch>
+              <WatchTitle>
+                관련 미디어
+                <SymbolicIcons>
+                  {result.homepage && (
+                    <MediaLink
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={result.homepage}
+                    >
+                      <TrailerIcon
+                        className="fas fa-home"
+                        style={{ marginRight: "0.4rem" }}
+                        title={`${result.title} 홈페이지`}
+                      />
+                    </MediaLink>
+                  )}
+                  {result.imdb_id && (
+                    <MediaLink
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={`https://www.imdb.com/title/${result.imdb_id}`}
+                    >
+                      <img
+                        src={
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/800px-IMDB_Logo_2016.svg.png"
+                        }
+                        alt="IMDB"
+                        title={`${result.title} IMDb`}
+                        style={{ width: "2rem" }}
+                      />
+                    </MediaLink>
+                  )}
+                </SymbolicIcons>
+              </WatchTitle>
+              {result.videos.results.filter(
+                (video: TMDbMovieVideo) => video.site === "YouTube"
+              ).length !== 0 && (
+                <WatchPanel>
+                  {result.videos.results
+                    .filter((video: TMDbMovieVideo) => video.site === "YouTube")
+                    .map((video: TMDbMovieVideo, index: number) => (
+                      <VideoContainer
+                        onClick={() => onClickToggleActiveVideo(video.key)}
+                        key={index}
+                      >
+                        <VideoInfo>
+                          <TrailerIcon
+                            style={{
+                              fontSize: "1.5rem",
+                              marginBottom: "0.4rem"
+                            }}
+                            className="fas fa-play-circle"
+                          />
+                          <TrailerText>
+                            {video.type === "Trailer"
+                              ? `${video.name}`
+                              : video.type === "Teaser"
+                              ? `${video.name}`
+                              : video.type === "Featurette"
+                              ? `${video.name}`
+                              : `${video.name}`}
+                          </TrailerText>
+                        </VideoInfo>
+                        <VideoThumbnail
+                          src={`https://img.youtube.com/vi/${video.key}/0.jpg`}
+                        />
+                      </VideoContainer>
+                    ))}
+                </WatchPanel>
               )}
-              {result.videos.results.map((video: any, index: number) => (
-                <a
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "flex-start",
-                    margin: "0.3rem 0"
-                  }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={
-                    video.site === "YouTube"
-                      ? `https://www.youtube.com/watch?v=${video.key}`
-                      : "/"
-                  }
-                  key={index}
-                >
-                  <TrailerIcon className="fas fa-play-circle" />
-                  <TrailerText>
-                    {video.type === "Trailer"
-                      ? `${result.title} 예고편`
-                      : video.type === "Teaser"
-                      ? `${result.title} 티져`
-                      : `${result.title} 영상`}
-                  </TrailerText>
-                </a>
-              ))}
-              {result.imdb_id && (
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`https://www.imdb.com/title/${result.imdb_id}`}
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    margin: "0.3rem 0"
-                  }}
-                >
-                  <img
-                    src={
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/800px-IMDB_Logo_2016.svg.png"
-                    }
-                    alt="IMDB"
-                    style={{ width: "2rem", marginRight: "0.4rem" }}
-                  />{" "}
-                  {`${result.title} IMDb`}
-                </a>
+              {/* <MoreService>
+                <Link to={"/"}>
+                  <MoreServiceText>더 많은 서비스</MoreServiceText>
+                </Link>
+              </MoreService> */}
+            </Watch>
+            <Sidebar>
+              <UserPanel>
+                <UserActionContainer>
+                  <UserAction style={{ borderTopLeftRadius: 4 }}>
+                    <UserActionIcon className="far fa-eye" />
+                    <UserActionText>봤어요</UserActionText>
+                  </UserAction>
+                  <UserAction>
+                    <UserActionIcon className="far fa-heart" />
+                    <UserActionText>좋아요</UserActionText>
+                  </UserAction>
+                  <UserAction style={{ borderTopRightRadius: 4 }}>
+                    <UserActionIcon className="far fa-clock" />
+                    <UserActionText>보고싶어요</UserActionText>
+                  </UserAction>
+                </UserActionContainer>
+                <RatingContainer>
+                  <RatingText>평점</RatingText>
+                  <Rate
+                    style={{ fontSize: 30, color: "goldenrod", marginLeft: 10 }}
+                    allowHalf
+                  />
+                </RatingContainer>
+                <AddReview>리뷰 작성</AddReview>
+                <AddList>컬렉션 추가</AddList>
+                <Share>공유</Share>
+              </UserPanel>
+            </Sidebar>
+          </MediaInfo>
+          <TextInfo>
+            <TitleSection>
+              <Title>{result.title}</Title>
+              <Subtitle>
+                {result.release_date.substring(0, 4)}/
+                {result.release_date.substring(5, 7)}/
+                {result.release_date.substring(8)}
+                <Divider>•</Divider>
+                {result.genres.map((genre: any, index: number) => {
+                  return (
+                    <React.Fragment key={genre.id}>
+                      <GenreEmoji genre={genre.name} />
+                      {result.genres.length - 1 !== index && <span>, </span>}
+                    </React.Fragment>
+                  );
+                })}
+                <Divider>•</Divider>
+                {result.production_countries.map(
+                  (country: any, index: number) => (
+                    <React.Fragment key={country.iso_3166_1}>
+                      <ReactCountryFlag code={country.iso_3166_1} svg />
+                      {result.production_countries.length - 1 !== index && (
+                        <span>, </span>
+                      )}
+                    </React.Fragment>
+                  )
+                )}
+                <Divider>•</Divider>
+                {`${Math.floor(result.runtime / 60)}시간 ${result.runtime %
+                  60}분`}
+              </Subtitle>
+            </TitleSection>
+            <SideInfoSection>
+              {result.tagline && (
+                <Tagline>
+                  <Quote className="fas fa-quote-left" />
+                  <span style={{ margin: "0 1rem" }}>{result.tagline}</span>
+                  <Quote className="fas fa-quote-right" />
+                </Tagline>
               )}
-            </WatchPanel>
-            <MoreService>
-              <Link to={"/"}>
-                <MoreServiceText>더 많은 서비스</MoreServiceText>
-              </Link>
-            </MoreService>
-          </Watch>
-          <Sidebar>
-            <UserPanel>
-              <UserActionContainer>
-                <UserAction style={{ borderTopLeftRadius: 4 }}>
-                  <UserActionIcon className="far fa-eye" />
-                  <UserActionText>봤어요</UserActionText>
-                </UserAction>
-                <UserAction>
-                  <UserActionIcon className="far fa-heart" />
-                  <UserActionText>좋아요</UserActionText>
-                </UserAction>
-                <UserAction style={{ borderTopRightRadius: 4 }}>
-                  <UserActionIcon className="far fa-clock" />
-                  <UserActionText>보고싶어요</UserActionText>
-                </UserAction>
-              </UserActionContainer>
-              <RatingContainer>
-                <RatingText>평점</RatingText>
-                <Rate
-                  style={{ fontSize: 30, color: "goldenrod", marginLeft: 10 }}
-                  allowHalf
-                />
-              </RatingContainer>
-              <AddReview>리뷰 작성</AddReview>
-              <AddList>컬렉션 추가</AddList>
-              <Share>공유</Share>
-            </UserPanel>
-          </Sidebar>
-        </MediaInfo>
-        <TextInfo>
-          <TitleSection>
-            <Title>{result.title}</Title>
-            <Subtitle>
-              {result.release_date.substring(0, 4)}/
-              {result.release_date.substring(5, 7)}/
-              {result.release_date.substring(8)}
-              <Divider>•</Divider>
-              {result.genres.map((genre: any, index: number) => {
-                return (
-                  <React.Fragment key={genre.id}>
-                    <GenreEmoji genre={genre.name} />
-                    {result.genres.length - 1 !== index && <span>, </span>}
-                  </React.Fragment>
-                );
-              })}
-              <Divider>•</Divider>
-              {result.production_countries.map(
-                (country: any, index: number) => (
-                  <React.Fragment key={country.iso_3166_1}>
-                    <ReactCountryFlag code={country.iso_3166_1} svg />
-                    {result.production_countries.length - 1 !== index && (
-                      <span>, </span>
-                    )}
-                  </React.Fragment>
-                )
-              )}
-              <Divider>•</Divider>
-              {`${Math.floor(result.runtime / 60)}시간 ${result.runtime %
-                60}분`}
-            </Subtitle>
-          </TitleSection>
-          <SideInfoSection>
-            {result.tagline && (
-              <Tagline>
-                <Quote className="fas fa-quote-left" />
-                <span style={{ margin: "0 1rem" }}>{result.tagline}</span>
-                <Quote className="fas fa-quote-right" />
-              </Tagline>
-            )}
-            {result.overview && <Overview>{result.overview}</Overview>}
-            <Credit
-              id={id}
-              creditIndex={creditIndex}
-              result={result}
-              cast={cast}
-              directors={directors}
-              producers={producers}
-              writers={writers}
-              editors={editors}
-              cinematographies={cinematographies}
-              productionDesigns={productionDesigns}
-              composers={composers}
-              costumes={costumes}
-              handleCreditIndexChange={handleCreditIndexChange}
-            />
-          </SideInfoSection>
-        </TextInfo>
-      </Content>
-    </Container>
+              {result.overview && <Overview>{result.overview}</Overview>}
+              <BoxOfficeChart />
+              <Credit
+                id={id}
+                creditIndex={creditIndex}
+                result={result}
+                cast={cast}
+                directors={directors}
+                producers={producers}
+                writers={writers}
+                editors={editors}
+                cinematographies={cinematographies}
+                productionDesigns={productionDesigns}
+                composers={composers}
+                costumes={costumes}
+                handleCreditIndexChange={handleCreditIndexChange}
+              />
+            </SideInfoSection>
+          </TextInfo>
+        </Content>
+      </Container>
+    </>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 import { PersonPresenter } from "./PersonPresenter";
-import { moviesApi } from "../../api";
+import { tmdbApis } from "../../api";
 import { RouteComponentProps } from "react-router";
 
 interface Props extends RouteComponentProps<any> {}
@@ -28,7 +28,7 @@ export default class PersonContainer extends React.Component<Props, State> {
           params: { personId }
         }
       } = this.props;
-      const { data: person } = await moviesApi.person(personId);
+      const { data: person } = await tmdbApis.person(personId);
       person.also_known_as = person.also_known_as.filter((name: string) => {
         const c = name.charCodeAt(0);
         if (0x1100 <= c && c <= 0x11ff) return true;
@@ -36,7 +36,6 @@ export default class PersonContainer extends React.Component<Props, State> {
         if (0xac00 <= c && c <= 0xd7a3) return true;
         return false;
       });
-      console.log(person.also_known_as);
       if (person.also_known_as.length > 0) {
         person.name = person.also_known_as[0];
       }
@@ -55,7 +54,6 @@ export default class PersonContainer extends React.Component<Props, State> {
       }
     } = this.props;
     const { person, error, loading } = this.state;
-    console.log(this.props, this.state);
     return (
       <>
         <PersonPresenter

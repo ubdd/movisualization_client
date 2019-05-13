@@ -29,11 +29,13 @@ const Grid = styled("div")<IGridProps>`
   grid-gap: 0.5rem;
 `;
 
-const MoreIcon = styled.i<{ noMore: boolean }>`
+const MoreIcon = styled.i<{ noMore: boolean; loading: boolean }>`
   font-size: 2rem;
   margin-bottom: 1rem;
   transition: 0.5s ease-in-out;
   transform: ${props => (props.noMore ? "rotate(45deg)" : undefined)};
+  animation: ${props =>
+    props.loading ? "spin 1s ease-in-out infinite" : undefined};
 `;
 
 const More = styled.div<{ noMore: boolean }>`
@@ -92,7 +94,7 @@ export default class MovieGrid extends React.Component<Props, State> {
     const { getAPI, term, id } = this.props;
     try {
       let movies: any[] = [];
-      if (term && term.trim() && term !== undefined) {
+      if (term && term.trim()) {
         const {
           data: { results }
         } = await getAPI(term, this.state.page);
@@ -227,17 +229,21 @@ export default class MovieGrid extends React.Component<Props, State> {
               />
             ))}
           {noMoreMovie ? (
-            <More noMore={true}>
-              <MoreIcon noMore={true} className="fas fa-plus" />
+            <More noMore={noMoreMovie}>
+              <MoreIcon
+                noMore={noMoreMovie}
+                loading={false}
+                className="fas fa-plus"
+              />
               {/* <span>마지막 페이지</span> */}
             </More>
           ) : (
             <More noMore={false} onClick={() => this.handleOnClickMore()}>
-              {!loading ? (
-                <MoreIcon noMore={false} className="fas fa-plus" />
-              ) : (
-                <MoreIcon noMore={false} className="fas fa-spinner" />
-              )}
+              <MoreIcon
+                noMore={noMoreMovie}
+                loading={loading}
+                className={loading ? "fas fa-spinner" : "fas fa-plus"}
+              />
               <span>더 보기</span>
             </More>
           )}
