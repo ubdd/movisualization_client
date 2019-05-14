@@ -37,14 +37,12 @@ const Profile = styled.img`
 const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1rem;
-  font-size: 1rem;
-  width: 440px;
+  margin: 0 1rem;
+  font-size: 0.9rem;
+  width: 21.7rem;
 `;
 
-const ChartContainer = styled.div`
-  width: 250px;
-`;
+const ChartContainer = styled.div``;
 
 const Name = styled.div`
   font-size: 1.5rem;
@@ -64,7 +62,7 @@ const Gender = styled.div`
 
 const Biography = styled.div`
   margin-bottom: 1rem;
-  line-height: 1.7rem;
+  line-height: 1.5rem;
 `;
 
 const PlaceOfBirth = styled.div`
@@ -150,9 +148,11 @@ export const PersonPresenter: React.SFC<Props> = ({
             </Gender>
           )}
           <BirthToDeath>
-            <Title>출생일</Title>
-            {`${person.birthday && `${person.birthday} ~ `}`}
-            {person.deathday && person.deathday}
+            {person.deathday ? <Title>출생-사망</Title> : <Title>출생</Title>}
+            {`${person.birthday &&
+              `${person.birthday}
+              `}`}
+            {person.deathday && `- ${person.deathday}`}
           </BirthToDeath>
           {person.place_of_birth && (
             <PlaceOfBirth>

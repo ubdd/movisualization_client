@@ -60,6 +60,7 @@ export default class Section extends React.Component<Props, State> {
       } = await getAPI(id);
       this._sortByDate(cast);
       this._sortByDate(crew);
+      console.log(cast);
       this.setState({
         cast,
         crew,
