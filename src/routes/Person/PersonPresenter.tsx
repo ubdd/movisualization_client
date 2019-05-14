@@ -37,13 +37,25 @@ const Profile = styled.img`
 const ProfileInfo = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1rem;
-  font-size: 1rem;
-  width: 440px;
+  margin: 0 1rem;
+  font-size: 0.9rem;
+  /* width: 21.7rem; */
 `;
 
 const ChartContainer = styled.div`
-  width: 250px;
+  width: 100%;
+  margin: 1rem 0;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+`;
+
+const ContainerTitle = styled.span`
+  font-size: 1rem;
+  font-weight: 600;
 `;
 
 const Name = styled.div`
@@ -64,7 +76,7 @@ const Gender = styled.div`
 
 const Biography = styled.div`
   margin-bottom: 1rem;
-  line-height: 1.7rem;
+  line-height: 1.5rem;
 `;
 
 const PlaceOfBirth = styled.div`
@@ -150,9 +162,11 @@ export const PersonPresenter: React.SFC<Props> = ({
             </Gender>
           )}
           <BirthToDeath>
-            <Title>출생일</Title>
-            {`${person.birthday && `${person.birthday} ~ `}`}
-            {person.deathday && person.deathday}
+            {person.deathday ? <Title>출생-사망</Title> : <Title>출생</Title>}
+            {`${person.birthday &&
+              `${person.birthday}
+              `}`}
+            {person.deathday && `- ${person.deathday}`}
           </BirthToDeath>
           {person.place_of_birth && (
             <PlaceOfBirth>
@@ -179,16 +193,24 @@ export const PersonPresenter: React.SFC<Props> = ({
             </Popularity>
           )}
         </ProfileInfo>
-        <ChartContainer>
+      </ProfileContainer>
+      <ChartContainer>
+        <ContainerTitle role="img" aria-label="cast">
+          <span role="img" aria-label="crew">
+            📊
+          </span>{" "}
+          차트
+        </ContainerTitle>
+        <Flex>
           <PersonStat
             person={person}
             id={personId}
             getAPI={tmdbApis.filmography}
           />
-        </ChartContainer>
-      </ProfileContainer>
+          <PersonGenrePref id={personId} getAPI={tmdbApis.filmography} />
+        </Flex>
+      </ChartContainer>
       <SectionContainer>
-        <PersonGenrePref id={personId} getAPI={tmdbApis.filmography} />
         <FilmoSection id={personId} getAPI={tmdbApis.filmography} />
       </SectionContainer>
     </Container>

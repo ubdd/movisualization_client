@@ -39,6 +39,7 @@ export default class PersonContainer extends React.Component<Props, State> {
       if (person.also_known_as.length > 0) {
         person.name = person.also_known_as[0];
       }
+      console.log(person);
       this.setState({ person, loading: true });
     } catch (error) {
       this.setState({ error: error.message });

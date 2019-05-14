@@ -85,10 +85,10 @@ export const genreWithEmoji = (genre: string) => {
   let emoji: any;
   switch (genre) {
     case "액션":
-      emoji = "🏃‍♂️";
+      emoji = "🏃‍";
       break;
     case "판타지":
-      emoji = "🧙‍♂️";
+      emoji = "🧙‍";
       break;
     case "SF":
       emoji = "👽";
@@ -112,13 +112,13 @@ export const genreWithEmoji = (genre: string) => {
       emoji = "🎭";
       break;
     case "미스터리":
-      emoji = "🕵️‍♂️";
+      emoji = "🕵️‍";
       break;
     case "스릴러":
       emoji = "😱";
       break;
     case "범죄":
-      emoji = "👮‍♂️";
+      emoji = "👮‍";
       break;
     case "로맨스":
       emoji = "🥰";
