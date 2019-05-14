@@ -39,10 +39,24 @@ const ProfileInfo = styled.div`
   flex-direction: column;
   margin: 0 1rem;
   font-size: 0.9rem;
-  width: 21.7rem;
+  /* width: 21.7rem; */
 `;
 
-const ChartContainer = styled.div``;
+const ChartContainer = styled.div`
+  width: 100%;
+  margin: 1rem 0;
+`;
+
+const Flex = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+`;
+
+const ContainerTitle = styled.span`
+  font-size: 1rem;
+  font-weight: 600;
+`;
 
 const Name = styled.div`
   font-size: 1.5rem;
@@ -179,16 +193,24 @@ export const PersonPresenter: React.SFC<Props> = ({
             </Popularity>
           )}
         </ProfileInfo>
-        <ChartContainer>
+      </ProfileContainer>
+      <ChartContainer>
+        <ContainerTitle role="img" aria-label="cast">
+          <span role="img" aria-label="crew">
+            📊
+          </span>{" "}
+          차트
+        </ContainerTitle>
+        <Flex>
           <PersonStat
             person={person}
             id={personId}
             getAPI={tmdbApis.filmography}
           />
-        </ChartContainer>
-      </ProfileContainer>
+          <PersonGenrePref id={personId} getAPI={tmdbApis.filmography} />
+        </Flex>
+      </ChartContainer>
       <SectionContainer>
-        <PersonGenrePref id={personId} getAPI={tmdbApis.filmography} />
         <FilmoSection id={personId} getAPI={tmdbApis.filmography} />
       </SectionContainer>
     </Container>

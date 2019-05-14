@@ -72,6 +72,9 @@ class PersonStat extends React.Component<Props, State> {
         type: "radar",
         colors: { "배우 스탯": "#dba506" }
       },
+      legend: {
+        show: false
+      },
       radar: {
         size: {
           ratio: 0.75
@@ -85,8 +88,8 @@ class PersonStat extends React.Component<Props, State> {
         }
       },
       size: {
-        width: 330,
-        height: 310
+        width: 400,
+        height: 250
       }
     });
   };
