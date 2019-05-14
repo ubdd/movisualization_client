@@ -16,11 +16,11 @@ const Title = styled.span`
   font-weight: 600;
 `;
 
-interface IGridProps {
+interface GridProps {
   loading: boolean;
 }
 
-const Grid = styled("div")<IGridProps>`
+const Grid = styled("div")<GridProps>`
   margin-top: 1.5rem;
   display: grid;
   justify-content: space-between;
@@ -29,20 +29,20 @@ const Grid = styled("div")<IGridProps>`
   grid-gap: 0.5rem;
 `;
 
-interface IProps {
+interface Props {
   getAPI: any;
   id: string;
 }
 
-interface IState {
+interface State {
   cast: any;
   crew: any;
   error: string | null;
   loading: boolean;
 }
 
-export default class Section extends React.Component<IProps, IState> {
-  constructor(props: IProps) {
+export default class Section extends React.Component<Props, State> {
+  constructor(props: Props) {
     super(props);
     this.state = {
       cast: null,
@@ -58,6 +58,8 @@ export default class Section extends React.Component<IProps, IState> {
       const {
         data: { cast, crew }
       } = await getAPI(id);
+      this._sortByDate(cast);
+      this._sortByDate(crew);
       this.setState({
         cast,
         crew,
@@ -73,6 +75,14 @@ export default class Section extends React.Component<IProps, IState> {
       });
     }
   }
+
+  _sortByDate = (obj: any) => {
+    obj.sort((a: any, b: any) => {
+      const movieA: Date = new Date(a.release_date);
+      const movieB: Date = new Date(b.release_date);
+      return movieA > movieB ? -1 : movieA < movieB ? 1 : 0;
+    });
+  };
 
   render() {
     const { cast, crew, loading } = this.state;
