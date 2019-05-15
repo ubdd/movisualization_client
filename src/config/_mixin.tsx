@@ -81,6 +81,19 @@ export const normalize = (
   return shiftedNormalized.toFixed(fixed);
 };
 
+export const koreanNumeral = (num: number) => {
+  if (10000 <= num && num < 100000000) {
+    return Math.floor(num / 10000) + "만";
+  } else if (100000000 <= num) {
+    const urk = Math.floor(num / 100000000);
+    const man = Math.floor((num % 100000000) / 10000);
+    return urk + "억 " + (man !== 0 ? `${man}만` : "");
+  } else {
+    return num;
+  }
+};
+
+/* get related emoji from genre */
 export const genreWithEmoji = (genre: string) => {
   let emoji: any;
   switch (genre) {

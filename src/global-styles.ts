@@ -95,6 +95,14 @@ export const GlobalStyle = createGlobalStyle`
     letter-spacing: -0.3px;
   }
 
+  /* ant design style */
+  .ant-table-small {
+     font-size : 0.5rem;
+     td {
+       padding: 0.1rem;
+     }
+  }
+
   /* animations */
   @keyframes spin {
     0% {

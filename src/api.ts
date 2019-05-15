@@ -45,8 +45,8 @@ export const youtubeApis = {
 };
 
 /* tmdb api variables */
-const region: "KR" | "US" = "US"; /* ISO 3166-1 region */
-const language: "ko-KR" | "en-US" = "en-US"; /* ISO 639-1 language */
+const region: "KR" | "US" = "KR"; /* ISO 3166-1 region */
+const language: "ko-KR" | "en-US" = "ko-KR"; /* ISO 639-1 language */
 const include_adult: boolean = true; /* include adult only content */
 const append_to_response: null | "images" | "videos" | "images,videos" =
   "images,videos"; /* which media append to response */
