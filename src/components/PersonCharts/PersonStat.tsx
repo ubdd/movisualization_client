@@ -36,7 +36,7 @@ class PersonStat extends React.Component<Props, State> {
       data: { cast, crew }
     } = await getAPI(id);
     let total_filmo = cast.length;
-    cast.map((cast: any) => {
+    cast.forEach((cast: any) => {
       vote_average += cast.vote_average;
       if (cast.vote_average === 0) total_filmo--;
     });

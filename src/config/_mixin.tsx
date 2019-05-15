@@ -66,7 +66,7 @@ export const normalize = (
     Math.log(rawValue - minEntry + 1) / Math.log(maxEntry - minEntry + 1);
   const preshiftNormalized = mx * (normalizedMax - normalizedMin);
   const shiftedNormalized = preshiftNormalized + normalizedMin;
-  if (shiftedNormalized === NaN) {
+  if (isNaN(shiftedNormalized)) {
     console.error(
       "Raw value is lower than min entry or entered wrong raw value."
     );

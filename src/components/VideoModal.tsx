@@ -136,7 +136,7 @@ export const VideoModal = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [videoKey]);
+  }, [activeVideo]);
 
   return (
     <Section activeVideo={activeVideo}>
