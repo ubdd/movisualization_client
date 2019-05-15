@@ -41,13 +41,20 @@ class UBDCHart extends React.Component<Props, State> {
       bindto: "#UBDChart",
       data: {
         columns: [column.concat(UBDArray)],
-        type: "bubble",
-        labels: true
+        // type: "bubble",
+        labels: false,
+        colors: { UBD: "#144d99" }
       },
-      bubble: {
-        maxR: (x: any) => 50
+      point: {
+        pattern: [
+          `<g><text x='-5' y='35' style='font-size:40px; text-shadow: 2px 2px #efefef'>🚲</text></g>`
+        ]
       },
+      // bubble: {
+      //   maxR: (x: any) => 50
+      // },
       axis: {
+        rotated: true,
         x: {
           type: "category",
           categories: this.state.boxOfficeList.map(
@@ -55,7 +62,7 @@ class UBDCHart extends React.Component<Props, State> {
           )
         },
         y: {
-          max: Math.max.apply(null, UBDArray) * 1.2,
+          // max: Math.max.apply(null, UBDArray) * 1.2,
           tick: {
             outer: false
           }
