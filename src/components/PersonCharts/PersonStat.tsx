@@ -63,7 +63,7 @@ class PersonStat extends React.Component<Props, State> {
           [
             "배우 스탯",
             this.state.audieAcc,
-            this.state.avgRate,
+            this.state.avgRate.toFixed(2),
             this.state.trend,
             (person.popularity / 9).toFixed(2),
             this.state.filmoCnt
@@ -72,13 +72,24 @@ class PersonStat extends React.Component<Props, State> {
         type: "radar",
         colors: { "배우 스탯": "#dba506" }
       },
+      legend: {
+        show: false
+      },
       radar: {
+        size: {
+          ratio: 0.75
+          // width: 250
+        },
         axis: {
           max: 5
         },
         level: {
           depth: 5
         }
+      },
+      size: {
+        width: 400,
+        height: 250
       }
     });
   };

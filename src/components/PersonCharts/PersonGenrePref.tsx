@@ -1,15 +1,8 @@
 import React from "react";
 import chart from "billboard.js";
-import styled from "styled-components";
 import { tmdbApis } from "../../api";
 import { genreWithEmoji } from "../../config/_mixin";
 import { Genre } from "../../shared-interfaces";
-
-const LegendContainer = styled.div`
-  width: 500px;
-  height: 250px;
-  text-align: left;
-`;
 
 interface GenreWithCount extends Genre {
   count: number;
@@ -73,16 +66,23 @@ class PersonGenrePref extends React.Component<Props, State> {
         type: "pie"
       },
       pie: {
-        padding: 0
+        padding: 0,
+        label: {
+          format: (value: number) => value + "편"
+        }
       },
       legend: {
         position: "right"
+      },
+      size: {
+        width: 400,
+        height: 250
       }
     });
   };
 
   render() {
-    return <LegendContainer id="personGenrePref" />;
+    return <div id="personGenrePref" />;
   }
 }
 
