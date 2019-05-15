@@ -66,7 +66,7 @@ export const normalize = (
     Math.log(rawValue - minEntry + 1) / Math.log(maxEntry - minEntry + 1);
   const preshiftNormalized = mx * (normalizedMax - normalizedMin);
   const shiftedNormalized = preshiftNormalized + normalizedMin;
-  if (shiftedNormalized === NaN) {
+  if (isNaN(shiftedNormalized)) {
     console.error(
       "Raw value is lower than min entry or entered wrong raw value."
     );
@@ -81,6 +81,21 @@ export const normalize = (
   return shiftedNormalized.toFixed(fixed);
 };
 
+export const koreanNumeral = (num: number, withScale: boolean) => {
+  if (10000 <= num && num < 10000000) {
+    return Math.floor(num / 10000) + (withScale === true ? "만" : "");
+  } else if (10000000 <= num) {
+    const urk = Math.floor(num / 100000000);
+    const man = Math.floor((num % 100000000) / 10000000);
+    return (
+      urk + (man !== 0 ? `.${man}` : "") + (withScale === true ? "억" : "")
+    );
+  } else {
+    return num;
+  }
+};
+
+/* get related emoji from genre */
 export const genreWithEmoji = (genre: string) => {
   let emoji: any;
   switch (genre) {

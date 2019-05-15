@@ -40,7 +40,7 @@ class PersonGenrePref extends React.Component<Props, State> {
   _getGenres = (movies: any, genres: GenreWithCount[]) => {
     movies.forEach((movie: any) => {
       movie.genre_ids.forEach((genre_id: number) => {
-        let genreIndex = genres.findIndex((x: any) => x.id == genre_id);
+        let genreIndex = genres.findIndex((x: any) => x.id === genre_id);
         if (!genres[genreIndex].count) {
           genres[genreIndex].count = 1;
         } else {

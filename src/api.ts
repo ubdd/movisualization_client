@@ -1,11 +1,24 @@
 import axios from "axios";
-import { YoutubeSearchApiParams } from "./shared-interfaces";
+import {
+  YoutubeSearchApiParams,
+  IDailyBoxOfficeListReq,
+  IWeeklyBoxOfficeListReq
+} from "./shared-interfaces";
 
-const region: "KR" | "US" = "KR"; /* ISO 3166-1 region */
-const language: "ko-KR" | "en-US" = "ko-KR"; /* ISO 639-1 language */
-const include_adult: boolean = true; /* include adult only content */
-const append_to_response: null | "images" | "videos" | "images,videos" =
-  "images,videos"; /* which media append to response */
+/* base kobis api axios object */
+const kobisApiBase = axios.create({
+  baseURL: "https://www.kobis.or.kr/kobisopenapi/webservice/rest/",
+  params: { key: process.env.REACT_APP_KOBIS_API_KEY }
+});
+
+export const kobisApi = {
+  dailyBoxOffice: (params: IDailyBoxOfficeListReq) =>
+    kobisApiBase.get("boxoffice/searchDailyBoxOfficeList.json", { params }),
+  weeklyBoxOffice: (params: IWeeklyBoxOfficeListReq) =>
+    kobisApiBase.get("boxoffice/searchWeeklyBoxOfficeList.json", { params })
+};
+
+/* youtube data api variables */
 const videoPart =
   "id, snippet, contentDetails,liveStreamingDetails, player, recordingDetails, statistics, status, topicDetails";
 
@@ -30,6 +43,13 @@ export const youtubeApis = {
       }
     })
 };
+
+/* tmdb api variables */
+const region: "KR" | "US" = "KR"; /* ISO 3166-1 region */
+const language: "ko-KR" | "en-US" = "ko-KR"; /* ISO 639-1 language */
+const include_adult: boolean = true; /* include adult only content */
+const append_to_response: null | "images" | "videos" | "images,videos" =
+  "images,videos"; /* which media append to response */
 
 /* base tmdb api axios object */
 const tmdbBaseApi = axios.create({
@@ -96,4 +116,33 @@ export const tmdbApis = {
   filmography: (personId: number) =>
     tmdbBaseApi.get(`person/${personId}/movie_credits`),
   genres: () => tmdbBaseApi.get(`genre/movie/list`)
+};
+
+/* naver search api variables */
+const display = 100;
+const start = 1;
+
+/* base naver api axios object */
+const naverSearchBaseApi = axios.create({
+  baseURL: "https://openapi.naver.com/v1/search/",
+  headers: {
+    "X-Naver-Client-Id": process.env.REACT_APP_NAVER_CLIENT_ID,
+    "X-Naver-Client-Secret": process.env.REACT_APP_NAVER_CLIENT_SECRET,
+    "content-type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,OPTIONS",
+    "Access-Control-Allow-Headers":
+      "Content-Type, Authorization, Content-Length, X-Requested-With"
+  }
+});
+
+export const naverSearchApis = {
+  movie: (query: string) =>
+    naverSearchBaseApi.get(`movie`, {
+      params: {
+        query,
+        display,
+        start
+      }
+    })
 };
