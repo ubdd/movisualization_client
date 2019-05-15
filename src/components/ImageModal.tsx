@@ -69,7 +69,7 @@ const Overlay = styled.div<{ activeImage: boolean }>`
 `;
 
 const Image = styled.img`
-  height: 80vh;
+  height: 85vh;
   background: #000;
   box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.5);
 `;

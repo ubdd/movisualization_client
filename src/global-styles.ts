@@ -4,7 +4,7 @@ import { fontSize, color } from "./config/_mixin";
 import "./static/css/mytheme.css";
 export const GlobalStyle = createGlobalStyle`
   ${reset};
-  @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+  @import url("https://use.fontawesome.com/releases/v5.8.2/css/all.css");
   @import url("https://cdnjs.cloudflare.com/ajax/libs/antd/3.18.1/antd.min.css");
   @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Playfair+Display|Do+Hyeon|Song+Myung|Thasadith|Nanum+Myeongjo|Nanum+Pen+Script');
   * {
