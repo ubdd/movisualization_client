@@ -13,13 +13,15 @@ const columns = [
     title: "순위",
     dataIndex: "rank",
     key: "rank",
-    align
+    align,
+    sorter: (a: any, b: any) => a.rank - b.rank
   },
   {
     title: "순위 변동",
     dataIndex: "rankInten",
     key: "rankInten",
     align,
+    sorter: (a: any, b: any) => a.rankInten - b.rankInten,
     render: (rankInten: any, record: any) =>
       rankInten === "0" ? (
         record.rankOldAndNew === "NEW" ? (
@@ -28,7 +30,7 @@ const columns = [
           <span>{rankInten}</span>
         )
       ) : rankInten > 0 ? (
-        <span style={{ color: "green" }}>{rankInten}</span>
+        <span style={{ color: "green" }}>+{rankInten}</span>
       ) : (
         <span style={{ color: "red" }}>{rankInten}</span>
       )
@@ -78,9 +80,6 @@ const ChartContainer = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 1;
-  a {
-    color: black;
-  }
 `;
 
 const Table = styled(AntdTable)`
@@ -140,7 +139,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
     const myChart = chart.generate({
       size: {
         height: 400,
-        width: 800
+        width: 650
       },
       title: {
         text: `${moment(Date.now())
@@ -157,8 +156,8 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
           movieNm: "x"
         },
         types: {
-          salesAmt: "area-spline",
-          audiCnt: "area-spline"
+          salesAmt: "bar",
+          audiCnt: "bar"
         },
         names: {
           salesAmt: `당일 수익`,
@@ -167,6 +166,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
         }
       },
       axis: {
+        rotated: true,
         y: {
           label: "당일 수익",
           show: true,

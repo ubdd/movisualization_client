@@ -41,7 +41,7 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  /* antd style */
+  /* ant design style */
   .ant-carousel{
     width: 75rem;
     height: 42.2rem;
@@ -61,8 +61,28 @@ export const GlobalStyle = createGlobalStyle`
     border: none;
   }
   .ant-table-content {
+    font-weight: 700;
     background: white;
   }
+  .ant-table-small {
+    font-size : 0.7rem;
+    a {
+      color: black;
+       &:hover{
+         color: goldenrod;
+       }
+    }
+  }
+  .ant-table-small>.ant-table-content>.ant-table-body>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-fixed-left>.ant-table-body-outer>.ant-table-body-inner>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-fixed-left>.ant-table-body-outer>.ant-table-body-inner>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-fixed-left>.ant-table-header>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-fixed-left>.ant-table-header>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-fixed-right>.ant-table-body-outer>.ant-table-body-inner>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-fixed-right>.ant-table-body-outer>.ant-table-body-inner>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-fixed-right>.ant-table-header>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-fixed-right>.ant-table-header>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-header>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-header>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-scroll>.ant-table-header>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-scroll>.ant-table-header>table>.ant-table-thead>tr>th{
+    padding: 0.3rem 0.5rem;
+  }
+  .ant-table-small>.ant-table-content>.ant-table-body{
+    margin: 0;
+  }
+  .ant-table-thead>tr>th .ant-table-column-sorter {
+    vertical-align: baseline;
+  }
+
 
   /* billboard style */
   .bb-axis-y text,
@@ -95,13 +115,6 @@ export const GlobalStyle = createGlobalStyle`
     letter-spacing: -0.3px;
   }
 
-  /* ant design style */
-  .ant-table-small {
-     font-size : 0.5rem;
-     td {
-       padding: 0.1rem;
-     }
-  }
 
   /* animations */
   @keyframes spin {

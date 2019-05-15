@@ -82,12 +82,12 @@ export const normalize = (
 };
 
 export const koreanNumeral = (num: number) => {
-  if (10000 <= num && num < 100000000) {
+  if (10000 <= num && num < 10000000) {
     return Math.floor(num / 10000) + "만";
-  } else if (100000000 <= num) {
+  } else if (10000000 <= num) {
     const urk = Math.floor(num / 100000000);
-    const man = Math.floor((num % 100000000) / 10000);
-    return urk + "억 " + (man !== 0 ? `${man}만` : "");
+    const man = Math.floor((num % 100000000) / 10000000);
+    return urk + (man !== 0 ? `.${man}` : "") + "억";
   } else {
     return num;
   }
