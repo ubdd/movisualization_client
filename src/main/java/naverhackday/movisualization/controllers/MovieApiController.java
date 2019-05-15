@@ -1,16 +1,26 @@
 package naverhackday.movisualization.controllers;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import naverhackday.movisualization.dto.BoxOfficeRecord;
+import naverhackday.movisualization.storage.BoxOfficeDao;
+import naverhackday.movisualization.storage.BoxOfficeStorageService;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin("*")
 @RestController
 @RequestMapping("api")
 public class MovieApiController {
+
+    BoxOfficeStorageService boxOfficeRepository = new BoxOfficeDao();
+
+    @GetMapping("/movie/{movieCd}")
+    public List<BoxOfficeRecord> showBoxoffice(@PathVariable String movieCd) {
+        return boxOfficeRepository.getListWithMovieCd(movieCd);
+    }
+
     @GetMapping("hello")
     public String hello() {
-        return "hello, world";
+        return "Hello World";
     }
 }
