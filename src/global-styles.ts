@@ -5,7 +5,7 @@ import "./static/css/mytheme.css";
 export const GlobalStyle = createGlobalStyle`
   ${reset};
   @import url("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-  @import url("https://cdnjs.cloudflare.com/ajax/libs/antd/3.16.6/antd.min.css");
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/antd/3.18.1/antd.min.css");
   @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic|Playfair+Display|Do+Hyeon|Song+Myung|Thasadith|Nanum+Myeongjo|Nanum+Pen+Script');
   * {
       box-sizing: border-box;
@@ -40,6 +40,8 @@ export const GlobalStyle = createGlobalStyle`
       border: none;
     }
   }
+
+  /* ant design style */
   .ant-carousel{
     width: 75rem;
     height: 42.2rem;
@@ -58,6 +60,29 @@ export const GlobalStyle = createGlobalStyle`
   .ant-carousel .slick-vertical .slick-slide{
     border: none;
   }
+  .ant-table-content {
+    font-weight: 700;
+    background: white;
+  }
+  .ant-table-small {
+    font-size : 0.7rem;
+    a {
+      color: black;
+       &:hover{
+         color: goldenrod;
+       }
+    }
+  }
+  .ant-table-small>.ant-table-content>.ant-table-body>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-body>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-fixed-left>.ant-table-body-outer>.ant-table-body-inner>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-fixed-left>.ant-table-body-outer>.ant-table-body-inner>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-fixed-left>.ant-table-header>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-fixed-left>.ant-table-header>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-fixed-right>.ant-table-body-outer>.ant-table-body-inner>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-fixed-right>.ant-table-body-outer>.ant-table-body-inner>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-fixed-right>.ant-table-header>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-fixed-right>.ant-table-header>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-header>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-header>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-scroll>.ant-table-body>table>.ant-table-thead>tr>th, .ant-table-small>.ant-table-content>.ant-table-scroll>.ant-table-header>table>.ant-table-tbody>tr>td, .ant-table-small>.ant-table-content>.ant-table-scroll>.ant-table-header>table>.ant-table-thead>tr>th{
+    padding: 0.3rem 0.5rem;
+  }
+  .ant-table-small>.ant-table-content>.ant-table-body{
+    margin: 0;
+  }
+  .ant-table-thead>tr>th .ant-table-column-sorter {
+    vertical-align: baseline;
+  }
+
 
   /* billboard style */
   .bb-axis-y text,
@@ -89,6 +114,7 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 12px;
     letter-spacing: -0.3px;
   }
+
 
   /* animations */
   @keyframes spin {

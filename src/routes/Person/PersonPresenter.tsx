@@ -8,6 +8,7 @@ import Helmet from "react-helmet";
 import Avatar from "../../static/image/avatar.png";
 import PersonStat from "../../components/PersonCharts/PersonStat";
 import PersonGenrePref from "../../components/PersonCharts/PersonGenrePref";
+import { ImageModal } from "../../components/ImageModal";
 
 const Container = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const Profile = styled.img`
   border: 1px solid rgba(221, 238, 255, 0.35);
   border-radius: 5px;
   width: 13rem;
+  cursor: pointer;
 `;
 
 const ProfileInfo = styled.div`
@@ -109,110 +111,130 @@ interface Props {
   personId: string;
   error: string | null;
   loading: boolean;
+  activeImage: boolean;
+  imageUrl: string;
+  onClickToggleActiveImage: (imageUrl?: string) => void;
 }
 
 export const PersonPresenter: React.SFC<Props> = ({
   person,
   personId,
   error,
-  loading
+  loading,
+  activeImage,
+  imageUrl,
+  onClickToggleActiveImage
 }) => {
   return loading ? (
     <Loader />
   ) : (
-    <Container>
-      <Helmet>
-        <title>
-          {person.name} | {websiteTitle}
-        </title>
-      </Helmet>
-      <ProfileContainer>
-        <Profile
-          title={person.name}
-          src={
-            person.profile_path
-              ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
-              : Avatar
-          }
-        />
-        <ProfileInfo>
-          <Name>
-            {`${person.name} `}
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href={`https://www.imdb.com/name/${person.imdb_id}`}
-              style={{
-                margin: "0.3rem 0"
-              }}
-            >
-              <img
-                src={
-                  "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/800px-IMDB_Logo_2016.svg.png"
-                }
-                alt={person.name}
-                style={{ width: "2rem", marginRight: "0.4rem" }}
-              />
-            </a>
-          </Name>
-          {person.gender !== 0 && (
-            <Gender>
-              <Title>성별</Title>
-              {person.gender === 2 ? "남성" : "여성"}
-            </Gender>
-          )}
-          <BirthToDeath>
-            {person.deathday ? <Title>출생-사망</Title> : <Title>출생</Title>}
-            {`${person.birthday &&
-              `${person.birthday}
-              `}`}
-            {person.deathday && `- ${person.deathday}`}
-          </BirthToDeath>
-          {person.place_of_birth && (
-            <PlaceOfBirth>
-              <Title>출생지</Title>
-              {person.place_of_birth}
-            </PlaceOfBirth>
-          )}
-          {person.known_for_department && (
-            <KnownForDepartment>
-              <Title>분야</Title>
-              {person.known_for_department}
-            </KnownForDepartment>
-          )}
-          {person.biography && (
-            <Biography>
-              <Title>소개</Title>
-              {person.biography}
-            </Biography>
-          )}
-          {person.popularity && (
-            <Popularity>
-              <Title>인기도</Title>
-              {person.popularity}
-            </Popularity>
-          )}
-        </ProfileInfo>
-      </ProfileContainer>
-      <ChartContainer>
-        <ContainerTitle role="img" aria-label="cast">
-          <span role="img" aria-label="crew">
-            📊
-          </span>{" "}
-          차트
-        </ContainerTitle>
-        <Flex>
-          <PersonStat
-            person={person}
-            id={personId}
-            getAPI={tmdbApis.filmography}
+    <>
+      <ImageModal
+        onClickToggleActiveImage={onClickToggleActiveImage}
+        activeImage={activeImage}
+        imageUrl={imageUrl}
+      />
+      <Container>
+        <Helmet>
+          <title>
+            {person.name} | {websiteTitle}
+          </title>
+        </Helmet>
+        <ProfileContainer>
+          <Profile
+            onClick={() =>
+              onClickToggleActiveImage(
+                person.profile_path
+                  ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
+                  : Avatar
+              )
+            }
+            title={person.name}
+            src={
+              person.profile_path
+                ? `https://image.tmdb.org/t/p/w500${person.profile_path}`
+                : Avatar
+            }
           />
-          <PersonGenrePref id={personId} getAPI={tmdbApis.filmography} />
-        </Flex>
-      </ChartContainer>
-      <SectionContainer>
-        <FilmoSection id={personId} getAPI={tmdbApis.filmography} />
-      </SectionContainer>
-    </Container>
+          <ProfileInfo>
+            <Name>
+              {`${person.name} `}
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                href={`https://www.imdb.com/name/${person.imdb_id}`}
+                style={{
+                  margin: "0.3rem 0"
+                }}
+              >
+                <img
+                  src={
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/800px-IMDB_Logo_2016.svg.png"
+                  }
+                  alt={person.name}
+                  style={{ width: "2rem", marginRight: "0.4rem" }}
+                />
+              </a>
+            </Name>
+            {person.gender !== 0 && (
+              <Gender>
+                <Title>성별</Title>
+                {person.gender === 2 ? "남성" : "여성"}
+              </Gender>
+            )}
+            <BirthToDeath>
+              {person.deathday ? <Title>출생-사망</Title> : <Title>출생</Title>}
+              {`${person.birthday &&
+                `${person.birthday}
+              `}`}
+              {person.deathday && `- ${person.deathday}`}
+            </BirthToDeath>
+            {person.place_of_birth && (
+              <PlaceOfBirth>
+                <Title>출생지</Title>
+                {person.place_of_birth}
+              </PlaceOfBirth>
+            )}
+            {person.known_for_department && (
+              <KnownForDepartment>
+                <Title>분야</Title>
+                {person.known_for_department}
+              </KnownForDepartment>
+            )}
+            {person.biography && (
+              <Biography>
+                <Title>소개</Title>
+                {person.biography}
+              </Biography>
+            )}
+            {person.popularity && (
+              <Popularity>
+                <Title>인기도</Title>
+                {person.popularity}
+              </Popularity>
+            )}
+          </ProfileInfo>
+        </ProfileContainer>
+        <ChartContainer>
+          <ContainerTitle role="img" aria-label="cast">
+            <span role="img" aria-label="crew">
+              📊
+            </span>{" "}
+            차트
+          </ContainerTitle>
+          <Flex>
+            <PersonStat
+              person={person}
+              id={personId}
+              getAPI={tmdbApis.filmography}
+            />
+            <PersonGenrePref id={personId} getAPI={tmdbApis.filmography} />
+          </Flex>
+        </ChartContainer>
+        <SectionContainer>
+          <FilmoSection id={personId} getAPI={tmdbApis.filmography} />
+        </SectionContainer>
+      </Container>
+    </>
   );
 };

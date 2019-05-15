@@ -9,6 +9,8 @@ interface State {
   person: any;
   error: string | null;
   loading: boolean;
+  activeImage: boolean;
+  imageUrl: string;
 }
 
 export default class PersonContainer extends React.Component<Props, State> {
@@ -17,7 +19,9 @@ export default class PersonContainer extends React.Component<Props, State> {
     this.state = {
       person: null,
       error: null,
-      loading: true
+      loading: true,
+      activeImage: false,
+      imageUrl: ""
     };
   }
 
@@ -48,13 +52,22 @@ export default class PersonContainer extends React.Component<Props, State> {
     }
   };
 
+  onClickToggleActiveImage = (imageUrl: string = "") => {
+    if (!this.state.activeImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    this.setState({ activeImage: !this.state.activeImage, imageUrl });
+  };
+
   render() {
     const {
       match: {
         params: { personId }
       }
     } = this.props;
-    const { person, error, loading } = this.state;
+    const { person, error, loading, activeImage, imageUrl } = this.state;
     return (
       <>
         <PersonPresenter
@@ -62,6 +75,9 @@ export default class PersonContainer extends React.Component<Props, State> {
           personId={personId}
           error={error}
           loading={loading}
+          activeImage={activeImage}
+          imageUrl={imageUrl}
+          onClickToggleActiveImage={this.onClickToggleActiveImage}
         />
       </>
     );

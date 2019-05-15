@@ -21,6 +21,8 @@
 .env.production
 .env.production.local
 
+example.http
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

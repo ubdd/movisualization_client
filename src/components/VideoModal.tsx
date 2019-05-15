@@ -85,7 +85,7 @@ const Overlay = styled.div<{ activeVideo: boolean }>`
   bottom: 0;
   left: 0;
   z-index: 0;
-  background: rgba(20, 20, 20, 0.8); /* overlay color */
+  background: rgba(100, 100, 100, 0.8); /* overlay color */
   opacity: ${props => (props.activeVideo ? "1" : "0")};
   transition: opacity 0.2s ease-out 0.05s;
 `;
@@ -136,7 +136,7 @@ export const VideoModal = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [videoKey]);
+  }, [activeVideo]);
 
   return (
     <Section activeVideo={activeVideo}>

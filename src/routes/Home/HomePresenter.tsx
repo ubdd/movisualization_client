@@ -7,6 +7,7 @@ import { Carousel } from "antd";
 import { Loader } from "../../components/Loader";
 import { websiteTitle } from "../../config/_mixin";
 import UBDChart from "../../components/UBDChart";
+import DailyBoxOfficeChart from "../../components/DailyBoxOfficeChart";
 
 const Container = styled.div`
   margin: 30rem 0 10rem 0;
@@ -74,6 +75,7 @@ export const HomePresenter: React.SFC<Props> = ({ movies, error, loading }) =>
         <title>Home | {websiteTitle}</title>
       </Helmet>
       <Container>
+        <DailyBoxOfficeChart />
         <Carousel
           effect="fade"
           dotPosition={"right"}

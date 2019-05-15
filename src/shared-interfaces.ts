@@ -133,3 +133,20 @@ export interface YoutubeSearchApiParams {
   videoSyndicated?: "any" | "true";
   videoType?: "any" | "episode" | "movie";
 }
+
+export interface IDailyBoxOfficeListReq {
+  targetDt: string;
+  itemPerPage?: string;
+  multiMovieYn?: "Y" | "N";
+  repNationCd?: "K" | "F";
+  wideAreaCd?: string;
+}
+
+export interface IWeeklyBoxOfficeListReq {
+  targetDt: string;
+  weekGb?: "0" | "1" | "2";
+  itemPerPage?: string;
+  multiMovieYn?: "Y" | "N";
+  repNationCd?: "K" | "F";
+  wideAreaCd?: string;
+}
