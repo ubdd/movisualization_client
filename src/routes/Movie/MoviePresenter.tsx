@@ -11,6 +11,7 @@ import { websiteTitle, genreWithEmoji } from "../../config/_mixin";
 import { VideoModal } from "../../components/VideoModal";
 import { TMDbMovieVideo, DailyRandAudiCnt } from "../../shared-interfaces";
 import BoxOfficeChart from "../../components/BoxOfficeChart";
+import { ImageModal } from "../../components/ImageModal";
 const numeral = require("numeral");
 
 const Container = styled.div`
@@ -74,6 +75,7 @@ const Cover = styled.img`
   position: relative;
   -webkit-background-clip: padding-box;
   border-radius: 4px;
+  cursor: pointer;
 `;
 
 const FilmStats = styled.ul`
@@ -390,10 +392,13 @@ interface Props {
   error: string | null;
   loading: boolean;
   activeVideo: boolean;
+  activeImage: boolean;
   videoKey: string;
+  imageUrl: string;
   dailyRankAudiCnt: DailyRandAudiCnt | null;
   handleCreditIndexChange: (creditIndex: number) => void;
   onClickToggleActiveVideo: (videoKey?: string) => void;
+  onClickToggleActiveImage: (imageUrl?: string) => void;
 }
 
 export const MoviePresenter: React.SFC<Props> = ({
@@ -412,15 +417,23 @@ export const MoviePresenter: React.SFC<Props> = ({
   error,
   loading,
   activeVideo,
+  activeImage,
   videoKey,
+  imageUrl,
   dailyRankAudiCnt,
   handleCreditIndexChange,
-  onClickToggleActiveVideo
+  onClickToggleActiveVideo,
+  onClickToggleActiveImage
 }) =>
   loading ? (
     <Loader />
   ) : (
     <>
+      <ImageModal
+        onClickToggleActiveImage={onClickToggleActiveImage}
+        activeImage={activeImage}
+        imageUrl={imageUrl}
+      />
       <VideoModal
         onClickToggleActiveVideo={onClickToggleActiveVideo}
         activeVideo={activeVideo}
@@ -438,6 +451,13 @@ export const MoviePresenter: React.SFC<Props> = ({
         <Content>
           <MediaInfo>
             <Cover
+              onClick={() =>
+                onClickToggleActiveImage(
+                  result.poster_path
+                    ? `https://image.tmdb.org/t/p/original${result.poster_path}`
+                    : NoImage
+                )
+              }
               title={result.title}
               src={
                 result.poster_path

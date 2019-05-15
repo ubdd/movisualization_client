@@ -32,7 +32,9 @@ interface State {
   error: string | null;
   loading: boolean;
   activeVideo: boolean;
+  activeImage: boolean;
   videoKey: string;
+  imageUrl: string;
 }
 
 export default class MovieDetailContainer extends React.Component<
@@ -58,7 +60,9 @@ export default class MovieDetailContainer extends React.Component<
       error: null,
       loading: true,
       activeVideo: false,
-      videoKey: ""
+      activeImage: false,
+      videoKey: "",
+      imageUrl: ""
     };
   }
 
@@ -204,6 +208,15 @@ export default class MovieDetailContainer extends React.Component<
     this.setState({ activeVideo: !this.state.activeVideo, videoKey });
   };
 
+  onClickToggleActiveImage = (imageUrl: string = "") => {
+    if (!this.state.activeImage) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    this.setState({ activeImage: !this.state.activeImage, imageUrl });
+  };
+
   render() {
     const {
       match: {
@@ -226,7 +239,9 @@ export default class MovieDetailContainer extends React.Component<
       error,
       loading,
       activeVideo,
-      videoKey
+      activeImage,
+      videoKey,
+      imageUrl
     } = this.state;
     console.log(this.state);
     console.log(result && normalize(result.vote_average, 0, 10, 0, 5, 3));
@@ -254,10 +269,13 @@ export default class MovieDetailContainer extends React.Component<
         error={error}
         loading={loading}
         activeVideo={activeVideo}
+        activeImage={activeImage}
         videoKey={videoKey}
+        imageUrl={imageUrl}
         dailyRankAudiCnt={dailyRankAudiCnt}
         handleCreditIndexChange={this.handleCreditIndexChange}
         onClickToggleActiveVideo={this.onClickToggleActiveVideo}
+        onClickToggleActiveImage={this.onClickToggleActiveImage}
       />
     );
   }
