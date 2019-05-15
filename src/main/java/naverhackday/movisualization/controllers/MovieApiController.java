@@ -14,7 +14,7 @@ public class MovieApiController {
 
     BoxOfficeStorageService boxOfficeRepository = new BoxOfficeDao();
 
-    @GetMapping("/movie/{movieCd}")
+    @GetMapping("movie/{movieCd}")
     public List<BoxOfficeRecord> showBoxoffice(@PathVariable String movieCd) {
         return boxOfficeRepository.getListWithMovieCd(movieCd);
     }
