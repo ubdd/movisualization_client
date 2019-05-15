@@ -97,3 +97,11 @@ export const tmdbApis = {
     tmdbBaseApi.get(`person/${personId}/movie_credits`),
   genres: () => tmdbBaseApi.get(`genre/movie/list`)
 };
+
+export const kobisApi = axios.create({
+  baseURL:
+    "http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json",
+  params: {
+    key: process.env.REACT_APP_KOBIS_API_KEY
+  }
+});
