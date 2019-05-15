@@ -9,8 +9,7 @@ import java.util.List;
 
 public class BoxOfficeDao implements BoxOfficeStorageService {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
     @Override
     public List<BoxOfficeRecord> getListWithMovieCd(String movieCd) {

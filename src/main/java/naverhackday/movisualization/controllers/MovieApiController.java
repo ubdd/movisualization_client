@@ -12,10 +12,11 @@ import java.util.List;
 @RequestMapping("api")
 public class MovieApiController {
 
-    BoxOfficeStorageService boxOfficeRepository = new BoxOfficeDao();
+    private BoxOfficeStorageService boxOfficeRepository = new BoxOfficeDao();
 
     @GetMapping("movie/{movieCd}")
     public List<BoxOfficeRecord> showBoxoffice(@PathVariable String movieCd) {
+
         return boxOfficeRepository.getListWithMovieCd(movieCd);
     }
 
