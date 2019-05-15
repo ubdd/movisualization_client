@@ -168,20 +168,20 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
       axis: {
         rotated: true,
         y: {
-          label: "당일 수익",
+          label: "당일 수익(억 원)",
           show: true,
           tick: {
             format: (value: number) => {
-              return `${koreanNumeral(value)}원`;
+              return `${koreanNumeral(value, false)}`;
             }
           }
         },
         y2: {
-          label: "당일 관객수",
+          label: "당일 관객수(만 명)",
           show: true,
           tick: {
             format: (value: number) => {
-              return `${koreanNumeral(value)}명`;
+              return `${koreanNumeral(value, false)}`;
             }
           }
         },
@@ -201,9 +201,9 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
           value: (value: number, ratio: any, id: any) => {
             console.log(value, ratio, id);
             if (id === "salesAmt") {
-              return `${koreanNumeral(value)}원`;
+              return `${koreanNumeral(value, true)}원`;
             } else {
-              return `${koreanNumeral(value)}명`;
+              return `${koreanNumeral(value, true)}명`;
             }
           }
         }
