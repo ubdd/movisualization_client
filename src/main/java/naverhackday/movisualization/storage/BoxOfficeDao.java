@@ -15,7 +15,9 @@ public class BoxOfficeDao implements BoxOfficeStorageService {
     @Override
     public List<BoxOfficeRecord> getListWithMovieCd(String movieCd) {
         String query = "select from boxoffice where movieCd=?";
-        return jdbcTemplate.queryForList(query, new Object[] { movieCd }, BoxOfficeRecord.class);
+        List<BoxOfficeRecord> result = jdbcTemplate.queryForList(query, new Object[] { movieCd }, BoxOfficeRecord.class);
+        System.out.println("result is " + result);
+        return result;
     }
 
     @Override
