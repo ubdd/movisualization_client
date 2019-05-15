@@ -6,6 +6,7 @@ import { tmdbApis } from "../../api";
 import { Carousel } from "antd";
 import { Loader } from "../../components/Loader";
 import { websiteTitle } from "../../config/_mixin";
+import UBDChart from "../../components/UBDChart";
 import DailyBoxOfficeChart from "../../components/DailyBoxOfficeChart";
 
 const Container = styled.div`
@@ -91,6 +92,7 @@ export const HomePresenter: React.SFC<Props> = ({ movies, error, loading }) =>
               />
             ))}
         </Carousel>
+        <UBDChart />
         <SectionContainer>
           <MovieGrid title="현재 상영중" getAPI={tmdbApis.nowPlaying} />
           <MovieGrid title="인기 작품" getAPI={tmdbApis.popular} />

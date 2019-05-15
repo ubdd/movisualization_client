@@ -60,7 +60,6 @@ export default class Section extends React.Component<Props, State> {
       } = await getAPI(id);
       this._sortByDate(cast);
       this._sortByDate(crew);
-      console.log(cast);
       this.setState({
         cast,
         crew,
@@ -95,7 +94,7 @@ export default class Section extends React.Component<Props, State> {
               <span role="img" aria-label="crew">
                 🎭
               </span>{" "}
-              출연
+              출연 <b>{cast.length}</b>편
             </Title>
             <Grid loading={loading}>
               {cast.map((movie: any, index: number) => (
@@ -120,7 +119,7 @@ export default class Section extends React.Component<Props, State> {
               <span role="img" aria-label="crew">
                 🎥
               </span>{" "}
-              제작
+              제작 <b>{crew.length}</b>편
             </Title>
             <Grid loading={loading}>
               {crew.map((movie: any, index: number) => (

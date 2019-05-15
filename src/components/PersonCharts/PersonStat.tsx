@@ -1,5 +1,6 @@
 import React from "react";
 import chart from "billboard.js";
+import { normalize } from "../../config/_mixin";
 
 interface Props {
   person: any;
@@ -21,7 +22,7 @@ class PersonStat extends React.Component<Props, State> {
       audieAcc: 4.6,
       avgRate: 3.7,
       trend: 4,
-      filmoCnt: 4.8
+      filmoCnt: 0
     };
   }
 
@@ -41,7 +42,7 @@ class PersonStat extends React.Component<Props, State> {
       if (cast.vote_average === 0) total_filmo--;
     });
     this.setState({
-      filmoCnt: (cast.length + crew.length) / 10,
+      filmoCnt: cast.length + crew.length,
       avgRate: vote_average / total_filmo / 2
     });
   };
@@ -65,12 +66,12 @@ class PersonStat extends React.Component<Props, State> {
             this.state.audieAcc,
             this.state.avgRate.toFixed(2),
             this.state.trend,
-            (person.popularity / 9).toFixed(2),
-            this.state.filmoCnt
+            normalize(person.popularity, 0, 40, 0, 5, 2),
+            normalize(this.state.filmoCnt, 0, 240, 0, 5, 2)
           ]
         ],
         type: "radar",
-        colors: { "배우 스탯": "#dba506" }
+        colors: { "배우 스탯": "#f2c431" }
       },
       legend: {
         show: false
