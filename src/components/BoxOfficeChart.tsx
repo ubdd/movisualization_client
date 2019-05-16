@@ -61,6 +61,9 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
         text: `《${json.movie_name}》 박스오피스`
       },
       bindto: "#chart1",
+      color: {
+        pattern: ["#2e98d8", "#f2c431"]
+      },
       data: {
         x: "date",
         xFormat: "%Y-%m-%d",

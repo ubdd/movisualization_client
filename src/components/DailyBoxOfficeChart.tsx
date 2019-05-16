@@ -155,6 +155,9 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
           .format("YYYY-MM-DD")} 박스오피스`
       },
       bindto: "#dailyBoxOffice",
+      color: {
+        pattern: ["#e94d3f", "#f2c431"]
+      },
       data: {
         x: "movieNm",
         json: { movieNm, salesAmt, audiCnt },
