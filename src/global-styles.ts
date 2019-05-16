@@ -93,10 +93,10 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
   .ant-switch {
-    background-color: #e4bb13
+    background-color: #e4bb13;
   }
   .ant-switch-checked {
-    background-color: white
+    background-color: white;
   }
 
   /* billboard style */

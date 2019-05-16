@@ -260,6 +260,11 @@ export interface PersonDetail {
   }[];
 }
 
+export interface DailyBoxOfficeParams {
+  from_dt: string;
+  to_dt: string;
+}
+
 export interface DailyBoxOffice {
   date: string;
   box_office_result: {
@@ -271,5 +276,18 @@ export interface DailyBoxOffice {
     total_rank: number;
     rank_inten: number;
     rank_old_and_new: boolean;
+  }[];
+}
+
+export interface MultiBoxOfficeParams {
+  from_dt: string;
+  to_dt: string;
+}
+
+export interface MultiBoxOffice {
+  movie_box_offices: {
+    movie_name: string;
+    total_rank: number[];
+    date: string[];
   }[];
 }

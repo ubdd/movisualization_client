@@ -16,17 +16,17 @@ export default class SearchContainer extends React.Component<IProps, IState> {
     };
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     const { term } = this.props.match.params;
     this.setState({ term });
-  }
+  };
 
-  async componentDidUpdate(prevProps: any) {
+  componentDidUpdate = async (prevProps: any) => {
     if (this.props.match.params.term !== prevProps.match.params.term) {
       const { term } = this.props.match.params;
       this.setState({ term });
     }
-  }
+  };
 
   render() {
     const { term } = this.state;

@@ -80,7 +80,12 @@ export default class MovieDetailContainer extends React.Component<
         return push("/");
       }
       try {
-        const { data: boxOffices } = await ubdMovieApis.detail(parsedId);
+        try {
+          const { data: boxOffices } = await ubdMovieApis.detail(parsedId);
+          this.setState({
+            boxOffices
+          });
+        } catch (error) {}
         const { data: result } = await tmdbApis.detail(parsedId);
         const { data: credit } = await tmdbApis.credit(parsedId);
         const { cast, crew } = credit;
@@ -119,8 +124,7 @@ export default class MovieDetailContainer extends React.Component<
           productionDesigns,
           composers,
           costumes,
-          loading: false,
-          boxOffices
+          loading: false
         });
       } catch (error) {
         toast.error(`😫 ${error.message}`);

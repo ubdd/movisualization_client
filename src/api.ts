@@ -15,7 +15,9 @@ export const ubdMovieApis = {
 
 export const ubdBoxOfficeApis = {
   dailyBoxOfficeWithRange: (from_dt: string, to_dt: string) =>
-    ubdApiBase.get("boxoffice/", { params: { from_dt, to_dt } })
+    ubdApiBase.get("boxoffice/", { params: { from_dt, to_dt } }),
+  moviesBoxOfficeWithRange: (from_dt: string, to_dt: string) =>
+    ubdApiBase.get("top_movie_records", { params: { from_dt, to_dt } })
 };
 
 /* base kobis api axios object */

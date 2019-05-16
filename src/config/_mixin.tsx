@@ -83,7 +83,11 @@ export const normalize = (
 
 export const koreanNumeral = (num: number, withScale: boolean) => {
   if (10000 <= num && num < 10000000) {
-    return Math.floor(num / 10000) + (withScale === true ? "만" : "");
+    const man = Math.floor(num / 10000);
+    const chun = Math.floor((num % 10000) / 1000);
+    return (
+      man + (chun !== 0 ? `.${chun}` : "") + (withScale === true ? "만" : "")
+    );
   } else if (10000000 <= num) {
     const urk = Math.floor(num / 100000000);
     const man = Math.floor((num % 100000000) / 10000000);
