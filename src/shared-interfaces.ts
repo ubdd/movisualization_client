@@ -218,3 +218,58 @@ export interface MovieDetail {
   // multi: string;
   // nation: string;
 }
+
+export interface PersonDetail {
+  person_id: string;
+  name: string;
+  also_known_as: string[];
+  birthday: string | null;
+  deathday: null | string;
+  place_of_birth: string | null;
+  known_for_department: string;
+  gender: string;
+  biography: string;
+  popularity: number /* float */;
+  profile_path: string | null;
+  /* genre chart */
+  genres: {
+    genre_name: string;
+    genre_count: number;
+  }[];
+  /* person stat */
+  audie_acc: number;
+  avg_rate: number /* float */;
+  filmo_cnt: number;
+  search_cnt: number;
+  /* cast & crew */
+  cast: {
+    movie_id: string;
+    title: string;
+    release_date: string;
+    character: string;
+    poster_path: string | null;
+    vote_average: number /* float */;
+  }[];
+  crew: {
+    movie_id: string;
+    title: string;
+    release_date: string;
+    department: string[];
+    poster_path: string | null;
+    vote_average: number /* float */;
+  }[];
+}
+
+export interface DailyBoxOffice {
+  date: string;
+  box_office_result: {
+    movie_id: string;
+    moive_nm: string;
+    audi_cnt: number;
+    sales_amt: number /* float */;
+    rank: number;
+    total_rank: number;
+    rank_inten: number;
+    rank_old_and_new: boolean;
+  }[];
+}
