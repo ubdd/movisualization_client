@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BoxOfficeStorageService {
 
-    MovieBoxOfficeResponse getListWithMovieCd(String movieCd);
+    MovieBoxOfficeResponse getListWithMovieCd(String tmdbId);
 
     List<BoxOfficeRecord> getWithDateRange(String startDate, String endDate);
 

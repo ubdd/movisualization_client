@@ -17,8 +17,8 @@ public class MovieApiController {
     @Autowired
     private BoxOfficeStorageService boxOfficeRepository;
 
-    @GetMapping("movie/{movieCd}")
-    public MovieBoxOfficeResponse showBoxoffice(@PathVariable String movieCd) {
+    @GetMapping("movie/{tmdbId}")
+    public MovieBoxOfficeResponse showBoxoffice(@PathVariable String tmdbId) {
 
         return boxOfficeRepository.getListWithMovieCd(movieCd);
     }

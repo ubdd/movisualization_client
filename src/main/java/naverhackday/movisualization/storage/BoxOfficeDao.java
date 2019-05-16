@@ -19,12 +19,12 @@ public class BoxOfficeDao implements BoxOfficeStorageService {
     private JdbcTemplate jdbcTemplate;
 
     @Override
-    public MovieBoxOfficeResponse getListWithMovieCd(String movieCd) {
-        String query1 = "select currentDate, rank, totalRank, audiAcc, audiCnt from boxoffice where movieCd=?";
+    public MovieBoxOfficeResponse getListWithMovieCd(String tmdbId) {
+        String query1 = "select currentDate, rank, totalRank, audiAcc, audiCnt from boxoffice as b, movie as m where b.movieCd=m.movieCd and m.tmdbId=?";
         String query2 = "select movieNm, movieNmEn, movieNmOg, multi, nation from movie where movieCd=?";
 
-        List<BoxOfficeRecord> result = jdbcTemplate.query(query1, new BeanPropertyRowMapper<BoxOfficeRecord>(BoxOfficeRecord.class), movieCd);
-        MovieProperty movieProperty = jdbcTemplate.queryForObject(query2, new BeanPropertyRowMapper<MovieProperty>(MovieProperty.class), movieCd);
+        List<BoxOfficeRecord> result = jdbcTemplate.query(query1, new BeanPropertyRowMapper<BoxOfficeRecord>(BoxOfficeRecord.class), tmdbId);
+        MovieProperty movieProperty = jdbcTemplate.queryForObject(query2, new BeanPropertyRowMapper<MovieProperty>(MovieProperty.class), tmdbId);
 
         result.sort(new Comparator<BoxOfficeRecord>() {
             @Override
