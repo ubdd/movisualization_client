@@ -2,6 +2,7 @@ import reset from "styled-reset";
 import { createGlobalStyle } from "./typed-components";
 import { fontSize, color } from "./config/_mixin";
 import "./static/css/mytheme.css";
+import "react-toastify/dist/ReactToastify.css";
 export const GlobalStyle = createGlobalStyle`
   ${reset};
   @import url("https://use.fontawesome.com/releases/v5.8.2/css/all.css");
@@ -62,12 +63,16 @@ export const GlobalStyle = createGlobalStyle`
   }
   .ant-table-content {
     font-weight: 700;
-    background: white;
+    background: #363636;
+    color: white;
+  }
+  .ant-table-column-title{
+    color: white;
   }
   .ant-table-small {
     font-size : 0.7rem;
     a {
-      color: black;
+      color: white;
        &:hover{
          color: goldenrod;
        }
@@ -82,13 +87,17 @@ export const GlobalStyle = createGlobalStyle`
   .ant-table-thead>tr>th .ant-table-column-sorter {
     vertical-align: baseline;
   }
+  .ant-table-thead>tr>th.ant-table-column-has-actions.ant-table-column-has-sorters{
+    &:hover{
+      background-color: black;
+    }
+  }
   .ant-switch {
     background-color: #e4bb13
   }
   .ant-switch-checked {
     background-color: white
   }
-
 
   /* billboard style */
   .bb-axis-y text,
@@ -121,6 +130,10 @@ export const GlobalStyle = createGlobalStyle`
     letter-spacing: -0.3px;
   }
 
+  /* medium zoom */
+  .medium-zoom-overlay{
+    z-index: 6;
+  }
 
   /* animations */
   @keyframes spin {

@@ -2,12 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import chart from "billboard.js";
 import moment from "moment";
-import { DailyRandAudiCnt } from "../shared-interfaces";
+import { DailyRankAudiCnt } from "../shared-interfaces";
+import { koreanNumeral } from "../config/_mixin";
 
 // const tick: number = 4000;
 
 interface Props {
-  dailyRankAudiCnt: DailyRandAudiCnt | null;
+  dailyRankAudiCnt: DailyRankAudiCnt | null;
 }
 
 interface State {
@@ -18,7 +19,7 @@ const ChartContainer = styled.div``;
 
 /*
 
-  Chart1: 한 영화의 날짜별 박스 오피스 데이터(당일 관객수, 누적 관객수, 순위, 매출액)를 보여줍니다.
+  BoxOfficeChart: 한 영화의 날짜별 박스 오피스 데이터(당일 관객수, 누적 관객수, 순위, 매출액)를 보여줍니다.
   세 영화(어벤져스: 엔드게임, 어스, 돈)가 번갈아서 보여집니다.
 
 */
@@ -31,21 +32,6 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
   }
   componentDidMount = async () => {
     this._renderChart(this.props.dailyRankAudiCnt);
-    // setTimeout(() => {
-    //   this._rerenderChart(usDailyRankAudiCnt);
-    // }, tick);
-    // setTimeout(() => {
-    //   this._rerenderChart(moneyDailyRankAudiCnt);
-    // }, tick * 2);
-    // setInterval(() => {
-    //   this._rerenderChart(endgameDailyRankAudiCnt);
-    //   setTimeout(() => {
-    //     this._rerenderChart(usDailyRankAudiCnt);
-    //   }, tick);
-    //   setTimeout(() => {
-    //     this._rerenderChart(moneyDailyRankAudiCnt);
-    //   }, tick * 2);
-    // }, tick * 3);
   };
 
   _rerenderChart = (api: any) => {
@@ -54,13 +40,13 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
     this.state.myChart.load({
       names: {
         rank: `《${movieNm}》 순위`,
-        audiCnt: `《${movieNm}》 당일 관객수`
+        audi_cnt: `《${movieNm}》 당일 관객수`
       },
       json
     });
   };
 
-  _renderChart = (api: any) => {
+  _renderChart = (json: any) => {
     /*
 
       json 구조:  { date, rank, audiCnt }
@@ -69,38 +55,50 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
       axis의 object는 x, y, y2로 꼭 정해진 값을 사용해야 합니다.
 
       */
-    const { data: json, movieNm } = api;
-    // json.date = json.date.slice(0, 10);
+
     const myChart = chart.generate({
       title: {
-        text: `박스오피스 순위 & 당일 관객수`
+        text: `《${json.movie_name}》 박스오피스`
       },
       bindto: "#chart1",
       data: {
         x: "date",
         xFormat: "%Y-%m-%d",
-        json: json,
+        json: {
+          date: json.date,
+          rank: json.rank,
+          audi_cnt: json.audi_cnt
+        },
         axes: {
           rank: "y",
-          audiCnt: "y2"
+          audi_cnt: "y2"
         },
         types: {
           rank: "step",
-          audiCnt: "area-spline"
+          audi_cnt: "area-spline"
         },
         names: {
-          rank: `《${movieNm}》 순위`,
-          audiCnt: `《${movieNm}》 당일 관객수`
+          rank: `《${json.movie_name}》 순위`,
+          audi_cnt: `《${json.movie_name}》 당일 관객수`
         }
       },
       axis: {
         y: {
-          label: "순위",
-          inverted: true
+          label: "순위(위)",
+          inverted: true,
+          show: true,
+          tick: {
+            format: (x: number) => (x % 1 === 0 ? x : "")
+          }
         },
         y2: {
-          label: "당일 관객수",
-          show: true
+          label: "당일 관객수(만 명)",
+          show: true,
+          tick: {
+            format: (value: number) => {
+              return `${koreanNumeral(value, false)}`;
+            }
+          }
         },
         x: {
           label: "날짜",
@@ -115,11 +113,6 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
           }
         }
       },
-      colors: {
-        rank: "#ff0000",
-        audiCnt: "#00ff00",
-        date: "#0000ff"
-      },
       zoom: {
         enabled: {
           type: "drag"
@@ -129,6 +122,14 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
         format: {
           title: (d: any) => {
             return moment(d).format("YYYY-MM-DD");
+          },
+          value: (value: number, ratio: any, id: any) => {
+            console.log(value, ratio, id);
+            if (id === "audi_cnt") {
+              return `${koreanNumeral(value, true)}명`;
+            } else {
+              return `${value}위`;
+            }
           }
         }
       }

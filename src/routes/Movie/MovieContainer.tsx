@@ -1,9 +1,10 @@
 import React from "react";
 import { MoviePresenter } from "./MoviePresenter";
-import { tmdbApis } from "../../api";
-import { ICrew, DailyRandAudiCnt, Movie } from "../../shared-interfaces";
-import { normalize } from "../../config/_mixin";
-import { usDailyRankAudiCnt } from "../../static/dummy/us";
+import { tmdbApis, ubdMovieApis } from "../../api";
+import { ICrew, Movie } from "../../shared-interfaces";
+// import { normalize } from "../../config/_mixin";
+import mediumZoom from "medium-zoom";
+import { toast } from "react-toastify";
 
 interface Props {
   match: {
@@ -29,12 +30,12 @@ interface State {
   composers: any;
   costumes: any;
   creditIndex: number;
-  error: string | null;
   loading: boolean;
   activeVideo: boolean;
   activeImage: boolean;
   videoKey: string;
   imageUrl: string;
+  boxOffices: any;
 }
 
 export default class MovieDetailContainer extends React.Component<
@@ -57,12 +58,12 @@ export default class MovieDetailContainer extends React.Component<
       composers: null,
       costumes: null,
       creditIndex: 0,
-      error: null,
       loading: true,
       activeVideo: false,
       activeImage: false,
       videoKey: "",
-      imageUrl: ""
+      imageUrl: "",
+      boxOffices: null
     };
   }
 
@@ -79,6 +80,7 @@ export default class MovieDetailContainer extends React.Component<
         return push("/");
       }
       try {
+        const { data: boxOffices } = await ubdMovieApis.detail(parsedId);
         const { data: result } = await tmdbApis.detail(parsedId);
         const { data: credit } = await tmdbApis.credit(parsedId);
         const { cast, crew } = credit;
@@ -117,13 +119,16 @@ export default class MovieDetailContainer extends React.Component<
           productionDesigns,
           composers,
           costumes,
-          loading: false
+          loading: false,
+          boxOffices
         });
       } catch (error) {
-        this.setState({ error: error.message });
+        toast.error(`😫 ${error.message}`);
+        this.props.history.push("/");
       }
     } catch (error) {
-      this.setState({ error: error.message });
+      toast.error(`😫 ${error.message}`);
+      this.props.history.push("/");
     }
   };
 
@@ -142,6 +147,7 @@ export default class MovieDetailContainer extends React.Component<
         }
         try {
           this.setState({ loading: true });
+          const { data: boxOffices } = await ubdMovieApis.detail(parsedId);
           const { data: result } = await tmdbApis.detail(parsedId);
           const { data: credit } = await tmdbApis.credit(parsedId);
           const { cast } = credit;
@@ -182,15 +188,18 @@ export default class MovieDetailContainer extends React.Component<
             composers,
             costumes,
             creditIndex: 0,
+            boxOffices,
             loading: true
           });
         } catch (error) {
-          this.setState({ error: error.message });
+          toast.error(`😫 ${error.message}`);
+          this.props.history.push("/");
         } finally {
           this.setState({ loading: false });
         }
       } catch (error) {
-        this.setState({ error: error.message });
+        toast.error(`😫 ${error.message}`);
+        this.props.history.push("/");
       }
     }
   };
@@ -217,6 +226,8 @@ export default class MovieDetailContainer extends React.Component<
     this.setState({ activeImage: !this.state.activeImage, imageUrl });
   };
 
+  zoom = mediumZoom({ background: "#000", margin: 48 });
+
   render() {
     const {
       match: {
@@ -236,22 +247,13 @@ export default class MovieDetailContainer extends React.Component<
       composers,
       costumes,
       creditIndex,
-      error,
       loading,
       activeVideo,
       activeImage,
       videoKey,
-      imageUrl
+      imageUrl,
+      boxOffices
     } = this.state;
-    console.log(this.state);
-    console.log(result && normalize(result.vote_average, 0, 10, 0, 5, 3));
-    let dailyRankAudiCnt: DailyRandAudiCnt | null = null;
-    if (result) {
-      dailyRankAudiCnt = {
-        movieNm: result.title,
-        data: usDailyRankAudiCnt.data
-      };
-    }
     return (
       <MoviePresenter
         id={parsedId}
@@ -266,13 +268,14 @@ export default class MovieDetailContainer extends React.Component<
         composers={composers}
         costumes={costumes}
         creditIndex={creditIndex}
-        error={error}
         loading={loading}
         activeVideo={activeVideo}
         activeImage={activeImage}
         videoKey={videoKey}
         imageUrl={imageUrl}
-        dailyRankAudiCnt={dailyRankAudiCnt}
+        dailyRankAudiCnt={boxOffices}
+        zoom={this.zoom}
+        boxOffices={boxOffices}
         handleCreditIndexChange={this.handleCreditIndexChange}
         onClickToggleActiveVideo={this.onClickToggleActiveVideo}
         onClickToggleActiveImage={this.onClickToggleActiveImage}

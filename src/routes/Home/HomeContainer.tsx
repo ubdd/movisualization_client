@@ -1,19 +1,19 @@
 import React from "react";
 import { HomePresenter } from "./HomePresenter";
 import { tmdbApis } from "../../api";
+import { toast } from "react-toastify";
+import { RouteComponentProps } from "react-router";
 
-interface Props {}
+interface Props extends RouteComponentProps {}
 
 interface State {
   movies: any;
-  error: string | null;
   loading: boolean;
 }
 
 export default class extends React.Component<Props, State> {
   state = {
     movies: null,
-    error: null,
     loading: false
   };
 
@@ -27,9 +27,8 @@ export default class extends React.Component<Props, State> {
         loading: true
       });
     } catch (error) {
-      this.setState({
-        error: error.message
-      });
+      toast.error(`😫 ${error.message}`);
+      this.props.history.push("/");
     } finally {
       this.setState({
         loading: false
@@ -37,7 +36,7 @@ export default class extends React.Component<Props, State> {
     }
   };
   render() {
-    const { movies, error, loading } = this.state;
-    return <HomePresenter movies={movies} error={error} loading={loading} />;
+    const { movies, loading } = this.state;
+    return <HomePresenter movies={movies} loading={loading} />;
   }
 }

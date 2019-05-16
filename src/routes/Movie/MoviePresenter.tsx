@@ -9,9 +9,10 @@ import Credit from "../../components/Credit";
 import NoImage from "../../static/image/popcorn.png";
 import { websiteTitle, genreWithEmoji } from "../../config/_mixin";
 import { VideoModal } from "../../components/VideoModal";
-import { TMDbMovieVideo, DailyRandAudiCnt } from "../../shared-interfaces";
+import { TMDbMovieVideo, DailyRankAudiCnt } from "../../shared-interfaces";
 import BoxOfficeChart from "../../components/BoxOfficeChart";
-import { ImageModal } from "../../components/ImageModal";
+// import { ImageModal } from "../../components/ImageModal";
+import ImageZoom from "../../components/ImageZoom";
 const numeral = require("numeral");
 
 const Container = styled.div`
@@ -65,8 +66,8 @@ const MediaInfo = styled.div`
   float: left;
 `;
 
-const Cover = styled.img`
-  width: 15rem;
+const Cover = styled(ImageZoom)`
+  /* width: 15rem;
   background: #161718;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
   border: 1px solid rgba(221, 238, 255, 0.35);
@@ -75,7 +76,7 @@ const Cover = styled.img`
   position: relative;
   -webkit-background-clip: padding-box;
   border-radius: 4px;
-  cursor: pointer;
+  cursor: pointer; */
 `;
 
 const FilmStats = styled.ul`
@@ -389,13 +390,14 @@ interface Props {
   composers: any;
   costumes: any;
   creditIndex: number;
-  error: string | null;
   loading: boolean;
   activeVideo: boolean;
   activeImage: boolean;
   videoKey: string;
   imageUrl: string;
-  dailyRankAudiCnt: DailyRandAudiCnt | null;
+  dailyRankAudiCnt: DailyRankAudiCnt | null;
+  zoom: any;
+  boxOffices: any;
   handleCreditIndexChange: (creditIndex: number) => void;
   onClickToggleActiveVideo: (videoKey?: string) => void;
   onClickToggleActiveImage: (imageUrl?: string) => void;
@@ -414,13 +416,14 @@ export const MoviePresenter: React.SFC<Props> = ({
   composers,
   costumes,
   creditIndex,
-  error,
   loading,
   activeVideo,
   activeImage,
   videoKey,
   imageUrl,
   dailyRankAudiCnt,
+  zoom,
+  boxOffices,
   handleCreditIndexChange,
   onClickToggleActiveVideo,
   onClickToggleActiveImage
@@ -429,11 +432,17 @@ export const MoviePresenter: React.SFC<Props> = ({
     <Loader />
   ) : (
     <>
-      <ImageModal
+      {/* <ImageZoom
+        src={imageUrl}
+        alt={result.title}
+        zoom={zoom}
+        color="#BADA55"
+      /> */}
+      {/* <ImageModal
         onClickToggleActiveImage={onClickToggleActiveImage}
         activeImage={activeImage}
         imageUrl={imageUrl}
-      />
+      /> */}
       <VideoModal
         onClickToggleActiveVideo={onClickToggleActiveVideo}
         activeVideo={activeVideo}
@@ -451,14 +460,9 @@ export const MoviePresenter: React.SFC<Props> = ({
         <Content>
           <MediaInfo>
             <Cover
-              onClick={() =>
-                onClickToggleActiveImage(
-                  result.poster_path
-                    ? `https://image.tmdb.org/t/p/original${result.poster_path}`
-                    : NoImage
-                )
-              }
-              title={result.title}
+              alt={result.title}
+              zoom={zoom}
+              color="rgba(0, 0, 0, 0.5)"
               src={
                 result.poster_path
                   ? `https://image.tmdb.org/t/p/original${result.poster_path}`
@@ -658,7 +662,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                 </Tagline>
               )}
               {result.overview && <Overview>{result.overview}</Overview>}
-              <BoxOfficeChart dailyRankAudiCnt={dailyRankAudiCnt} />
+              <BoxOfficeChart dailyRankAudiCnt={boxOffices} />
               <Credit
                 id={id}
                 creditIndex={creditIndex}

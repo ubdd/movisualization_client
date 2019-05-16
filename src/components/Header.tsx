@@ -34,7 +34,7 @@ const Container = styled.header`
   height: 6rem;
   display: flex;
   align-items: center;
-  z-index: 10;
+  z-index: 5; /* header z-index */
   display: flex;
   align-items: center;
   justify-content: center;

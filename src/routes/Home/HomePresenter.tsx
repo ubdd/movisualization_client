@@ -61,11 +61,10 @@ const SectionContainer = styled.div`
 
 interface Props {
   movies: any;
-  error: string | null;
   loading: boolean;
 }
 
-export const HomePresenter: React.SFC<Props> = ({ movies, error, loading }) =>
+export const HomePresenter: React.SFC<Props> = ({ movies, loading }) =>
   loading ? (
     <Loader />
   ) : (

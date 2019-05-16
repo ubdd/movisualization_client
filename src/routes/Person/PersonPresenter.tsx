@@ -109,7 +109,6 @@ const Title = styled.span`
 interface Props {
   person: any;
   personId: string;
-  error: string | null;
   loading: boolean;
   activeImage: boolean;
   imageUrl: string;
@@ -119,7 +118,6 @@ interface Props {
 export const PersonPresenter: React.SFC<Props> = ({
   person,
   personId,
-  error,
   loading,
   activeImage,
   imageUrl,

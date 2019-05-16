@@ -14,7 +14,7 @@ const App: React.FC = () => {
       <GlobalStyle />
       <ToastContainer
         draggable={true}
-        position={"top-left"}
+        position={"bottom-right"}
         autoClose={5000}
         hideProgressBar={true}
         pauseOnHover={true}

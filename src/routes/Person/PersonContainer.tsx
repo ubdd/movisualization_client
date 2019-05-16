@@ -2,12 +2,12 @@ import React from "react";
 import { PersonPresenter } from "./PersonPresenter";
 import { tmdbApis } from "../../api";
 import { RouteComponentProps } from "react-router";
+import { toast } from "react-toastify";
 
 interface Props extends RouteComponentProps<any> {}
 
 interface State {
   person: any;
-  error: string | null;
   loading: boolean;
   activeImage: boolean;
   imageUrl: string;
@@ -18,7 +18,6 @@ export default class PersonContainer extends React.Component<Props, State> {
     super(props);
     this.state = {
       person: null,
-      error: null,
       loading: true,
       activeImage: false,
       imageUrl: ""
@@ -46,7 +45,8 @@ export default class PersonContainer extends React.Component<Props, State> {
       console.log(person);
       this.setState({ person, loading: true });
     } catch (error) {
-      this.setState({ error: error.message });
+      toast.error(`😫 ${error.message}`);
+      this.props.history.push("/");
     } finally {
       this.setState({ loading: false });
     }
@@ -67,13 +67,12 @@ export default class PersonContainer extends React.Component<Props, State> {
         params: { personId }
       }
     } = this.props;
-    const { person, error, loading, activeImage, imageUrl } = this.state;
+    const { person, loading, activeImage, imageUrl } = this.state;
     return (
       <>
         <PersonPresenter
           person={person}
           personId={personId}
-          error={error}
           loading={loading}
           activeImage={activeImage}
           imageUrl={imageUrl}

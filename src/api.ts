@@ -5,6 +5,19 @@ import {
   IWeeklyBoxOfficeListReq
 } from "./shared-interfaces";
 
+const ubdApiBase = axios.create({
+  baseURL: "http://101.101.160.234/api/"
+});
+
+export const ubdMovieApis = {
+  detail: (movie_id: number) => ubdApiBase.get(`movie/${movie_id}`)
+};
+
+export const ubdBoxOfficeApis = {
+  dailyBoxOfficeWithRange: (from_dt: string, to_dt: string) =>
+    ubdApiBase.get("boxoffice/", { params: { from_dt, to_dt } })
+};
+
 /* base kobis api axios object */
 const kobisApiBase = axios.create({
   baseURL: "https://www.kobis.or.kr/kobisopenapi/webservice/rest/",
