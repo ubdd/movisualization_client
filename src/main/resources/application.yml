@@ -5,7 +5,7 @@ spring:
   application:
     name: Movisualization
   datasource:
-    url: jdbc:mysql://127.0.0.1/naverhackday?autoReconnect=true&useSSL=false
+    url: jdbc:mariadb://127.0.0.1:3306/naverhackday?autoReconnect=true&useSSL=false
     username: hackday
     password: 2019hackday_2
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.mariadb.jdbc.Driver

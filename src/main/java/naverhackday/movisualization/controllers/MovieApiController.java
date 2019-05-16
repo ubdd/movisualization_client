@@ -1,8 +1,10 @@
 package naverhackday.movisualization.controllers;
 
 import naverhackday.movisualization.dto.BoxOfficeRecord;
+import naverhackday.movisualization.dto.MovieBoxOfficeResponse;
 import naverhackday.movisualization.storage.BoxOfficeDao;
 import naverhackday.movisualization.storage.BoxOfficeStorageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,10 +14,11 @@ import java.util.List;
 @RequestMapping("api")
 public class MovieApiController {
 
-    private BoxOfficeStorageService boxOfficeRepository = new BoxOfficeDao();
+    @Autowired
+    private BoxOfficeStorageService boxOfficeRepository;
 
     @GetMapping("movie/{movieCd}")
-    public List<BoxOfficeRecord> showBoxoffice(@PathVariable String movieCd) {
+    public MovieBoxOfficeResponse showBoxoffice(@PathVariable String movieCd) {
 
         return boxOfficeRepository.getListWithMovieCd(movieCd);
     }

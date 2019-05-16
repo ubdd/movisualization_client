@@ -4,59 +4,26 @@ import java.sql.Date;
 
 public class BoxOfficeRecord {
 
-    private int showCnt;
-    private int scrnCnt;
-    private int rankOldAndNew;
-    private String movieCd;
-    private int audiAcc;
+    private String currentDate;
+
     private int audiCnt;
-    private double salesShare;
+
+    private int audiAcc;
+
     private int rank;
-    private long salesAmt;
-    private long salesAcc;
-    private Date currentDate;
+
     private int totalRank;
-    private int audiChange;
-    private int salesChange;
 
-    public int getShowCnt() {
-        return showCnt;
+    private String multi;
+
+    private String nation;
+
+    public String getCurrentDate() {
+        return currentDate;
     }
 
-    public void setShowCnt(int showCnt) {
-        this.showCnt = showCnt;
-    }
-
-    public int getScrnCnt() {
-        return scrnCnt;
-    }
-
-    public void setScrnCnt(int scrnCnt) {
-        this.scrnCnt = scrnCnt;
-    }
-
-    public int getRankOldAndNew() {
-        return rankOldAndNew;
-    }
-
-    public void setRankOldAndNew(int rankOldAndNew) {
-        this.rankOldAndNew = rankOldAndNew;
-    }
-
-    public String getMovieCd() {
-        return movieCd;
-    }
-
-    public void setMovieCd(String movieCd) {
-        this.movieCd = movieCd;
-    }
-
-    public int getAudiAcc() {
-        return audiAcc;
-    }
-
-    public void setAudiAcc(int audiAcc) {
-        this.audiAcc = audiAcc;
+    public void setCurrentDate(String currentDate) {
+        this.currentDate = currentDate;
     }
 
     public int getAudiCnt() {
@@ -67,12 +34,12 @@ public class BoxOfficeRecord {
         this.audiCnt = audiCnt;
     }
 
-    public double getSalesShare() {
-        return salesShare;
+    public int getAudiAcc() {
+        return audiAcc;
     }
 
-    public void setSalesShare(double salesShare) {
-        this.salesShare = salesShare;
+    public void setAudiAcc(int audiAcc) {
+        this.audiAcc = audiAcc;
     }
 
     public int getRank() {
@@ -83,30 +50,6 @@ public class BoxOfficeRecord {
         this.rank = rank;
     }
 
-    public long getSalesAmt() {
-        return salesAmt;
-    }
-
-    public void setSalesAmt(long salesAmt) {
-        this.salesAmt = salesAmt;
-    }
-
-    public long getSalesAcc() {
-        return salesAcc;
-    }
-
-    public void setSalesAcc(long salesAcc) {
-        this.salesAcc = salesAcc;
-    }
-
-    public Date getCurrentDate() {
-        return currentDate;
-    }
-
-    public void setCurrentDate(Date currentDate) {
-        this.currentDate = currentDate;
-    }
-
     public int getTotalRank() {
         return totalRank;
     }
@@ -115,19 +58,19 @@ public class BoxOfficeRecord {
         this.totalRank = totalRank;
     }
 
-    public int getAudiChange() {
-        return audiChange;
+    public String getMulti() {
+        return multi;
     }
 
-    public void setAudiChange(int audiChange) {
-        this.audiChange = audiChange;
+    public void setMulti(String multi) {
+        this.multi = multi;
     }
 
-    public int getSalesChange() {
-        return salesChange;
+    public String getNation() {
+        return nation;
     }
 
-    public void setSalesChange(int salesChange) {
-        this.salesChange = salesChange;
+    public void setNation(String nation) {
+        this.nation = nation;
     }
 }
