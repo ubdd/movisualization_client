@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MovieCard } from "./MovieCard";
 import { posterSize } from "../config/_mixin";
+import { toast } from "react-toastify";
 
 const Container = styled.div`
   position: relative;
@@ -73,7 +74,6 @@ interface Props {
 interface State {
   movies: any;
   page: number;
-  error: string | null;
   loading: boolean;
   noMoreMovie: boolean;
 }
@@ -84,7 +84,6 @@ export default class MovieGrid extends React.Component<Props, State> {
     this.state = {
       movies: null,
       page: 1,
-      error: null,
       loading: true,
       noMoreMovie: false
     };
@@ -92,13 +91,18 @@ export default class MovieGrid extends React.Component<Props, State> {
 
   componentDidMount = async () => {
     const { getAPI, term, id } = this.props;
+    console.log(this.props);
     try {
       let movies: any[] = [];
-      if (term && term.trim()) {
-        const {
-          data: { results }
-        } = await getAPI(term, this.state.page);
-        movies = results;
+      console.log(term);
+      if (term !== undefined) {
+        if (term !== "" && term.trim() !== "") {
+          console.log(term);
+          const {
+            data: { results }
+          } = await getAPI(term, this.state.page);
+          movies = results;
+        }
       } else if (id !== undefined) {
         const {
           data: { results }
@@ -118,9 +122,7 @@ export default class MovieGrid extends React.Component<Props, State> {
         loading: true
       });
     } catch (error) {
-      this.setState({
-        error: error.message
-      });
+      toast.error(`😫 ${error.message}`);
     } finally {
       this.setState({
         loading: false
@@ -129,16 +131,19 @@ export default class MovieGrid extends React.Component<Props, State> {
   };
 
   componentDidUpdate = async (prevProps: any, prevState: any) => {
-    if (this.props.term && this.props.term !== prevProps.term) {
+    if (this.props.term !== "" && this.props.term !== prevProps.term) {
       console.log(this.props.term, prevProps.term);
       const { getAPI, term, id } = this.props;
+      console.log(this.props);
       try {
         let movies: any[] = [];
-        if (term && term.trim() && term !== undefined) {
-          const {
-            data: { results }
-          } = await getAPI(term, 1);
-          movies = results;
+        if (term !== undefined) {
+          if (term !== "" && term.trim() !== "") {
+            const {
+              data: { results }
+            } = await getAPI(term, 1);
+            movies = results;
+          }
         } else if (id !== undefined) {
           const {
             data: { results }
@@ -159,9 +164,7 @@ export default class MovieGrid extends React.Component<Props, State> {
           this.setState({ noMoreMovie: true });
         }
       } catch (error) {
-        this.setState({
-          error: error.message
-        });
+        toast.error(`😫 ${error.message}`);
       } finally {
         this.setState({
           loading: false
@@ -176,10 +179,12 @@ export default class MovieGrid extends React.Component<Props, State> {
     try {
       let movies: any = [];
       if (term !== undefined) {
-        const {
-          data: { results }
-        } = await getAPI(term, page + 1);
-        movies = results;
+        if (term !== "" && term.trim() !== "") {
+          const {
+            data: { results }
+          } = await getAPI(term, page + 1);
+          movies = results;
+        }
       } else if (id !== undefined) {
         const {
           data: { results }
@@ -200,9 +205,7 @@ export default class MovieGrid extends React.Component<Props, State> {
         loading: true
       });
     } catch (error) {
-      this.setState({
-        error: error.message
-      });
+      toast.error(`😫 ${error.message}`);
     } finally {
       this.setState({
         loading: false
@@ -212,6 +215,7 @@ export default class MovieGrid extends React.Component<Props, State> {
 
   render() {
     const { title } = this.props;
+    console.log(this.state);
     const { movies, loading, noMoreMovie } = this.state;
     return (
       <Container>
