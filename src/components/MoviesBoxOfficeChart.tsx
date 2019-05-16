@@ -1,10 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import chart from "billboard.js";
-import moment from "moment";
+import moment, { Moment } from "moment";
 
 interface Props {
   moviesBoxOffice: any;
+  from_dt: Moment;
+  to_dt: Moment;
 }
 
 interface State {
@@ -31,6 +33,36 @@ export default class MoviesBoxOfficeChart extends React.Component<
   componentDidMount = async () => {
     const { moviesBoxOffice } = this.props;
     this._renderChart(moviesBoxOffice);
+  };
+
+  componentDidUpdate = async (prevProps: Props, prevState: State) => {
+    if (
+      this.props.from_dt !== prevProps.from_dt ||
+      this.props.to_dt !== prevProps.to_dt ||
+      this.props.moviesBoxOffice !== prevProps.moviesBoxOffice
+    ) {
+      const { moviesBoxOffice } = this.props;
+      this._renderChart(moviesBoxOffice);
+    }
+  };
+
+  _rerenderChart = (moviesBoxOffice: object[]) => {
+    console.log(moviesBoxOffice);
+    let json = {};
+    let xs = {};
+    let names = {};
+    moviesBoxOffice.forEach((movieBoxOffice: any, idx: number) => {
+      const { total_rank, date } = movieBoxOffice;
+      json[`rank${idx}`] = total_rank;
+      json[`date${idx}`] = date;
+      xs[`rank${idx}`] = `date${idx}`;
+      names[`rank${idx}`] = movieBoxOffice.movie_name;
+    });
+    this.state.myChart.load({
+      xs,
+      json,
+      names
+    });
   };
 
   _renderChart = (moviesBoxOffice: object[]) => {
@@ -77,6 +109,11 @@ export default class MoviesBoxOfficeChart extends React.Component<
           title: (d: any) => {
             return moment(d).format("YYYY-MM-DD");
           }
+        }
+      },
+      zoom: {
+        enabled: {
+          type: "drag"
         }
       }
     });
