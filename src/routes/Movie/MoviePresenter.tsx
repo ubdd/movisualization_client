@@ -662,7 +662,7 @@ export const MoviePresenter: React.SFC<Props> = ({
                 </Tagline>
               )}
               {result.overview && <Overview>{result.overview}</Overview>}
-              <BoxOfficeChart dailyRankAudiCnt={boxOffices} />
+              {boxOffices && <BoxOfficeChart dailyRankAudiCnt={boxOffices} />}
               <Credit
                 id={id}
                 creditIndex={creditIndex}
