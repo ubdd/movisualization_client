@@ -8,6 +8,7 @@
     "billboard.js": "1.8.1",
     "chart.js": "^2.8.0",
     "d3": "^5.9.2",
+    "medium-zoom": "^1.0.4",
     "moment": "^2.24.0",
     "numeral": "^2.0.6",
     "react": "^16.8.6",
