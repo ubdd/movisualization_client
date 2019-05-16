@@ -221,13 +221,15 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
     return (
       <ChartContainer>
         <div id="dailyBoxOffice" />
-        <Table
-          dataSource={dailyBoxOfficeList}
-          columns={columns}
-          bordered
-          size="small"
-          pagination={false}
-        />
+        {dailyBoxOfficeList && (
+          <Table
+            dataSource={dailyBoxOfficeList}
+            columns={columns}
+            bordered
+            size="small"
+            pagination={false}
+          />
+        )}
       </ChartContainer>
     );
   }

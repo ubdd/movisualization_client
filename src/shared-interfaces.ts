@@ -150,3 +150,71 @@ export interface IWeeklyBoxOfficeListReq {
   repNationCd?: "K" | "F";
   wideAreaCd?: string;
 }
+
+export interface MovieDetail {
+  /* movie detail result */
+  movie_id: string;
+  title: string;
+  backdrop_path: string;
+  poster_path: string;
+  revenue: string;
+  budget: string;
+  popularity: number /* float */;
+  vote_average: number /* float */;
+  homepage: string;
+  imdb_id: string;
+  videos: {
+    site: string;
+    key: string;
+    name: string;
+  }[];
+  release_date: string;
+  genres: {
+    id: number;
+    name: string;
+  }[];
+  production_countries: {
+    iso_3166_1: string;
+    name: string;
+  }[];
+  runtime: number;
+  tagline: string;
+  overview: string;
+  production_companies: {
+    logo_path: string;
+    name: string;
+    origin_country: string;
+  }[];
+  spoken_languages: {
+    iso_639_1: string;
+    name: string;
+  }[];
+
+  /* movie credit result */
+  people: {
+    id: string;
+    department: string;
+    job: string;
+    name: string;
+    profile_path: string;
+  }[];
+
+  /* movie box office with other api */
+  date: string[];
+  rank: number[];
+  totalRank: number[];
+  audi_cnt: number[];
+  audi_acc: number[];
+  multi: string;
+  nation: string;
+
+  /* if only movie box office */
+  // movie_name: string;
+  // date: string[];
+  // rank: number[];
+  // totalRank: number[];
+  // audi_cnt: number[];
+  // audi_acc: number[];
+  // multi: string;
+  // nation: string;
+}

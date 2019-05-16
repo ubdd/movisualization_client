@@ -62,12 +62,16 @@ export const GlobalStyle = createGlobalStyle`
   }
   .ant-table-content {
     font-weight: 700;
-    background: white;
+    background: #363636;
+    color: white;
+  }
+  .ant-table-column-title{
+    color: white;
   }
   .ant-table-small {
     font-size : 0.7rem;
     a {
-      color: black;
+      color: white;
        &:hover{
          color: goldenrod;
        }
@@ -82,7 +86,11 @@ export const GlobalStyle = createGlobalStyle`
   .ant-table-thead>tr>th .ant-table-column-sorter {
     vertical-align: baseline;
   }
-
+  .ant-table-thead>tr>th.ant-table-column-has-actions.ant-table-column-has-sorters{
+    &:hover{
+      background-color: black;
+    }
+  }
 
   /* billboard style */
   .bb-axis-y text,
