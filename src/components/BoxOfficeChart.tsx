@@ -3,6 +3,7 @@ import styled from "styled-components";
 import chart from "billboard.js";
 import moment from "moment";
 import { DailyRankAudiCnt } from "../shared-interfaces";
+import { koreanNumeral } from "../config/_mixin";
 
 // const tick: number = 4000;
 
@@ -31,21 +32,6 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
   }
   componentDidMount = async () => {
     this._renderChart(this.props.dailyRankAudiCnt);
-    // setTimeout(() => {
-    //   this._rerenderChart(usDailyRankAudiCnt);
-    // }, tick);
-    // setTimeout(() => {
-    //   this._rerenderChart(moneyDailyRankAudiCnt);
-    // }, tick * 2);
-    // setInterval(() => {
-    //   this._rerenderChart(endgameDailyRankAudiCnt);
-    //   setTimeout(() => {
-    //     this._rerenderChart(usDailyRankAudiCnt);
-    //   }, tick);
-    //   setTimeout(() => {
-    //     this._rerenderChart(moneyDailyRankAudiCnt);
-    //   }, tick * 2);
-    // }, tick * 3);
   };
 
   _rerenderChart = (api: any) => {
@@ -72,7 +58,7 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
 
     const myChart = chart.generate({
       title: {
-        text: `박스오피스 순위 & 당일 관객수`
+        text: `《${json.movie_name}》 박스오피스`
       },
       bindto: "#chart1",
       data: {
@@ -98,12 +84,21 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
       },
       axis: {
         y: {
-          label: "순위",
-          inverted: true
+          label: "순위(위)",
+          inverted: true,
+          show: true,
+          tick: {
+            format: (x: number) => (x % 1 === 0 ? x : "")
+          }
         },
         y2: {
-          label: "당일 관객수",
-          show: true
+          label: "당일 관객수(만 명)",
+          show: true,
+          tick: {
+            format: (value: number) => {
+              return `${koreanNumeral(value, false)}`;
+            }
+          }
         },
         x: {
           label: "날짜",
@@ -118,11 +113,6 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
           }
         }
       },
-      colors: {
-        rank: "#ff0000",
-        audi_cnt: "#00ff00",
-        date: "#0000ff"
-      },
       zoom: {
         enabled: {
           type: "drag"
@@ -132,6 +122,14 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
         format: {
           title: (d: any) => {
             return moment(d).format("YYYY-MM-DD");
+          },
+          value: (value: number, ratio: any, id: any) => {
+            console.log(value, ratio, id);
+            if (id === "audi_cnt") {
+              return `${koreanNumeral(value, true)}명`;
+            } else {
+              return `${value}위`;
+            }
           }
         }
       }
