@@ -1,8 +1,7 @@
 package naverhackday.movisualization.storage;
 
-import naverhackday.movisualization.dto.BoxOfficeRecord;
-import naverhackday.movisualization.dto.MovieBoxOfficeResponse;
-import naverhackday.movisualization.dto.MovieProperty;
+import naverhackday.movisualization.dto.*;
+import naverhackday.movisualization.exception.InvalidDateRangeException;
 import naverhackday.movisualization.exception.MovieNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -67,7 +66,7 @@ public class BoxOfficeDao implements BoxOfficeStorageService {
     @Override
     public List<BoxOfficeRecord> getWithDateRange(String startDate, String endDate) {
         List<BoxOfficeRecord> result;
-        String query = "select tmdbId, salesAmt, movieNm, currentDate, audiCnt, rank, rankInten, rankOldAndNew, totalRank, b.multi, b.nation from boxoffice as b, movie as m where currentDate between ? and ? and b.movieCd = m.movieCd";
+        String query = "select tmdbId, salesAmt, movieNm, currentDate, audiCnt, audiAcc, rank, rankInten, rankOldAndNew, totalRank, b.multi, b.nation from boxoffice as b, movie as m where currentDate between ? and ? and b.movieCd = m.movieCd";
 
         try {
             result = jdbcTemplate.query(query, new BeanPropertyRowMapper<BoxOfficeRecord>(BoxOfficeRecord.class), startDate, endDate);
@@ -80,7 +79,36 @@ public class BoxOfficeDao implements BoxOfficeStorageService {
     }
 
     @Override
-    public List<BoxOfficeRecord> getWithDate(String date) {
-        return null;
+    public List<TopMovie> getTopMovies(String startDate, String endDate) {
+        List<CodeAndNameVO> topMovieBoxOfficeRecordList;
+        List<TopMovie> result = new ArrayList<>();
+        String query = "select distinct m.movieCd as movieCd, movieNm from boxoffice as b, movie as m where currentDate between ? and ? and totalRank <= 3 and m.movieCd = b.movieCd";
+        String query2 = "select movieNm, totalRank, currentDate, tmdbId from boxoffice as b, movie as m where currentDate between ? and ? and b.movieCd = m.movieCd and m.movieCd = ?";
+
+        try {
+            topMovieBoxOfficeRecordList = jdbcTemplate.query(query, new BeanPropertyRowMapper<CodeAndNameVO>(CodeAndNameVO.class), startDate, endDate);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new InvalidDateRangeException("Date invalid");
+        }
+
+        for (CodeAndNameVO vo : topMovieBoxOfficeRecordList) {
+            List<BoxOfficeRecord> boxOfficeRecordList = jdbcTemplate.query(query2, new BeanPropertyRowMapper<BoxOfficeRecord>(BoxOfficeRecord.class), startDate, endDate, vo.getMovieCd());
+            TopMovie topMovie = new TopMovie();
+            topMovie.setMovie_nm(vo.getMovieNm());
+            topMovie.setDate(new ArrayList<>());
+            topMovie.setRank(new ArrayList<>());
+
+            boxOfficeRecordList.sort((a, b) -> a.getCurrentDate().compareTo(b.getCurrentDate()));
+
+            for (BoxOfficeRecord e : boxOfficeRecordList) {
+                topMovie.getDate().add(e.getCurrentDate());
+                topMovie.getRank().add(e.getTotalRank());
+            }
+            result.add(topMovie);
+
+        }
+
+        return result;
     }
 }

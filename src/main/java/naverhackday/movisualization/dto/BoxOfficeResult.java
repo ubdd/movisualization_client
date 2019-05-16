@@ -8,6 +8,8 @@ public class BoxOfficeResult {
 
     private int audi_cnt;
 
+    private int audi_acc;
+
     private double sales_amt;
 
     private int rank;
@@ -80,5 +82,13 @@ public class BoxOfficeResult {
 
     public void setRank_old_and_new(int rank_old_and_new) {
         this.rank_old_and_new = rank_old_and_new;
+    }
+
+    public int getAudi_acc() {
+        return audi_acc;
+    }
+
+    public void setAudi_acc(int audi_acc) {
+        this.audi_acc = audi_acc;
     }
 }

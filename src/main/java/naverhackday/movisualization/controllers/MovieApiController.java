@@ -1,9 +1,6 @@
 package naverhackday.movisualization.controllers;
 
-import naverhackday.movisualization.dto.BoxOfficeRecord;
-import naverhackday.movisualization.dto.BoxOfficeResult;
-import naverhackday.movisualization.dto.DailyBoxOfficeResult;
-import naverhackday.movisualization.dto.MovieBoxOfficeResponse;
+import naverhackday.movisualization.dto.*;
 import naverhackday.movisualization.exception.InvalidDateRangeException;
 import naverhackday.movisualization.storage.BoxOfficeDao;
 import naverhackday.movisualization.storage.BoxOfficeStorageService;
@@ -52,6 +49,7 @@ public class MovieApiController {
             boxOfficeResult.setSales_amt(e.getSalesAmt());
             boxOfficeResult.setTmdb_movie_id(e.getTmdbId());
             boxOfficeResult.setTotal_rank(e.getTotalRank());
+            boxOfficeResult.setAudi_acc(e.getAudiAcc());
 
             dateMap.get(e.getCurrentDate()).add(boxOfficeResult);
         }
@@ -71,6 +69,16 @@ public class MovieApiController {
 
         return result;
 
+    }
+
+    @GetMapping("top_movie_records")
+    public List<TopMovie> topMovieRecords(@RequestParam(required = false) String from_dt, @RequestParam(required = false) String to_dt) {
+
+        if ((from_dt == null) || (to_dt == null)) {
+            throw new InvalidDateRangeException("Date is not valid");
+        }
+
+        return boxOfficeRepository.getTopMovies(from_dt, to_dt);
     }
 
     @GetMapping("hello")
