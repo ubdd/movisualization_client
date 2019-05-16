@@ -4,26 +4,26 @@ import java.util.List;
 
 public class TopMovie {
 
-    private String movie_nm;
+    private String movie_name;
 
-    private List<Integer> rank;
+    private List<Integer> total_rank;
 
     private List<String> date;
 
-    public String getMovie_nm() {
-        return movie_nm;
+    public String getMovie_name() {
+        return movie_name;
     }
 
-    public void setMovie_nm(String movie_nm) {
-        this.movie_nm = movie_nm;
+    public void setMovie_name(String movie_name) {
+        this.movie_name = movie_name;
     }
 
-    public List<Integer> getRank() {
-        return rank;
+    public List<Integer> getTotal_rank() {
+        return total_rank;
     }
 
-    public void setRank(List<Integer> rank) {
-        this.rank = rank;
+    public void setTotal_rank(List<Integer> total_rank) {
+        this.total_rank = total_rank;
     }
 
     public List<String> getDate() {

@@ -95,15 +95,15 @@ public class BoxOfficeDao implements BoxOfficeStorageService {
         for (CodeAndNameVO vo : topMovieBoxOfficeRecordList) {
             List<BoxOfficeRecord> boxOfficeRecordList = jdbcTemplate.query(query2, new BeanPropertyRowMapper<BoxOfficeRecord>(BoxOfficeRecord.class), startDate, endDate, vo.getMovieCd());
             TopMovie topMovie = new TopMovie();
-            topMovie.setMovie_nm(vo.getMovieNm());
+            topMovie.setMovie_name(vo.getMovieNm());
             topMovie.setDate(new ArrayList<>());
-            topMovie.setRank(new ArrayList<>());
+            topMovie.setTotal_rank(new ArrayList<>());
 
             boxOfficeRecordList.sort((a, b) -> a.getCurrentDate().compareTo(b.getCurrentDate()));
 
             for (BoxOfficeRecord e : boxOfficeRecordList) {
                 topMovie.getDate().add(e.getCurrentDate());
-                topMovie.getRank().add(e.getTotalRank());
+                topMovie.getTotal_rank().add(e.getTotalRank());
             }
             result.add(topMovie);
 
