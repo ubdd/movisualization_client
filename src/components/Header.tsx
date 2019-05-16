@@ -66,14 +66,16 @@ const NavList = styled.ul`
 //   z-index: 2;
 // `;
 
-const LogoText = styled.div`
+const LogoText = styled.span`
   all: unset;
   font-size: 2.5rem;
   position: relative;
   z-index: 2;
   font-style: italic;
   font-family: "Playfair Display", serif;
-  text-shadow: 0px 5px 5px #0a0e27;
+  background: linear-gradient(to right, #e74c3c, #f1c40f, #2ecc71, #3498db);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 const CustomHeaderContainer = styled.div`
@@ -130,7 +132,8 @@ class Header extends React.Component<Props, State> {
           <PlainLink to={"/"}>
             {/* <LogoImage src={Logo} /> */}
             <LogoText>
-              <span style={{ color: "#e74c3c", fontWeight: "bolder" }}>
+              <span>Movisualization</span>
+              {/* <span style={{ color: "#e74c3c", fontWeight: "bolder" }}>
                 Mov
               </span>
               <span style={{ color: "#f1c40f", fontWeight: "bolder" }}>is</span>
@@ -139,7 +142,7 @@ class Header extends React.Component<Props, State> {
               </span>
               <span style={{ color: "#3498db", fontWeight: "bolder" }}>
                 zation
-              </span>
+              </span> */}
             </LogoText>
           </PlainLink>
           <NavList>
