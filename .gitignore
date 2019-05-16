@@ -30,5 +30,4 @@ HELP.md
 .vscode/
 
 ### property ###
-
 /src/main/resources/application.yml
