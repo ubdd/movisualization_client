@@ -66,7 +66,17 @@ public class BoxOfficeDao implements BoxOfficeStorageService {
 
     @Override
     public List<BoxOfficeRecord> getWithDateRange(String startDate, String endDate) {
-        return null;
+        List<BoxOfficeRecord> result;
+        String query = "select tmdbId, salesAmt, movieNm, currentDate, audiCnt, rank, rankInten, rankOldAndNew, totalRank, b.multi, b.nation from boxoffice as b, movie as m where currentDate between ? and ? and b.movieCd = m.movieCd";
+
+        try {
+            result = jdbcTemplate.query(query, new BeanPropertyRowMapper<BoxOfficeRecord>(BoxOfficeRecord.class), startDate, endDate);
+        }
+        catch (EmptyResultDataAccessException e) {
+            throw new MovieNotFoundException("Movie not found");
+        }
+
+        return result;
     }
 
     @Override
