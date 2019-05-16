@@ -62,9 +62,14 @@ const SectionContainer = styled.div`
 interface Props {
   movies: any;
   loading: boolean;
+  boxoffice: any[];
 }
 
-export const HomePresenter: React.SFC<Props> = ({ movies, loading }) =>
+export const HomePresenter: React.SFC<Props> = ({
+  movies,
+  loading,
+  boxoffice
+}) =>
   loading ? (
     <Loader />
   ) : (
@@ -73,7 +78,7 @@ export const HomePresenter: React.SFC<Props> = ({ movies, loading }) =>
         <title>Home | {websiteTitle}</title>
       </Helmet>
       <Container>
-        <DailyBoxOfficeChart />
+        <DailyBoxOfficeChart boxOfficeResult={boxoffice} height={380} />
         <Carousel
           effect="fade"
           dotPosition={"right"}
