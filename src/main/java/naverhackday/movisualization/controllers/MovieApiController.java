@@ -20,7 +20,7 @@ public class MovieApiController {
     @GetMapping("movie/{tmdbId}")
     public MovieBoxOfficeResponse showBoxoffice(@PathVariable String tmdbId) {
 
-        return boxOfficeRepository.getListWithMovieCd(movieCd);
+        return boxOfficeRepository.getListWithMovieCd(tmdbId);
     }
 
     @GetMapping("hello")
