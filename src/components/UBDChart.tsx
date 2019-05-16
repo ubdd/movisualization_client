@@ -19,10 +19,8 @@ class UBDCHart extends React.Component<Props, State> {
   componentDidMount = async () => {
     const {
       data: { boxOfficeResult }
-    } = await kobisApi.get("", {
-      params: {
-        targetDt: "20190514"
-      }
+    } = await kobisApi.dailyBoxOffice({
+      targetDt: "20190514"
     });
     const { dailyBoxOfficeList: boxOfficeList } = boxOfficeResult;
     this.setState({ boxOfficeList });
