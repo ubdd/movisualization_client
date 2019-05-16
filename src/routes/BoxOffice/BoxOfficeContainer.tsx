@@ -103,12 +103,13 @@ export default class BoxOfficeContainer extends React.Component<Props, State> {
   };
 
   render() {
-    const { moviesBoxOffice, from_dt, to_dt } = this.state;
+    const { moviesBoxOffice, from_dt, to_dt, target_dt } = this.state;
     return (
       !this.state.loading && (
         <BoxOfficePresenter
           from_dt={from_dt}
           to_dt={to_dt}
+          target_dt={target_dt}
           moviesBoxOffice={moviesBoxOffice}
           changeRangePicker={this.changeRangePicker}
           boxOfficeResult={this.state.box_office_result}
