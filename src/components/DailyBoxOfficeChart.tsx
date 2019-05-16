@@ -46,34 +46,6 @@ const columns = [
       <Link to={`/film/${record.movieCd}`}>{movieNm}</Link>
     )
   }
-  // {
-  //   title: "총수익",
-  //   dataIndex: "salesAcc",
-  //   key: "salesAcc",
-  //   align,
-  //   render: (salesAcc: any) => `${numeral(salesAcc).format("0,0")}원`
-  // },
-  // {
-  //   title: "당일 수익",
-  //   dataIndex: "salesAmt",
-  //   key: "salesAmt",
-  //   align,
-  //   render: (salesAmt: any) => `${numeral(salesAmt).format("0,0")}원`
-  // },
-  // {
-  //   title: "당일 관객수",
-  //   dataIndex: "audiCnt",
-  //   key: "audiCnt",
-  //   align,
-  //   render: (audiCnt: any) => `${numeral(audiCnt).format("0,0")}명`
-  // },
-  // {
-  //   title: "총 관객수",
-  //   dataIndex: "audiAcc",
-  //   key: "audiAcc",
-  //   align,
-  //   render: (audiAcc: any) => `${numeral(audiAcc).format("0,0")}명`
-  // }
 ];
 
 const ChartContainer = styled.div`
@@ -198,7 +170,6 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
           tick: {
             format: (idx: any, title: any) => {
               return title;
-              // return title.length > 5 ? `${title.substring(0, 5)}...` : title;
             }
           },
           label: "영화명"
@@ -289,21 +260,26 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
 
     return (
       <ChartContainer>
-        <Table
-          dataSource={dailyBoxOfficeList}
-          columns={columns}
-          bordered
-          size="small"
-          pagination={false}
-        />
-        <BillboardContainer>
-          <Switch
-            onClick={this.toggleUBD}
-            checkedChildren="🍿"
-            unCheckedChildren="🚲"
-          />
-          {chart}
-        </BillboardContainer>
+        {dailyBoxOfficeList && (
+          <>
+            <Table
+              dataSource={dailyBoxOfficeList}
+              columns={columns}
+              bordered
+              size="small"
+              rowKey="uid"
+              pagination={false}
+            />
+            <BillboardContainer>
+              <Switch
+                onClick={this.toggleUBD}
+                checkedChildren="🍿"
+                unCheckedChildren="🚲"
+              />
+              {chart}
+            </BillboardContainer>
+          </>
+        )}
       </ChartContainer>
     );
   }

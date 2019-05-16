@@ -10,7 +10,7 @@ import NoImage from "../../static/image/popcorn.png";
 import { websiteTitle, genreWithEmoji } from "../../config/_mixin";
 import { VideoModal } from "../../components/VideoModal";
 import { TMDbMovieVideo, DailyRankAudiCnt } from "../../shared-interfaces";
-import BoxOfficeChart from "../../components/BoxOfficeChart";
+import MovieBoxOfficeChart from "../../components/MovieBoxOfficeChart";
 // import { ImageModal } from "../../components/ImageModal";
 import ImageZoom from "../../components/ImageZoom";
 const numeral = require("numeral");
@@ -662,7 +662,9 @@ export const MoviePresenter: React.SFC<Props> = ({
                 </Tagline>
               )}
               {result.overview && <Overview>{result.overview}</Overview>}
-              {boxOffices && <BoxOfficeChart dailyRankAudiCnt={boxOffices} />}
+              {boxOffices && (
+                <MovieBoxOfficeChart dailyRankAudiCnt={boxOffices} />
+              )}
               <Credit
                 id={id}
                 creditIndex={creditIndex}

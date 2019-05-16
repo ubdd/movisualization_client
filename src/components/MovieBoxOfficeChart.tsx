@@ -23,7 +23,7 @@ const ChartContainer = styled.div``;
   세 영화(어벤져스: 엔드게임, 어스, 돈)가 번갈아서 보여집니다.
 
 */
-export default class BoxOfficeChart extends React.Component<Props, State> {
+export default class MovieBoxOfficeChart extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
