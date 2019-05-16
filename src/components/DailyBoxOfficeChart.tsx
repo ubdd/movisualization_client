@@ -67,13 +67,12 @@ const BillboardContainer = styled.div`
 interface Props {
   boxOfficeResult: any;
   height: number;
+  targetDt: Moment;
 }
 
 interface State {
   myChart: any;
   dailyBoxOfficeList: any;
-  // targetDt: string;
-  targetDt: Moment;
   showUBD: boolean;
 }
 
@@ -83,8 +82,6 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
     this.state = {
       myChart: null,
       dailyBoxOfficeList: null,
-      targetDt: moment(Date.now()).subtract(1, "days"),
-      // targetDt: "20181201",
       showUBD: false
     };
   }
@@ -119,9 +116,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
         width: 650
       },
       title: {
-        text: `${moment(Date.now())
-          .subtract(1, "days")
-          .format("YYYY-MM-DD")} 박스오피스`
+        text: `${this.props.targetDt.format("YYYY-MM-DD")} 박스오피스`
       },
       bindto: "#dailyBoxOffice",
       color: {
