@@ -1,6 +1,7 @@
 package naverhackday.movisualization.controllers;
 
 import naverhackday.movisualization.client.KobisClient;
+import naverhackday.movisualization.client.TMDBClient;
 import naverhackday.movisualization.dto.*;
 import naverhackday.movisualization.exception.InvalidDateRangeException;
 import naverhackday.movisualization.storage.BoxOfficeDao;
@@ -19,6 +20,7 @@ public class MovieApiController {
     private BoxOfficeStorageService boxOfficeRepository;
 
     private KobisClient kobisClient = new KobisClient();
+    private TMDBClient tmdbClient = new TMDBClient();
 
     @GetMapping("movie/{tmdbId}")
     public MovieBoxOfficeResponse showBoxoffice(@PathVariable String tmdbId) {
@@ -87,6 +89,33 @@ public class MovieApiController {
     @GetMapping("find/{peopleNm}")
     public String getCode(@PathVariable String peopleNm) {
         return kobisClient.getPeopleCd(peopleNm);
+    }
+
+    @GetMapping("person_stat/{personId}")
+    public PersonStat personStat(@PathVariable String personId) {
+        List<TMDBCast> castList = tmdbClient.getCasts(personId);
+        double popularity = tmdbClient.getPopularity(personId);
+
+        double totalVotePoint = 0;
+        double totalVoteAvg = 0;
+        int totalVoteCount = 0;
+
+        for (TMDBCast cast : castList) {
+            totalVoteCount += cast.getVoteCount();
+            totalVotePoint += cast.getVoteCount() * cast.getVoteAverage();
+        }
+
+        totalVoteAvg = totalVotePoint / totalVoteCount;
+        int filmoCount = castList.size();
+
+        PersonStat personStat = new PersonStat();
+
+        personStat.setAvg_rate(totalVoteAvg);
+        personStat.setFilmo_count(filmoCount);
+        personStat.setPopularity(popularity);
+
+        return personStat;
+
     }
 
     @GetMapping("hello")
