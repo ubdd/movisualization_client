@@ -6,6 +6,7 @@ import { DatePicker } from "antd";
 import { Moment } from "moment";
 import MoviesBoxOfficeChart from "../../components/MoviesBoxOfficeChart";
 import DateRangeFilter from "../../components/DateRangeFilter";
+import styled from "styled-components";
 
 interface Props {
   boxOfficeResult: any[];
@@ -13,9 +14,15 @@ interface Props {
   moviesBoxOffice: any;
   from_dt: Moment;
   to_dt: Moment;
+  target_dt: Moment;
   changeDate: (date: Moment, dateString: string) => void;
   changeRangePicker: (date: any, dateString: string[]) => void;
 }
+
+const DailyBoxOfficeContainer = styled.div`
+  margin-top: 2.5rem;
+  font-size: 1.5rem;
+`;
 
 export const BoxOfficePresenter: React.SFC<Props> = ({
   boxOfficeResult,
@@ -24,6 +31,7 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
   moviesBoxOffice,
   from_dt,
   to_dt,
+  target_dt,
   changeRangePicker
 }) => {
   return (
@@ -45,11 +53,15 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
               moviesBoxOffice={moviesBoxOffice}
             />
           )}
-          <DatePicker onChange={changeDate} />
-          <DailyBoxOfficeChart
-            boxOfficeResult={boxOfficeResult}
-            height={1060}
-          />
+          <DailyBoxOfficeContainer>
+            날짜선택{" "}
+            <DatePicker onChange={changeDate} defaultValue={target_dt} />
+            <DailyBoxOfficeChart
+              boxOfficeResult={boxOfficeResult}
+              height={1060}
+              targetDt={target_dt}
+            />
+          </DailyBoxOfficeContainer>
         </>
       ) : (
         <></>
