@@ -2,8 +2,10 @@ package naverhackday.movisualization.controllers;
 
 import naverhackday.movisualization.client.KobisClient;
 import naverhackday.movisualization.client.KobisRestClient;
+import naverhackday.movisualization.client.NaverClient;
 import naverhackday.movisualization.client.TMDBClient;
 import naverhackday.movisualization.dto.*;
+import naverhackday.movisualization.dto.kobis.PeopleListResult;
 import naverhackday.movisualization.exception.InvalidDateRangeException;
 import naverhackday.movisualization.storage.BoxOfficeDao;
 import naverhackday.movisualization.storage.BoxOfficeStorageService;
@@ -25,6 +27,9 @@ public class MovieApiController {
 
     @Autowired
     private KobisRestClient kobisRestClient;
+
+    @Autowired
+    private NaverClient naverClient;
 
     @GetMapping("movie/{tmdbId}")
     public MovieBoxOfficeResponse showBoxoffice(@PathVariable String tmdbId) {
@@ -91,19 +96,34 @@ public class MovieApiController {
     }
 
     @GetMapping("find/{peopleNm}")
-    public String getCode(@PathVariable String peopleNm) {
+    public PeopleListResult getCode(@PathVariable String peopleNm) {
         //return kobisClient.getPeopleCd(peopleNm);
-        return kobisRestClient.getPeopleCd(peopleNm).getPeopleListResult().getSource();
+        return kobisRestClient.getPeopleCd(peopleNm).getPeopleListResult();
     }
 
     @GetMapping("person_stat/{personId}")
     public PersonStat personStat(@PathVariable String personId) {
         List<TMDBCast> castList = tmdbClient.getCasts(personId);
-        double popularity = tmdbClient.getPopularity(personId);
+
+        TMDBPersonResult personResult = tmdbClient.getResult(personId);
+        double popularity = personResult.getPopularity();
+        String peopleNm = personResult.getName();
+
+        if (!peopleNm.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*")) {
+            List<String> knownList = personResult.getAlsoKnownAs();
+            for (String candidate : knownList) {
+                if (candidate.matches(".*[ㄱ-ㅎㅏ-ㅣ가-힣]+.*")) {
+                    peopleNm = candidate;
+                    break;
+                }
+            }
+        }
+
 
         double totalVotePoint = 0;
-        double totalVoteAvg = 0;
+        double totalVoteAvg;
         int totalVoteCount = 0;
+        long searchCnt = naverClient.getSearchCnt(peopleNm);
 
         for (TMDBCast cast : castList) {
             totalVoteCount += cast.getVoteCount();
@@ -116,11 +136,18 @@ public class MovieApiController {
         PersonStat personStat = new PersonStat();
 
         personStat.setAvg_rate(totalVoteAvg);
-        personStat.setFilmo_count(filmoCount);
+        personStat.setFilmo_cnt(filmoCount);
         personStat.setPopularity(popularity);
+        personStat.setSearch_cnt(searchCnt);
+        personStat.setPerson_name(peopleNm);
 
         return personStat;
 
+    }
+
+    @GetMapping("search/{keyword}")
+    public Long search(@PathVariable String keyword) {
+        return naverClient.getSearchCnt(keyword);
     }
 
     @GetMapping("hello")

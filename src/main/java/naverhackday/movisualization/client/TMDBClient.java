@@ -29,4 +29,8 @@ public class TMDBClient {
 
     }
 
+    public TMDBPersonResult getResult(String person_id) {
+        return restTemplate.getForObject(tmdbPersonDetailUrl + "/" + person_id + "?api_key=" + apiKey + "&language=ko-KR&append_to_response=image%2Cvideo", TMDBPersonResult.class);
+    }
+
 }
