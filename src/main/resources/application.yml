@@ -1,3 +1,11 @@
+kobis: d95e147f4ad3c914e83f8c8f01a01058
+
+api-key:
+  naver:
+    client-id: tJcUNsVqvd8RGFyNNIXB
+    client-secret: cBiRAlyAsK
+  tmdb: 4473bb4e23c45395bf32ab11f3aa663f,d06188b89bcc40be89ee10d8e2301993
+
 server:
   port: 8080
 

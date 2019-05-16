@@ -1,5 +1,6 @@
 package naverhackday.movisualization.controllers;
 
+import naverhackday.movisualization.client.KobisClient;
 import naverhackday.movisualization.dto.*;
 import naverhackday.movisualization.exception.InvalidDateRangeException;
 import naverhackday.movisualization.storage.BoxOfficeDao;
@@ -16,6 +17,8 @@ public class MovieApiController {
 
     @Autowired
     private BoxOfficeStorageService boxOfficeRepository;
+
+    private KobisClient kobisClient = new KobisClient();
 
     @GetMapping("movie/{tmdbId}")
     public MovieBoxOfficeResponse showBoxoffice(@PathVariable String tmdbId) {
@@ -79,6 +82,11 @@ public class MovieApiController {
         }
 
         return boxOfficeRepository.getTopMovies(from_dt, to_dt);
+    }
+
+    @GetMapping("find/{peopleNm}")
+    public String getCode(@PathVariable String peopleNm) {
+        return kobisClient.getPeopleCd(peopleNm);
     }
 
     @GetMapping("hello")

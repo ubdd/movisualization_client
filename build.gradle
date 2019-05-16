@@ -18,5 +18,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'mysql:mysql-connector-java'
     implementation 'org.mariadb.jdbc:mariadb-java-client'
+    implementation 'com.fasterxml.jackson.core:jackson-core'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
