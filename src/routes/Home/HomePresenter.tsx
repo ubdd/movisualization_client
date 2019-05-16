@@ -7,6 +7,7 @@ import { Carousel } from "antd";
 import { Loader } from "../../components/Loader";
 import { websiteTitle } from "../../config/_mixin";
 import DailyBoxOfficeChart from "../../components/DailyBoxOfficeChart";
+import { Moment } from "moment";
 
 const Container = styled.div`
   margin: 30rem 0 10rem 0;
@@ -63,12 +64,14 @@ interface Props {
   movies: any;
   loading: boolean;
   boxoffice: any[];
+  target_dt: Moment;
 }
 
 export const HomePresenter: React.SFC<Props> = ({
   movies,
   loading,
-  boxoffice
+  boxoffice,
+  target_dt
 }) =>
   loading ? (
     <Loader />
@@ -78,7 +81,11 @@ export const HomePresenter: React.SFC<Props> = ({
         <title>Home | {websiteTitle}</title>
       </Helmet>
       <Container>
-        <DailyBoxOfficeChart boxOfficeResult={boxoffice} height={380} />
+        <DailyBoxOfficeChart
+          boxOfficeResult={boxoffice}
+          height={380}
+          targetDt={target_dt}
+        />
         <Carousel
           effect="fade"
           dotPosition={"right"}
