@@ -4,7 +4,7 @@ import chart from "billboard.js";
 import moment from "moment";
 
 interface Props {
-  movies_box_offices: any;
+  moviesBoxOffice: any;
 }
 
 interface State {
@@ -29,11 +29,11 @@ export default class MoviesBoxOfficeChart extends React.Component<
     };
   }
   componentDidMount = async () => {
-    const { movies_box_offices } = this.props;
-    this._renderChart(movies_box_offices);
+    const { moviesBoxOffice } = this.props;
+    this._renderChart(moviesBoxOffice);
   };
 
-  _renderChart = (...apis: object[]) => {
+  _renderChart = (moviesBoxOffice: object[]) => {
     /*
 
       json 구조:  { rank1, date1, rank2, date2, ... }
@@ -46,14 +46,12 @@ export default class MoviesBoxOfficeChart extends React.Component<
     let json = {};
     let xs = {};
     let names = {};
-    apis.forEach((api: any, idx: number) => {
-      const {
-        data: { rank, date }
-      } = api;
-      json[`rank${idx}`] = rank;
+    moviesBoxOffice.forEach((movieBoxOffice: any, idx: number) => {
+      const { total_rank, date } = movieBoxOffice;
+      json[`rank${idx}`] = total_rank;
       json[`date${idx}`] = date;
       xs[`rank${idx}`] = `date${idx}`;
-      names[`rank${idx}`] = api.movieNm;
+      names[`rank${idx}`] = movieBoxOffice.movie_name;
     });
     const myChart = chart.generate({
       bindto: "#chart2",

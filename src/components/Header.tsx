@@ -90,6 +90,12 @@ const PlainLink = styled(Link)`
   }
 `;
 
+const BoxOffice = styled.i`
+  font-size: 1.2rem;
+  position: relative;
+  margin-right: 1rem;
+`;
+
 interface Props extends RouteComponentProps<any> {}
 
 interface State {
@@ -144,6 +150,9 @@ class Header extends React.Component<Props, State> {
           </PlainLink>
           <NavList>
             <CustomHeaderContainer>
+              <PlainLink to={"/boxOffice"}>
+                <BoxOffice className="fas fa-ticket-alt" />
+              </PlainLink>
               <HeaderSearch />
             </CustomHeaderContainer>
           </NavList>

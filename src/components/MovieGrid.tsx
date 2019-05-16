@@ -91,10 +91,8 @@ export default class MovieGrid extends React.Component<Props, State> {
 
   componentDidMount = async () => {
     const { getAPI, term, id } = this.props;
-    console.log(this.props);
     try {
       let movies: any[] = [];
-      console.log(term);
       if (term !== undefined) {
         if (term !== "" && term.trim() !== "") {
           console.log(term);
@@ -132,9 +130,7 @@ export default class MovieGrid extends React.Component<Props, State> {
 
   componentDidUpdate = async (prevProps: any, prevState: any) => {
     if (this.props.term !== "" && this.props.term !== prevProps.term) {
-      console.log(this.props.term, prevProps.term);
       const { getAPI, term, id } = this.props;
-      console.log(this.props);
       try {
         let movies: any[] = [];
         if (term !== undefined) {
@@ -215,7 +211,6 @@ export default class MovieGrid extends React.Component<Props, State> {
 
   render() {
     const { title } = this.props;
-    console.log(this.state);
     const { movies, loading, noMoreMovie } = this.state;
     return (
       <Container>
