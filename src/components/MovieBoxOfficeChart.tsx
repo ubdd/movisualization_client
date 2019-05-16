@@ -39,7 +39,7 @@ export default class MovieBoxOfficeChart extends React.Component<Props, State> {
     // json.date = json.date.slice(0, 10);
     this.state.myChart.load({
       names: {
-        rank: `《${movieNm}》 순위`,
+        total_rank: `《${movieNm}》 순위`,
         audi_cnt: `《${movieNm}》 당일 관객수`
       },
       json
@@ -66,19 +66,19 @@ export default class MovieBoxOfficeChart extends React.Component<Props, State> {
         xFormat: "%Y-%m-%d",
         json: {
           date: json.date,
-          rank: json.rank,
+          total_rank: json.total_rank,
           audi_cnt: json.audi_cnt
         },
         axes: {
-          rank: "y",
+          total_rank: "y",
           audi_cnt: "y2"
         },
         types: {
-          rank: "step",
-          audi_cnt: "area-spline"
+          total_rank: "step",
+          audi_cnt: "area"
         },
         names: {
-          rank: `《${json.movie_name}》 순위`,
+          total_rank: `《${json.movie_name}》 순위`,
           audi_cnt: `《${json.movie_name}》 당일 관객수`
         }
       },
@@ -130,6 +130,17 @@ export default class MovieBoxOfficeChart extends React.Component<Props, State> {
             } else {
               return `${value}위`;
             }
+          }
+        }
+      },
+      area: {
+        linearGradient: true
+      },
+      point: {
+        r: 0,
+        focus: {
+          expand: {
+            r: 5
           }
         }
       }
