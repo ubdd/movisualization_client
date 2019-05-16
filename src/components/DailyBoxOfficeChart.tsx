@@ -1,6 +1,6 @@
 import React from "react";
 import chart from "billboard.js";
-import { ubdBoxOfficeApis } from "../api";
+// import { ubdBoxOfficeApis } from "../api";
 import moment, { Moment } from "moment";
 import styled from "styled-components";
 import { Table as AntdTable } from "antd";
@@ -34,7 +34,7 @@ const columns = [
       ) : rank_inten > 0 ? (
         <span style={{ color: "#51ca61" }}>+{rank_inten}</span>
       ) : (
-        <span style={{ color: "#e94d3f" }}>{rank_inten}</span>
+        <span style={{ color: "#fd7150" }}>{rank_inten}</span>
       )
   },
   {
@@ -43,7 +43,7 @@ const columns = [
     key: "movie_nm",
     align,
     render: (movie_nm: any, record: any) => (
-      <Link to={`/film/${record.movieCd}`}>{movie_nm}</Link>
+      <Link to={`/film/${record.tmdb_movie_id}`}>{movie_nm}</Link>
     )
   }
   // {
@@ -69,10 +69,10 @@ const columns = [
   // },
   // {
   //   title: "총 관객수",
-  //   dataIndex: "audiAcc",
-  //   key: "audiAcc",
+  //   dataIndex: "audi_acc",
+  //   key: "audi_acc",
   //   align,
-  //   render: (audiAcc: any) => `${numeral(audiAcc).format("0,0")}명`
+  //   render: (audi_acc: any) => `${numeral(audi_acc).format("0,0")}명`
   // }
 ];
 
@@ -92,7 +92,10 @@ const BillboardContainer = styled.div`
   text-align: right;
 `;
 
-interface Props {}
+interface Props {
+  boxOfficeResult: any;
+  height: number;
+}
 
 interface State {
   myChart: any;
@@ -115,15 +118,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
   }
 
   componentDidMount = async () => {
-    const data = await ubdBoxOfficeApis.dailyBoxOfficeWithRange(
-      this.state.targetDt.format("YYYYMMDD"),
-      this.state.targetDt.format("YYYYMMDD")
-      // this.state.targetDt,
-      // this.state.targetDt
-    );
-    const box_office_result = data.data[0].box_office_result.slice(0, 10);
-    this.setState({ dailyBoxOfficeList: box_office_result });
-    this._renderChart(box_office_result);
+    this._renderChart(this.props.boxOfficeResult);
   };
 
   //   _rerenderChart = (dailyBoxOfficeList: any) => {
@@ -148,7 +143,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
     });
     const myChart = chart.generate({
       size: {
-        height: 380,
+        height: this.props.height,
         width: 650
       },
       title: {
@@ -212,7 +207,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
       tooltip: {
         format: {
           value: (value: number, ratio: any, id: any) => {
-            console.log(value, ratio, id);
+            // console.log(value, ratio, id);
             if (id === "sales_amt") {
               return `${koreanNumeral(value, true)}원`;
             } else {
@@ -235,15 +230,15 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
     let UBDArray: any[] = [];
     let categories: string[] = [];
     dailyBoxOfficeList.forEach((movie: any) => {
-      const audie = parseInt(movie.audiAcc);
+      const audie = parseInt(movie.audi_acc);
       UBDArray.push((audie / 170000).toFixed(2));
     });
     dailyBoxOfficeList.forEach((movie: any) => categories.push(movie.movie_nm));
     const myChart = chart.generate({
       bindto: "#UBDChart",
       size: {
-        height: 380,
-        width: 650
+        width: 650,
+        height: this.props.height
       },
       title: {
         text: `${moment(Date.now())
@@ -275,8 +270,11 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
   componentDidUpdate(prevProps: Props, prevState: State) {
     if (prevState.showUBD !== this.state.showUBD) {
       this.state.showUBD
-        ? this._renderUBDChart(this.state.dailyBoxOfficeList)
-        : this._renderChart(this.state.dailyBoxOfficeList);
+        ? this._renderUBDChart(this.props.boxOfficeResult)
+        : this._renderChart(this.props.boxOfficeResult);
+    }
+    if (prevProps.boxOfficeResult !== this.props.boxOfficeResult) {
+      this._renderChart(this.props.boxOfficeResult);
     }
   }
 
@@ -285,7 +283,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
   };
 
   render() {
-    const { dailyBoxOfficeList } = this.state;
+    const boxOfficeResult = this.props.boxOfficeResult;
     let chart = this.state.showUBD ? (
       <div id="UBDChart" />
     ) : (
@@ -295,7 +293,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
     return (
       <ChartContainer>
         <Table
-          dataSource={dailyBoxOfficeList}
+          dataSource={boxOfficeResult}
           columns={columns}
           bordered
           size="small"
