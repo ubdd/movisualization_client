@@ -82,6 +82,12 @@ export const GlobalStyle = createGlobalStyle`
   .ant-table-thead>tr>th .ant-table-column-sorter {
     vertical-align: baseline;
   }
+  .ant-switch {
+    background-color: #e4bb13
+  }
+  .ant-switch-checked {
+    background-color: white
+  }
 
 
   /* billboard style */
