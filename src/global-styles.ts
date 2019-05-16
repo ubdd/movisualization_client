@@ -2,6 +2,7 @@ import reset from "styled-reset";
 import { createGlobalStyle } from "./typed-components";
 import { fontSize, color } from "./config/_mixin";
 import "./static/css/mytheme.css";
+import "react-toastify/dist/ReactToastify.css";
 export const GlobalStyle = createGlobalStyle`
   ${reset};
   @import url("https://use.fontawesome.com/releases/v5.8.2/css/all.css");
@@ -123,6 +124,10 @@ export const GlobalStyle = createGlobalStyle`
     letter-spacing: -0.3px;
   }
 
+  /* medium zoom */
+  .medium-zoom-overlay{
+    z-index: 6;
+  }
 
   /* animations */
   @keyframes spin {

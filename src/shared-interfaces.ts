@@ -53,7 +53,7 @@ export interface SpokenLanguage {
   name: string;
 }
 
-export interface DailyRandAudiCnt {
+export interface DailyRankAudiCnt {
   movieNm: string;
   data: {
     date: string[];
@@ -202,7 +202,7 @@ export interface MovieDetail {
   /* movie box office with other api */
   date: string[];
   rank: number[];
-  totalRank: number[];
+  total_rank: number[];
   audi_cnt: number[];
   audi_acc: number[];
   multi: string;

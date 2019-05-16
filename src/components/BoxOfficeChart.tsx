@@ -2,12 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import chart from "billboard.js";
 import moment from "moment";
-import { DailyRandAudiCnt } from "../shared-interfaces";
+import { DailyRankAudiCnt } from "../shared-interfaces";
 
 // const tick: number = 4000;
 
 interface Props {
-  dailyRankAudiCnt: DailyRandAudiCnt | null;
+  dailyRankAudiCnt: DailyRankAudiCnt | null;
 }
 
 interface State {
@@ -54,13 +54,13 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
     this.state.myChart.load({
       names: {
         rank: `《${movieNm}》 순위`,
-        audiCnt: `《${movieNm}》 당일 관객수`
+        audi_cnt: `《${movieNm}》 당일 관객수`
       },
       json
     });
   };
 
-  _renderChart = (api: any) => {
+  _renderChart = (json: any) => {
     /*
 
       json 구조:  { date, rank, audiCnt }
@@ -69,8 +69,7 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
       axis의 object는 x, y, y2로 꼭 정해진 값을 사용해야 합니다.
 
       */
-    const { data: json, movieNm } = api;
-    // json.date = json.date.slice(0, 10);
+
     const myChart = chart.generate({
       title: {
         text: `박스오피스 순위 & 당일 관객수`
@@ -79,18 +78,22 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
       data: {
         x: "date",
         xFormat: "%Y-%m-%d",
-        json: json,
+        json: {
+          date: json.date,
+          rank: json.rank,
+          audi_cnt: json.audi_cnt
+        },
         axes: {
           rank: "y",
-          audiCnt: "y2"
+          audi_cnt: "y2"
         },
         types: {
           rank: "step",
-          audiCnt: "area-spline"
+          audi_cnt: "area-spline"
         },
         names: {
-          rank: `《${movieNm}》 순위`,
-          audiCnt: `《${movieNm}》 당일 관객수`
+          rank: `《${json.movie_name}》 순위`,
+          audi_cnt: `《${json.movie_name}》 당일 관객수`
         }
       },
       axis: {
@@ -117,7 +120,7 @@ export default class BoxOfficeChart extends React.Component<Props, State> {
       },
       colors: {
         rank: "#ff0000",
-        audiCnt: "#00ff00",
+        audi_cnt: "#00ff00",
         date: "#0000ff"
       },
       zoom: {
