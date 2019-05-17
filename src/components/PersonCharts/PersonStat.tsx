@@ -20,6 +20,7 @@ const StatContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.div`
@@ -27,7 +28,9 @@ const Title = styled.div`
     "nanumgothic", "Dotum";
   font-size: 1rem;
   margin: 0.7rem 0;
-  text-align: center;
+  width: fit-content;
+  padding: 5px;
+  background-color: rgba(0, 0, 0, 0.8);
 `;
 
 const Highlight = styled.span`
