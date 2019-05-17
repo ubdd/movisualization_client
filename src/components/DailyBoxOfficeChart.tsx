@@ -101,16 +101,18 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
     this._renderChart(this.props.boxOfficeResult);
   };
 
-  //   _rerenderChart = (dailyBoxOfficeList: any) => {
-  //     // json.date = json.date.slice(0, 10);
-  //     this.state.myChart.load({
-  //       names: {
-  //         rank: `《${movie_nm}》 순위`,
-  //         audi_cnt: `《${movie_nm}》 당일 관객수`
-  //       },
-  //       json
-  //     });
-  //   };
+  _rerenderChart = (dailyBoxOfficeList: any) => {
+    // json.date = json.date.slice(0, 10);
+    let column: string[] = ["UBD"];
+    let UBDArray: any[] = [];
+    dailyBoxOfficeList.forEach((movie: any) => {
+      const audie = parseInt(movie.audi_acc);
+      UBDArray.push((audie / 170000).toFixed(2));
+    });
+    this.state.myChart.load({
+      columns: [column.concat(UBDArray)]
+    });
+  };
 
   _renderChart = (dailyBoxOfficeList: any) => {
     let movie_nm: any = [];
@@ -200,12 +202,16 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
   };
 
   _renderUBDChart = (dailyBoxOfficeList: any) => {
-    let column: string[] = ["UBD"];
+    let column: any[] = ["UBD"];
     let UBDArray: any[] = [];
+    let maxArray: any[] = [];
     let categories: string[] = [];
     dailyBoxOfficeList.forEach((movie: any) => {
+      UBDArray.push(0);
+    });
+    dailyBoxOfficeList.forEach((movie: any) => {
       const audie = parseInt(movie.audi_acc);
-      UBDArray.push((audie / 170000).toFixed(2));
+      maxArray.push((audie / 170000).toFixed(2));
     });
     dailyBoxOfficeList.forEach((movie: any) => categories.push(movie.movie_nm));
     const myChart = chart.generate({
@@ -233,10 +239,18 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
         x: {
           type: "category",
           categories: categories
+        },
+        y: {
+          max: Math.max.apply(null, maxArray)
         }
       }
     });
-    this.setState({ myChart });
+    // this.setState({myCh})
+    this.setState({ myChart }, () =>
+      setTimeout(() => {
+        this._rerenderChart(dailyBoxOfficeList);
+      }, 500)
+    );
   };
 
   componentDidUpdate(prevProps: Props, prevState: State) {
