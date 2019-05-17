@@ -20,6 +20,10 @@ export const ubdBoxOfficeApis = {
     ubdApiBase.get("top_movie_records", { params: { from_dt, to_dt } })
 };
 
+export const ubdPersonApis = {
+  stat: (person_id: string) => ubdApiBase.get(`person_stat/${person_id}`)
+};
+
 /* base kobis api axios object */
 const kobisApiBase = axios.create({
   baseURL: "https://www.kobis.or.kr/kobisopenapi/webservice/rest/",
