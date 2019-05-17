@@ -221,11 +221,7 @@ export const PersonPresenter: React.SFC<Props> = ({
             차트
           </ContainerTitle>
           <Flex>
-            <PersonStat
-              person={person}
-              id={personId}
-              getAPI={tmdbApis.filmography}
-            />
+            <PersonStat person={person} id={personId} />
             <PersonGenrePref id={personId} getAPI={tmdbApis.filmography} />
           </Flex>
         </ChartContainer>
