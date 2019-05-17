@@ -48,12 +48,18 @@ const columns = [
   }
 ];
 
-const ChartContainer = styled.div`
+const DailyBoxOfficeChartContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
+  z-index: 1;
+`;
+
+const ChartContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1;
 `;
 
 const Table = styled(AntdTable)`
@@ -62,6 +68,12 @@ const Table = styled(AntdTable)`
 
 const BillboardContainer = styled.div`
   text-align: right;
+`;
+
+const Title = styled.div`
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: "Nanum Myeongjo", serif;
 `;
 
 interface Props {
@@ -114,9 +126,6 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
       size: {
         height: this.props.height,
         width: 650
-      },
-      title: {
-        text: `${this.props.targetDt.format("YYYY-MM-DD")} 박스오피스`
       },
       bindto: "#dailyBoxOffice",
       color: {
@@ -257,28 +266,34 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
     );
 
     return (
-      <ChartContainer>
-        {boxOfficeResult && (
-          <>
-            <Table
-              dataSource={boxOfficeResult}
-              columns={columns}
-              bordered
-              size="small"
-              rowKey="uid"
-              pagination={false}
-            />
-            <BillboardContainer>
-              <Switch
-                onClick={this.toggleUBD}
-                checkedChildren="🍿"
-                unCheckedChildren="🚲"
+      <DailyBoxOfficeChartContainer>
+        <Title>
+          🍿 {this.props.targetDt.format("YYYY년 MM월 DD일")}{" "}
+          <Link to={"/boxOffice"}>박스오피스</Link> 🍿
+        </Title>
+        <ChartContainer>
+          {boxOfficeResult && (
+            <>
+              <Table
+                dataSource={boxOfficeResult}
+                columns={columns}
+                bordered
+                size="small"
+                rowKey="uid"
+                pagination={false}
               />
-              {chart}
-            </BillboardContainer>
-          </>
-        )}
-      </ChartContainer>
+              <BillboardContainer>
+                <Switch
+                  onClick={this.toggleUBD}
+                  checkedChildren="🍿"
+                  unCheckedChildren="🚲"
+                />
+                {chart}
+              </BillboardContainer>
+            </>
+          )}
+        </ChartContainer>
+      </DailyBoxOfficeChartContainer>
     );
   }
 }

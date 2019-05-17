@@ -19,9 +19,14 @@ interface Props {
   changeRangePicker: (date: any, dateString: string[]) => void;
 }
 
+const Container = styled.div`
+  margin: 2rem 0;
+`;
+
 const DailyBoxOfficeContainer = styled.div`
   margin-top: 2.5rem;
   font-size: 1.5rem;
+  font-weight: 700;
 `;
 
 export const BoxOfficePresenter: React.SFC<Props> = ({
@@ -40,7 +45,7 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
         <title>Box office | {websiteTitle}</title>
       </Helmet>
       {!loading ? (
-        <>
+        <Container>
           <DateRangeFilter
             changeRangePicker={changeRangePicker}
             from_dt={from_dt}
@@ -62,7 +67,7 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
               targetDt={target_dt}
             />
           </DailyBoxOfficeContainer>
-        </>
+        </Container>
       ) : (
         <></>
       )}

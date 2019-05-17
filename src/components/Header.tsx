@@ -88,7 +88,7 @@ const CustomHeaderContainer = styled.div`
 
 const PlainLink = styled(Link)`
   &:hover {
-    color: white;
+    /* color: white; */
   }
 `;
 
