@@ -19,9 +19,14 @@ interface Props {
   changeRangePicker: (date: any, dateString: string[]) => void;
 }
 
+const Container = styled.div`
+  margin: 2rem 0;
+`;
+
 const DailyBoxOfficeContainer = styled.div`
   margin-top: 2.5rem;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 `;
 
 const ChartTitle = styled.div`
@@ -45,7 +50,7 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
         <title>Box office | {websiteTitle}</title>
       </Helmet>
       {!loading ? (
-        <>
+        <Container>
           <ChartTitle>📉 기간별 박스오피스 순위 변동</ChartTitle>
           <DateRangeFilter
             changeRangePicker={changeRangePicker}
@@ -68,7 +73,7 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
               targetDt={target_dt}
             />
           </DailyBoxOfficeContainer>
-        </>
+        </Container>
       ) : (
         <></>
       )}

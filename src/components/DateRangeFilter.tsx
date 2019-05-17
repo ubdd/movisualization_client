@@ -30,7 +30,7 @@ export default class DateRangeFilter extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      radio: "manual"
+      radio: "week"
     };
   }
 
@@ -45,6 +45,7 @@ export default class DateRangeFilter extends React.Component<Props, State> {
     const three_months_ago = moment(Date.now()).subtract(3, "months");
     const year_ago = moment(Date.now()).subtract(1, "years");
     const beginning = moment(Date.now()).subtract(27, "years");
+    console.log(this.state);
     return (
       <DateFilterContainer>
         <Radio.Group style={radioStyle} value={radio} buttonStyle="solid">
@@ -98,7 +99,7 @@ export default class DateRangeFilter extends React.Component<Props, State> {
         <RangePicker
           onChange={(date: any, dateString: string[]) => {
             changeRangePicker(date, dateString);
-            this.setState({ radio: "manual" });
+            // this.setState({ radio: "manual" });
           }}
           value={[moment(from_dt, dateFormat), moment(to_dt, dateFormat)]}
           format={displayFormat}

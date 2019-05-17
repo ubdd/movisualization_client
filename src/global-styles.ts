@@ -98,6 +98,12 @@ export const GlobalStyle = createGlobalStyle`
   .ant-switch-checked {
     background-color: white;
   }
+  .ant-table-small>.ant-table-content>.ant-table-body>table>.ant-table-tbody>tr>td{
+    background-color: #363636 !important;
+    &:hover{
+      background: grey !important;
+    }
+  }
 
   /* billboard style */
   .bb-axis-y text,
