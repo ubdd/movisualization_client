@@ -104,9 +104,6 @@ export const GlobalStyle = createGlobalStyle`
       background: grey !important;
     }
   }
-  
-  .ant-table-tbody>tr {
-  }
 
   /* billboard style */
   .bb-axis-y text,
