@@ -3,6 +3,7 @@ import chart from "billboard.js";
 import { tmdbApis } from "../../api";
 import { genreWithEmoji } from "../../config/_mixin";
 import { Genre } from "../../shared-interfaces";
+import styled from "styled-components";
 
 interface GenreWithCount extends Genre {
   count: number;
@@ -16,6 +17,25 @@ interface Props {
 interface State {
   genreName: GenreWithCount[];
 }
+
+const GenreContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const Title = styled.div`
+  font-family: Helvetica, "Apple SD Gothic Neo", Arial, sans-serif,
+    "nanumgothic", "Dotum";
+  font-size: 1rem;
+  margin: 0.7rem 0;
+  text-align: center;
+`;
+
+const Highlight = styled.span`
+  color: #e94d3f;
+  font-weight: 800;
+`;
 
 class PersonGenrePref extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -35,6 +55,7 @@ class PersonGenrePref extends React.Component<Props, State> {
     } = await getAPI(id);
     this._getGenres(movies, genres);
     this._renderChart();
+    console.log(this.state.genreName[0].name);
   };
 
   _getGenres = (movies: any, genres: GenreWithCount[]) => {
@@ -82,7 +103,16 @@ class PersonGenrePref extends React.Component<Props, State> {
   };
 
   render() {
-    return <div id="personGenrePref" />;
+    const topGenre =
+      this.state.genreName[0] && genreWithEmoji(this.state.genreName[0].name);
+    return (
+      <GenreContainer>
+        <div id="personGenrePref" />
+        <Title>
+          <Highlight>{topGenre}</Highlight> 장르의 영화에 가장 많이 출연했어요
+        </Title>
+      </GenreContainer>
+    );
   }
 }
 
