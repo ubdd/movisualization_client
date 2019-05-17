@@ -70,7 +70,7 @@ export const normalize = (
     console.error(
       "Raw value is lower than min entry or entered wrong raw value."
     );
-    return minEntry.toFixed(fixed);
+    return normalizedMin.toFixed(fixed);
   }
   if (shiftedNormalized > normalizedMax) {
     console.error(

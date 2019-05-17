@@ -12,14 +12,8 @@ const DateFilterContainer = styled.div`
   margin-bottom: 2rem;
 `;
 
-const Subtitle = styled.div`
-  font-weight: 700;
-  font-size: 1.5rem;
-  margin-right: 0.5rem;
-`;
-
 const radioStyle = {
-  marginRight: "0.5rem"
+  marginRight: "1rem"
 };
 
 interface Props {
@@ -54,7 +48,6 @@ export default class DateRangeFilter extends React.Component<Props, State> {
     console.log(this.state);
     return (
       <DateFilterContainer>
-        <Subtitle>기간</Subtitle>
         <Radio.Group style={radioStyle} value={radio} buttonStyle="solid">
           <Radio.Button
             onClick={() => {

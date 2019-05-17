@@ -1,7 +1,6 @@
 import React from "react";
 import chart from "billboard.js";
-// import { ubdBoxOfficeApis } from "../api";
-import moment, { Moment } from "moment";
+import { Moment } from "moment";
 import styled from "styled-components";
 import { Table as AntdTable } from "antd";
 import { Link } from "react-router-dom";
@@ -216,9 +215,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
         height: this.props.height
       },
       title: {
-        text: `${moment(Date.now())
-          .subtract(1, "days")
-          .format("YYYY-MM-DD")} UBD`
+        text: `${this.props.targetDt.format("YYYY-MM-DD")} UBD`
       },
       data: {
         columns: [column.concat(UBDArray)],

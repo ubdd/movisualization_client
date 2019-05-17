@@ -48,15 +48,13 @@ export default class extends React.Component<Props, State> {
   };
   render() {
     const { movies, loading, boxoffice, target_dt } = this.state;
-    return !loading ? (
+    return (
       <HomePresenter
         movies={movies}
         loading={loading}
         boxoffice={boxoffice}
         target_dt={target_dt}
       />
-    ) : (
-      <></>
     );
   }
 }

@@ -29,6 +29,11 @@ const DailyBoxOfficeContainer = styled.div`
   font-weight: 700;
 `;
 
+const ChartTitle = styled.div`
+  font-size: 1.4rem;
+  margin: 1rem 0;
+`;
+
 export const BoxOfficePresenter: React.SFC<Props> = ({
   boxOfficeResult,
   loading,
@@ -46,6 +51,7 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
       </Helmet>
       {!loading ? (
         <Container>
+          <ChartTitle>📉 기간별 박스오피스 순위 변동</ChartTitle>
           <DateRangeFilter
             changeRangePicker={changeRangePicker}
             from_dt={from_dt}
@@ -59,7 +65,7 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
             />
           )}
           <DailyBoxOfficeContainer>
-            날짜선택{" "}
+            <ChartTitle>📊 날짜별 박스오피스 순위 </ChartTitle>
             <DatePicker onChange={changeDate} defaultValue={target_dt} />
             <DailyBoxOfficeChart
               boxOfficeResult={boxOfficeResult}
