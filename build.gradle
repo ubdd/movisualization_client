@@ -5,6 +5,10 @@ plugins {
 
 apply plugin: 'io.spring.dependency-management'
 
+bootJar {
+    launchScript()
+}
+
 group = 'naverhackday'
 version = '1.0'
 sourceCompatibility = '1.8'
@@ -24,6 +28,3 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-bootJar {
-    launchScript()
-}
