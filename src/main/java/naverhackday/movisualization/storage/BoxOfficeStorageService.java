@@ -13,4 +13,6 @@ public interface BoxOfficeStorageService {
     List<BoxOfficeRecord> getWithDateRange(String startDate, String endDate);
 
     List<TopMovie> getTopMovies(String startDate, String endDate);
+
+    long getMaxAudiAcc(String movieCd);
 }

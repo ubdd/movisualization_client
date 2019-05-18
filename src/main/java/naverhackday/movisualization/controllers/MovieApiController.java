@@ -22,7 +22,9 @@ public class MovieApiController {
     @Autowired
     private BoxOfficeStorageService boxOfficeRepository;
 
-    private KobisClient kobisClient = new KobisClient();
+    @Autowired
+    private KobisClient kobisClient;
+
     private TMDBClient tmdbClient = new TMDBClient();
 
     @Autowired
@@ -119,6 +121,21 @@ public class MovieApiController {
             }
         }
 
+        String kobisMovieCd = kobisRestClient.getPeopleCd(peopleNm).getPeopleListResult().getPeopleList().get(0).getPeopleCd();
+
+        List<String> movieCdList = kobisClient.getMovieCds(kobisMovieCd);
+
+        Long audiAcc = 0L;
+
+        for (String movieCd : movieCdList) {
+            Long tmp = boxOfficeRepository.getMaxAudiAcc(movieCd);
+            if (tmp != null) {
+                audiAcc += tmp;
+            }
+        }
+
+
+
 
         double totalVotePoint = 0;
         double totalVoteAvg;
@@ -140,6 +157,7 @@ public class MovieApiController {
         personStat.setPopularity(popularity);
         personStat.setSearch_cnt(searchCnt);
         personStat.setPerson_name(peopleNm);
+        personStat.setAudi_acc(audiAcc);
 
         return personStat;
 

@@ -12,6 +12,8 @@ public class PersonStat {
 
     private long search_cnt;
 
+    private long audi_acc;
+
     public double getPopularity() {
         return popularity;
     }
@@ -50,5 +52,13 @@ public class PersonStat {
 
     public void setPerson_name(String person_name) {
         this.person_name = person_name;
+    }
+
+    public long getAudi_acc() {
+        return audi_acc;
+    }
+
+    public void setAudi_acc(long audi_acc) {
+        this.audi_acc = audi_acc;
     }
 }

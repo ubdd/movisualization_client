@@ -111,4 +111,14 @@ public class BoxOfficeDao implements BoxOfficeStorageService {
 
         return result;
     }
+
+    @Override
+    public long getMaxAudiAcc(String movieCd) {
+        String query = "select max(audiAcc) as maxAudiAcc from boxoffice where movieCd=?";
+
+        Long maxAudiAcc = jdbcTemplate.queryForObject(query, Long.class, movieCd);
+
+        return maxAudiAcc;
+
+    }
 }
