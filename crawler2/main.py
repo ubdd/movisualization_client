@@ -11,10 +11,13 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 with open(current_dir + '/api_keys.json', 'r') as fp:
     keys = json.load(fp)
 
+with open(current_dir + '/mysql_connect_conf.json') as fp:
+    mysql_config = json.load(fp)
+
 kobis = kc.KobisCrawler(api_keys=keys['kobis'])
 naver = nc.NaverCrawler(api_keys=keys['naver'])
 tmdb = tc.TmdbCrawler(api_keys=keys['tmdb'])
-repository = mysql_repository.MySqlRepository()
+repository = mysql_repository.MySqlRepository(config=mysql_config)
 
 start_date = datetime.date.today() - datetime.timedelta(days=1)
 end_date = start_date
