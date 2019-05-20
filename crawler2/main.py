@@ -3,10 +3,17 @@ import naver_crawler as nc
 import tmdb_crawler as tc
 import mysql_repository
 import datetime
+import os
+import json
 
-kobis = kc.KobisCrawler()
-naver = nc.NaverCrawler()
-tmdb = tc.TmdbCrawler()
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+with open(current_dir + '/api_keys.json', 'r') as fp:
+    keys = json.load(fp)
+
+kobis = kc.KobisCrawler(api_keys=keys['kobis'])
+naver = nc.NaverCrawler(api_keys=keys['naver'])
+tmdb = tc.TmdbCrawler(api_keys=keys['tmdb'])
 repository = mysql_repository.MySqlRepository()
 
 start_date = datetime.date.today() - datetime.timedelta(days=1)
