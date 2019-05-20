@@ -9,8 +9,8 @@ naver = nc.NaverCrawler()
 tmdb = tc.TmdbCrawler()
 repository = mysql_repository.MySqlRepository()
 
-start_date = datetime.date(2018, 7, 1)
-end_date = datetime.date(2018, 7, 15)
+start_date = datetime.date.today() - datetime.timedelta(days=1)
+end_date = start_date
 
 date_range = [datetime.date.fromordinal(i) for i in range(start_date.toordinal(), end_date.toordinal() + 1)]
 
