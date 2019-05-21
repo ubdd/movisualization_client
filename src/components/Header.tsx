@@ -46,9 +46,10 @@ const Container = styled.header`
 `;
 
 const List = styled.ul`
-  margin: 0 auto;
+  margin: 0 3rem;
   height: ${headerHeight};
-  min-width: 60rem;
+  width: 100%;
+  min-width: 30rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
