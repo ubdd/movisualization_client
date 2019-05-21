@@ -58,7 +58,6 @@ class PersonGenrePref extends React.Component<Props, State> {
     } = await getAPI(id);
     this._getGenres(movies, genres);
     this._renderChart();
-    console.log(this.state.genreName[0].name);
   };
 
   _getGenres = (movies: any, genres: GenreWithCount[]) => {

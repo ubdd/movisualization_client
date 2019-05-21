@@ -5,7 +5,6 @@ interface IProps extends RouteComponentProps<any> {}
 
 class ScrollToTop extends React.Component<IProps, {}> {
   componentDidUpdate(prevProps: any) {
-    console.log(this.props.location.pathname, prevProps.location.pathname);
     if (this.props.location.pathname !== prevProps.location.pathname) {
       window.scrollTo(0, 0);
     }

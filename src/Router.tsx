@@ -19,7 +19,7 @@ const MainContainer = styled.main`
 
 const SectionContainer = styled.section`
   margin: ${headerHeight} 0;
-  width: 60rem;
+  width: 100%;
 `;
 
 interface Props {}

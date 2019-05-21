@@ -30,7 +30,6 @@ export default class SearchContainer extends React.Component<IProps, IState> {
 
   render() {
     const { term } = this.state;
-    console.log(this.state);
     return <SearchPresenter term={term} />;
   }
 }

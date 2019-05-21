@@ -47,7 +47,6 @@ export default class MoviesBoxOfficeChart extends React.Component<
   };
 
   _rerenderChart = (moviesBoxOffice: object[]) => {
-    console.log(moviesBoxOffice);
     let json = {};
     let xs = {};
     let names = {};

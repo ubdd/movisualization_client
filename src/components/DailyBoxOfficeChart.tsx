@@ -4,7 +4,7 @@ import { Moment } from "moment";
 import styled from "styled-components";
 import { Table as AntdTable } from "antd";
 import { Link } from "react-router-dom";
-import { koreanNumeral } from "../config/_mixin";
+import { koreanNumeral, media } from "../config/_mixin";
 import { Switch } from "antd";
 
 const align: "center" | "left" | "right" = "center";
@@ -59,6 +59,9 @@ const ChartContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${media.desktop} {
+    flex-direction: column;
+  }
 `;
 
 const Table = styled(AntdTable)`
@@ -183,7 +186,6 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
       tooltip: {
         format: {
           value: (value: number, ratio: any, id: any) => {
-            // console.log(value, ratio, id);
             if (id === "sales_amt") {
               return `${koreanNumeral(value, true)}원`;
             } else {

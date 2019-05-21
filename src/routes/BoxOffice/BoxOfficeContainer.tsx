@@ -38,7 +38,6 @@ export default class BoxOfficeContainer extends React.Component<Props, State> {
         from_dt.format("YYYYMMDD"),
         to_dt.format("YYYYMMDD")
       );
-      console.log(moviesBoxOffice);
       this.setState({ moviesBoxOffice, loading: true });
     } catch (error) {
       toast.error(`😫 ${error.message}`);
@@ -87,7 +86,6 @@ export default class BoxOfficeContainer extends React.Component<Props, State> {
           from_dt.format("YYYYMMDD"),
           to_dt.format("YYYYMMDD")
         );
-        console.log(moviesBoxOffice);
         this.setState({ moviesBoxOffice, loading: true });
       } catch (error) {
         toast.error(`😫 ${error.message}`);

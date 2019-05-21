@@ -95,7 +95,6 @@ export default class MovieGrid extends React.Component<Props, State> {
       let movies: any[] = [];
       if (term !== undefined) {
         if (term !== "" && term.trim() !== "") {
-          console.log(term);
           const {
             data: { results }
           } = await getAPI(term, this.state.page);

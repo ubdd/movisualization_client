@@ -24,7 +24,6 @@ class UBDCHart extends React.Component<Props, State> {
     });
     const { dailyBoxOfficeList: boxOfficeList } = boxOfficeResult;
     this.setState({ boxOfficeList });
-    console.log(this.state);
     this.renderChart();
   };
 

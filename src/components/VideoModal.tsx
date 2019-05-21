@@ -126,7 +126,6 @@ export const VideoModal = ({
         const {
           data: { items }
         } = await youtubeApis.videos(videoKey);
-        console.log(items[0]);
       };
       fetchData();
     } else {
@@ -147,8 +146,6 @@ export const VideoModal = ({
           controls={false}
           width="100%"
           height="100%"
-          onReady={() => console.log("video ready")}
-          onError={() => console.log("video error")}
         />
         <CloseIcon
           onClick={() => onClickToggleActiveVideo()}

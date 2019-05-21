@@ -1,5 +1,6 @@
 // sizes for media queries
 const sizes = {
+  giant: 1080,
   desktop: 922,
   tablet: 768,
   phone: 576

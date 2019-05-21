@@ -35,13 +35,11 @@ export default class ImageZoom extends React.Component<Props, State> {
 
   attachZoom = (image: any) => {
     this.zoom.attach(image);
-    console.log("attach");
   };
 
   render() {
     return (
       <Image
-        onClick={() => console.log("open")}
         src={this.props.src}
         alt={this.props.alt}
         ref={this.attachZoom}

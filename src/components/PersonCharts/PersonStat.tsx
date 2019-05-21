@@ -56,7 +56,6 @@ class PersonStat extends React.Component<Props, State> {
   _getFilmoInfo = async () => {
     const { id } = this.props;
     const { data } = await ubdPersonApis.stat(id);
-    console.log(data);
     this.setState({
       avg_rate: data.avg_rate / 2,
       filmo_cnt: data.filmo_cnt,
@@ -96,7 +95,6 @@ class PersonStat extends React.Component<Props, State> {
       radar: {
         size: {
           ratio: 0.75
-          // width: 250
         },
         axis: {
           max: 5

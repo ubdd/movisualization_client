@@ -179,7 +179,6 @@ export default class PersonGrid extends React.Component<Props, State> {
   render() {
     const { title } = this.props;
     const { people, loading, noMorePerson } = this.state;
-    console.log(people);
     return (
       <Container>
         {title && <Title>{title}</Title>}

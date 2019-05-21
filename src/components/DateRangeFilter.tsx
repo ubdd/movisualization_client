@@ -45,7 +45,6 @@ export default class DateRangeFilter extends React.Component<Props, State> {
     const three_months_ago = moment(Date.now()).subtract(3, "months");
     const year_ago = moment(Date.now()).subtract(1, "years");
     const beginning = moment(Date.now()).subtract(27, "years");
-    console.log(this.state);
     return (
       <DateFilterContainer>
         <Radio.Group style={radioStyle} value={radio} buttonStyle="solid">

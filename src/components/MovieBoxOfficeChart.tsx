@@ -127,7 +127,6 @@ export default class MovieBoxOfficeChart extends React.Component<Props, State> {
             return moment(d).format("YYYY-MM-DD");
           },
           value: (value: number, ratio: any, id: any) => {
-            console.log(value, ratio, id);
             if (id === "audi_cnt") {
               return `${koreanNumeral(value, true)}명`;
             } else {
@@ -152,7 +151,6 @@ export default class MovieBoxOfficeChart extends React.Component<Props, State> {
   };
 
   render() {
-    console.log(this.props);
     return <ChartContainer id="chart1" />;
   }
 }
