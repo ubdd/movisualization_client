@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import ReactPlayer from "react-player";
 import { media } from "../config/_mixin";
@@ -103,12 +103,28 @@ const YoutubePlayer = styled(ReactPlayer)`
   box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.5);
 `;
 
+const TagContainer = styled.div`
+  visibility: hidden;
+  display: flex;
+`;
+
+const Tag = styled.div`
+  margin: 0.5rem;
+  padding: 0.5rem 0.6rem 0.5rem;
+  color: #46abf3;
+  font-weight: 700;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+`;
+
 export const VideoModal = ({
   activeVideo,
   videoKey,
   onClickToggleActiveVideo
 }: Props) => {
   const node: any = useRef({});
+  const [tags, setTags] = useState([]);
 
   const handleClickOutside = (e: any) => {
     if (node.current.contains(e.target)) {
@@ -126,6 +142,9 @@ export const VideoModal = ({
         const {
           data: { items }
         } = await youtubeApis.videos(videoKey);
+        const youtubeItem = items[0];
+        const { snippet } = youtubeItem;
+        setTags(snippet.tags);
       };
       fetchData();
     } else {
@@ -147,6 +166,13 @@ export const VideoModal = ({
           width="100%"
           height="100%"
         />
+        {tags.length !== 0 && (
+          <TagContainer>
+            {tags.map((tag: string) => (
+              <Tag># {tag}</Tag>
+            ))}
+          </TagContainer>
+        )}
         <CloseIcon
           onClick={() => onClickToggleActiveVideo()}
           className={"fas fa-times"}

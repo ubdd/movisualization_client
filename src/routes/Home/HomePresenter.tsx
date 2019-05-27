@@ -56,7 +56,7 @@ const Backdrop = styled("div")<IBackdropProps>`
 `;
 
 const SectionContainer = styled.div`
-  width: 55.5rem;
+  width: 100%;
   margin: 0 auto;
 `;
 
