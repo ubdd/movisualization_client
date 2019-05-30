@@ -20,6 +20,7 @@ const MainContainer = styled.main`
 const SectionContainer = styled.section`
   margin: ${headerHeight} 0;
   width: 100%;
+  padding: 0 2rem;
 `;
 
 interface Props {}

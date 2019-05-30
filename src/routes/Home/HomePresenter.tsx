@@ -57,6 +57,7 @@ const Backdrop = styled("div")<IBackdropProps>`
 
 const SectionContainer = styled.div`
   width: 100%;
+  max-width: 55.5rem;
   margin: 0 auto;
 `;
 
@@ -93,14 +94,17 @@ export const HomePresenter: React.SFC<Props> = ({
           autoplay={true}
         >
           {movies &&
-            movies.map((movie: any) => (
-              <Backdrop
-                key={movie.id}
-                bgImage={`https://image.tmdb.org/t/p/original${
-                  movie.backdrop_path
-                }`}
-              />
-            ))}
+            movies.map(
+              (movie: any) =>
+                movie.backdrop_path && (
+                  <Backdrop
+                    key={movie.id}
+                    bgImage={`https://image.tmdb.org/t/p/original${
+                      movie.backdrop_path
+                    }`}
+                  />
+                )
+            )}
         </Carousel>
         <SectionContainer>
           <MovieGrid title="현재 상영중" getAPI={tmdbApis.nowPlaying} />

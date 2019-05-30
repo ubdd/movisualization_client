@@ -8,7 +8,9 @@ interface Props {
   alt: string;
 }
 
-interface State {}
+interface State {
+  isZoomOpen: boolean;
+}
 
 const Image = styled.img`
   width: 15rem;
@@ -18,7 +20,6 @@ const Image = styled.img`
   display: inline-block;
   overflow: hidden;
   position: relative;
-  z-index: 7;
   -webkit-background-clip: padding-box;
   border-radius: 4px;
   cursor: pointer;
@@ -27,7 +28,7 @@ const Image = styled.img`
 export default class ImageZoom extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
-    this.state = {};
+    this.state = { isZoomOpen: false };
   }
   zoom = this.props.zoom.clone({
     background: this.props.color
@@ -35,11 +36,23 @@ export default class ImageZoom extends React.Component<Props, State> {
 
   attachZoom = (image: any) => {
     this.zoom.attach(image);
+    this.zoom.on("open", (event: unknown) => {
+      console.log(event);
+      this.setState({ isZoomOpen: true });
+      // the image has been opened (tracked only once)
+    });
+    this.zoom.on("close", (event: unknown) => {
+      console.log(event);
+      this.setState({ isZoomOpen: false });
+      // the image has been opened (tracked only once)
+    });
   };
 
   render() {
+    const { isZoomOpen } = this.state;
     return (
       <Image
+        style={{ zIndex: isZoomOpen ? 7 : 2 }}
         src={this.props.src}
         alt={this.props.alt}
         ref={this.attachZoom}

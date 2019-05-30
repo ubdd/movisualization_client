@@ -85,6 +85,9 @@ export default class MoviesBoxOfficeChart extends React.Component<
       names[`rank${idx}`] = movieBoxOffice.movie_name;
     });
     const myChart = chart.generate({
+      size: {
+        height: 450
+      },
       bindto: "#chart2",
       data: {
         xs,

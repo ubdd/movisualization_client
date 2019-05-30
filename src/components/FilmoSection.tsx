@@ -60,9 +60,23 @@ export default class Section extends React.Component<Props, State> {
       } = await getAPI(id);
       this._sortByDate(cast);
       this._sortByDate(crew);
+      let mergedCrew: any = [];
+      crew.forEach((movie: any) => {
+        let include = false;
+        for (let i = 0; i < mergedCrew.length; i++) {
+          if (mergedCrew[i].id === movie.id) {
+            mergedCrew[i].job = mergedCrew[i].job + `, ${movie.job}`;
+            include = true;
+            break;
+          }
+        }
+        if (!include) {
+          mergedCrew.push(movie);
+        }
+      });
       this.setState({
         cast,
-        crew,
+        crew: mergedCrew,
         loading: true
       });
     } catch (error) {

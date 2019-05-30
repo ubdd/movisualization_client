@@ -18,7 +18,7 @@ export default class extends React.Component<Props, State> {
   state = {
     movies: null,
     loading: false,
-    target_dt: moment(Date.now()).subtract(2, "days"),
+    target_dt: moment(Date.now()).subtract(1, "days"),
     boxoffice: []
   };
 

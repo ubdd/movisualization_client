@@ -1,6 +1,6 @@
 import reset from "styled-reset";
 import { createGlobalStyle } from "./typed-components";
-import { fontSize, color } from "./config/_mixin";
+import { fontSize, color, media } from "./config/_mixin";
 import "./static/css/mytheme.css";
 import "react-toastify/dist/ReactToastify.css";
 export const GlobalStyle = createGlobalStyle`
@@ -15,6 +15,7 @@ export const GlobalStyle = createGlobalStyle`
   body{
     font-family: 'Nanum Gothic', sans-serif;
     font-size: ${fontSize.normalFontSize};
+    overflow-x: hidden;
     background-color: ${color.bgColor};
     color: ${color.fontColor};
   }
@@ -45,12 +46,13 @@ export const GlobalStyle = createGlobalStyle`
   /* ant design style */
   .ant-carousel{
     width: 75rem;
-    height: 42.2rem;
     position: absolute;
     top: -2rem;   
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(20, 24, 28, 1);
+    ${media.tablet} {
+    }
   }
   .slick-slider {
     height: 100%;
@@ -138,10 +140,20 @@ export const GlobalStyle = createGlobalStyle`
 
   /* medium zoom */
   .medium-zoom-overlay{
-    z-index: 6;
+    z-index: 5;
   }
 
   /* animations */
+  @keyframes release {
+    0% {
+      height: 0px;
+      margin: 0;
+    }
+    100% {
+      height: 356px;
+      margin: 2rem 0;
+    }
+  }
   @keyframes spin {
     0% {
       transform: rotate(0deg);

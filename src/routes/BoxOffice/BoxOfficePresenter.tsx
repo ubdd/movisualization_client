@@ -15,8 +15,12 @@ interface Props {
   from_dt: Moment;
   to_dt: Moment;
   target_dt: Moment;
+  radio: "manual" | "whole" | "week" | "oneMonth" | "threeMonth" | "oneYear";
   changeDate: (date: Moment, dateString: string) => void;
   changeRangePicker: (date: any, dateString: string[]) => void;
+  onClickRadioChange: (
+    radio: "manual" | "whole" | "week" | "oneMonth" | "threeMonth" | "oneYear"
+  ) => void;
 }
 
 const Container = styled.div`
@@ -37,12 +41,14 @@ const ChartTitle = styled.div`
 export const BoxOfficePresenter: React.SFC<Props> = ({
   boxOfficeResult,
   loading,
-  changeDate,
   moviesBoxOffice,
   from_dt,
   to_dt,
   target_dt,
-  changeRangePicker
+  radio,
+  changeDate,
+  changeRangePicker,
+  onClickRadioChange
 }) => {
   return (
     <div>
@@ -51,11 +57,18 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
       </Helmet>
       {!loading ? (
         <Container>
-          <ChartTitle>📉 기간별 박스오피스 순위 변동</ChartTitle>
+          <ChartTitle>
+            <span role="img" aria-label="line-chart">
+              📉
+            </span>{" "}
+            기간별 박스오피스 순위 변동
+          </ChartTitle>
           <DateRangeFilter
-            changeRangePicker={changeRangePicker}
             from_dt={from_dt}
             to_dt={to_dt}
+            radio={radio}
+            changeRangePicker={changeRangePicker}
+            onClickRadioChange={onClickRadioChange}
           />
           {moviesBoxOffice && (
             <MoviesBoxOfficeChart
@@ -65,8 +78,17 @@ export const BoxOfficePresenter: React.SFC<Props> = ({
             />
           )}
           <DailyBoxOfficeContainer>
-            <ChartTitle>📊 날짜별 박스오피스 순위 </ChartTitle>
-            <DatePicker onChange={changeDate} defaultValue={target_dt} />
+            <ChartTitle>
+              <span role="img" aria-label="bar-chart">
+                📊
+              </span>{" "}
+              날짜별 박스오피스 순위{" "}
+            </ChartTitle>
+            <DatePicker
+              style={{ marginBottom: "1rem" }}
+              onChange={changeDate}
+              defaultValue={target_dt}
+            />
             <DailyBoxOfficeChart
               boxOfficeResult={boxOfficeResult}
               height={1060}

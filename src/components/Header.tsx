@@ -2,7 +2,7 @@ import React from "react";
 import { Link, withRouter, RouteComponentProps } from "react-router-dom";
 import styled from "styled-components";
 import HeaderSearch from "./HeaderSearch";
-import { headerHeight } from "../config/_mixin";
+import { headerHeight, media } from "../config/_mixin";
 
 interface IGradientBackgroundProps {
   darken: boolean;
@@ -43,16 +43,22 @@ const Container = styled.header`
       opacity: 0.95;
     }
   }
+  ${media.tablet} {
+    height: 4rem;
+  }
 `;
 
 const List = styled.ul`
-  margin: 0 3rem;
+  margin: 0 2rem;
   height: ${headerHeight};
   width: 100%;
-  min-width: 30rem;
+  min-width: 15rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${media.tablet} {
+    margin: 0 1rem;
+  }
 `;
 
 const NavList = styled.ul`
@@ -77,6 +83,9 @@ const LogoText = styled.span`
   background: linear-gradient(to right, #e74c3c, #f1c40f, #2ecc71, #3498db);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  ${media.tablet} {
+    font-size: 1.5rem;
+  }
 `;
 
 const CustomHeaderContainer = styled.div`

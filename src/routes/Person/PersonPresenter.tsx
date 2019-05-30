@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { tmdbApis } from "../../api";
 import FilmoSection from "../../components/FilmoSection";
 import { Loader } from "../../components/Loader";
-import { websiteTitle } from "../../config/_mixin";
+import { websiteTitle, media } from "../../config/_mixin";
 import Helmet from "react-helmet";
 import Avatar from "../../static/image/avatar.png";
 import PersonStat from "../../components/PersonCharts/PersonStat";
@@ -15,7 +15,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 55.5rem;
+  width: 100%;
+  max-width: 55.5rem;
   margin: 0 auto;
 `;
 
@@ -53,6 +54,9 @@ const Flex = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 1rem 0;
+  ${media.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const ContainerTitle = styled.span`
@@ -94,7 +98,7 @@ const Popularity = styled.div`
 `;
 
 const SectionContainer = styled.div`
-  width: 55.5rem;
+  width: 100%;
   margin: 0 auto;
 `;
 

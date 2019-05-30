@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { DatePicker, Radio } from "antd";
+import { Radio, DatePicker } from "antd";
 import moment, { Moment } from "moment";
+import { media } from "../config/_mixin";
 const { RangePicker } = DatePicker;
 
 const DateFilterContainer = styled.div`
@@ -10,6 +11,9 @@ const DateFilterContainer = styled.div`
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 2rem;
+  ${media.tablet} {
+    flex-direction: column;
+  }
 `;
 
 const radioStyle = {
@@ -17,41 +21,37 @@ const radioStyle = {
 };
 
 interface Props {
-  changeRangePicker: (date: any, dateString: string[]) => void;
   from_dt: Moment;
   to_dt: Moment;
+  radio: "manual" | "whole" | "week" | "oneMonth" | "threeMonth" | "oneYear";
+  changeRangePicker: (date: any, dateString: string[]) => void;
+  onClickRadioChange: (
+    radio: "manual" | "whole" | "week" | "oneMonth" | "threeMonth" | "oneYear"
+  ) => void;
 }
 
-interface State {
-  radio: "manual" | "whole" | "week" | "oneMonth" | "threeMonth" | "oneYear";
-}
+interface State {}
 
 export default class DateRangeFilter extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      radio: "week"
-    };
-  }
-
   render() {
-    const { radio } = this.state;
+    const { from_dt, to_dt, radio } = this.props;
     const dateFormat = "YYYY-MM-DD";
     const displayFormat = "YYYY-MM-DD";
-    const { changeRangePicker, from_dt, to_dt } = this.props;
-    const today = moment(Date.now()).subtract(1, "days");
-    const week_ago = moment(Date.now()).subtract(8, "days");
-    const month_ago = moment(Date.now()).subtract(1, "months");
-    const three_months_ago = moment(Date.now()).subtract(3, "months");
-    const year_ago = moment(Date.now()).subtract(1, "years");
-    const beginning = moment(Date.now()).subtract(27, "years");
+
+    const { changeRangePicker, onClickRadioChange } = this.props;
     return (
       <DateFilterContainer>
         <Radio.Group style={radioStyle} value={radio} buttonStyle="solid">
           <Radio.Button
             onClick={() => {
-              changeRangePicker([beginning, today], ["", ""]);
-              this.setState({ radio: "whole" });
+              changeRangePicker(
+                [
+                  moment(Date.now()).subtract(27, "years"),
+                  moment(Date.now()).subtract(1, "days")
+                ],
+                ["", ""]
+              );
+              onClickRadioChange("whole");
             }}
             value="whole"
           >
@@ -59,8 +59,14 @@ export default class DateRangeFilter extends React.Component<Props, State> {
           </Radio.Button>
           <Radio.Button
             onClick={() => {
-              changeRangePicker([week_ago, today], ["", ""]);
-              this.setState({ radio: "week" });
+              changeRangePicker(
+                [
+                  moment(Date.now()).subtract(8, "days"),
+                  moment(Date.now()).subtract(1, "days")
+                ],
+                ["", ""]
+              );
+              onClickRadioChange("week");
             }}
             value="week"
           >
@@ -68,8 +74,14 @@ export default class DateRangeFilter extends React.Component<Props, State> {
           </Radio.Button>
           <Radio.Button
             onClick={() => {
-              changeRangePicker([month_ago, today], ["", ""]);
-              this.setState({ radio: "oneMonth" });
+              changeRangePicker(
+                [
+                  moment(Date.now()).subtract(1, "months"),
+                  moment(Date.now()).subtract(1, "days")
+                ],
+                ["", ""]
+              );
+              onClickRadioChange("oneMonth");
             }}
             value="oneMonth"
           >
@@ -77,8 +89,14 @@ export default class DateRangeFilter extends React.Component<Props, State> {
           </Radio.Button>
           <Radio.Button
             onClick={() => {
-              changeRangePicker([three_months_ago, today], ["", ""]);
-              this.setState({ radio: "threeMonth" });
+              changeRangePicker(
+                [
+                  moment(Date.now()).subtract(3, "months"),
+                  moment(Date.now()).subtract(1, "days")
+                ],
+                ["", ""]
+              );
+              onClickRadioChange("threeMonth");
             }}
             value="threeMonth"
           >
@@ -86,8 +104,14 @@ export default class DateRangeFilter extends React.Component<Props, State> {
           </Radio.Button>
           <Radio.Button
             onClick={() => {
-              changeRangePicker([year_ago, today], ["", ""]);
-              this.setState({ radio: "oneYear" });
+              changeRangePicker(
+                [
+                  moment(Date.now()).subtract(1, "years"),
+                  moment(Date.now()).subtract(1, "days")
+                ],
+                ["", ""]
+              );
+              onClickRadioChange("oneYear");
             }}
             value="oneYear"
           >
@@ -98,7 +122,7 @@ export default class DateRangeFilter extends React.Component<Props, State> {
         <RangePicker
           onChange={(date: any, dateString: string[]) => {
             changeRangePicker(date, dateString);
-            // this.setState({ radio: "manual" });
+            onClickRadioChange("manual");
           }}
           value={[moment(from_dt, dateFormat), moment(to_dt, dateFormat)]}
           format={displayFormat}

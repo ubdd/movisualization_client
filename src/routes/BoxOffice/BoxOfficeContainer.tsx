@@ -13,18 +13,20 @@ interface State {
   target_dt: Moment;
   box_office_result: any[];
   loading: boolean;
+  radio: "manual" | "whole" | "week" | "oneMonth" | "threeMonth" | "oneYear";
 }
 
 export default class BoxOfficeContainer extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      target_dt: moment(Date.now()).subtract(2, "days"),
+      target_dt: moment(Date.now()).subtract(1, "days"),
       from_dt: moment(Date.now()).subtract(8, "days"),
       to_dt: moment(Date.now()).subtract(1, "days"),
       box_office_result: [],
       loading: true,
-      moviesBoxOffice: null
+      moviesBoxOffice: null,
+      radio: "manual"
     };
   }
 
@@ -97,11 +99,18 @@ export default class BoxOfficeContainer extends React.Component<Props, State> {
   };
 
   changeRangePicker = (date: Moment[], dateString: string[]) => {
+    console.log(date);
     this.setState({ from_dt: date[0], to_dt: date[1] });
   };
 
+  onClickRadioChange = (
+    radio: "manual" | "whole" | "week" | "oneMonth" | "threeMonth" | "oneYear"
+  ) => {
+    this.setState({ radio });
+  };
+
   render() {
-    const { moviesBoxOffice, from_dt, to_dt, target_dt } = this.state;
+    const { moviesBoxOffice, from_dt, to_dt, target_dt, radio } = this.state;
     return (
       !this.state.loading && (
         <BoxOfficePresenter
@@ -109,10 +118,12 @@ export default class BoxOfficeContainer extends React.Component<Props, State> {
           to_dt={to_dt}
           target_dt={target_dt}
           moviesBoxOffice={moviesBoxOffice}
-          changeRangePicker={this.changeRangePicker}
           boxOfficeResult={this.state.box_office_result}
           loading={this.state.loading}
+          radio={radio}
           changeDate={this.changeDateHandler}
+          changeRangePicker={this.changeRangePicker}
+          onClickRadioChange={this.onClickRadioChange}
         />
       )
     );

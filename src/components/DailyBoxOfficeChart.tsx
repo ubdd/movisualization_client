@@ -78,6 +78,33 @@ const Title = styled.div`
   font-family: "Nanum Myeongjo", serif;
 `;
 
+const UBDImage = styled.div<{ showUBD: boolean }>`
+  opacity: ${props => (props.showUBD ? "1" : "0")};
+  margin: ${props => (props.showUBD ? "2rem 0" : "0")};
+  width: 100%;
+  height: ${props => (props.showUBD ? "356px" : "0px")};
+  transition: 2s ease-in-out;
+  background: linear-gradient(
+      to right,
+      rgba(20, 24, 28, 1),
+      transparent,
+      transparent,
+      transparent,
+      rgba(20, 24, 28, 1)
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(20, 24, 28, 1),
+      transparent,
+      transparent,
+      transparent,
+      rgba(20, 24, 28, 1)
+    ),
+    url("https://w.namu.la/s/271e149e9ddeabf700ae2cd75d9661b7540b6dd7a1eaa2dc505919929427bd08344043674a11232c06fdc3e577ef9c8a982b7588869b023312e75cb2a31543b50a5e14c2f081eb56a515f4c69d8d945cd2e3077cfae09485fe279fd1ad6d9a34");
+  background-position: center center;
+  background-size: cover;
+`;
+
 interface Props {
   boxOfficeResult: any;
   height: number;
@@ -271,19 +298,29 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
   };
 
   render() {
-    const boxOfficeResult = this.props.boxOfficeResult;
-    let chart = this.state.showUBD ? (
-      <div id="UBDChart" />
-    ) : (
-      <div id="dailyBoxOffice" />
-    );
+    const { boxOfficeResult } = this.props;
+    const { showUBD } = this.state;
+    let chart = showUBD ? <div id="UBDChart" /> : <div id="dailyBoxOffice" />;
 
     return (
       <DailyBoxOfficeChartContainer>
         <Title>
-          🍿 {this.props.targetDt.format("YYYY년 MM월 DD일")}{" "}
-          <Link to={"/boxOffice"}>박스오피스</Link> 🍿
+          <span role="img" aria-label="popcorn">
+            🍿
+          </span>
+          {this.props.targetDt.format("YYYY년 MM월 DD일")}{" "}
+          <Link to={"/boxOffice"}>박스오피스</Link>
+          <span role="img" aria-label="popcorn">
+            🍿
+          </span>
         </Title>
+        <a
+          target="_blank"
+          style={{ width: "100%" }}
+          href="https://namu.wiki/w/UBD"
+        >
+          <UBDImage showUBD={showUBD} />
+        </a>
         <ChartContainer>
           {boxOfficeResult && (
             <>
