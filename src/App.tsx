@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { Router } from "./Router";
 import { GlobalStyle } from "./global-styles";
 import { ToastContainer } from "react-toastify";
@@ -19,13 +19,13 @@ const App: React.FC = () => {
         hideProgressBar={true}
         pauseOnHover={true}
       />
-      <BrowserRouter>
+      <HashRouter>
         <ScrollToTop>
           <AppContainer className="app">
             <Router />
           </AppContainer>
         </ScrollToTop>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 };

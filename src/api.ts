@@ -6,7 +6,7 @@ import {
 } from "./shared-interfaces";
 
 const ubdApiBase = axios.create({
-  baseURL: "http://101.101.160.234/api/"
+  baseURL: "https://movisualization.herokuapp.com/api/"
 });
 
 export const ubdMovieApis = {

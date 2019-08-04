@@ -6,6 +6,7 @@ import { Table as AntdTable } from "antd";
 import { Link } from "react-router-dom";
 import { koreanNumeral, media } from "../config/_mixin";
 import { Switch } from "antd";
+import UBD from "../static/image/ubd.jpeg";
 
 const align: "center" | "left" | "right" = "center";
 
@@ -28,13 +29,13 @@ const columns = [
         record.rank_old_and_new ? (
           <span style={{ color: "goldenrod" }}>NEW</span>
         ) : (
-          <span>{rank_inten}</span>
-        )
+            <span>{rank_inten}</span>
+          )
       ) : rank_inten > 0 ? (
         <span style={{ color: "#51ca61" }}>+{rank_inten}</span>
       ) : (
-        <span style={{ color: "#fd7150" }}>{rank_inten}</span>
-      )
+            <span style={{ color: "#fd7150" }}>{rank_inten}</span>
+          )
   },
   {
     title: "영화명",
@@ -78,7 +79,7 @@ const Title = styled.div`
   font-family: "Nanum Myeongjo", serif;
 `;
 
-const UBDImage = styled.div<{ showUBD: boolean }>`
+const UBDImage = styled.div<{ showUBD: boolean, UBD: string }>`
   opacity: ${props => (props.showUBD ? "1" : "0")};
   margin: ${props => (props.showUBD ? "2rem 0" : "0")};
   width: 100%;
@@ -100,7 +101,7 @@ const UBDImage = styled.div<{ showUBD: boolean }>`
       transparent,
       rgba(20, 24, 28, 1)
     ),
-    url("https://w.namu.la/s/271e149e9ddeabf700ae2cd75d9661b7540b6dd7a1eaa2dc505919929427bd08344043674a11232c06fdc3e577ef9c8a982b7588869b023312e75cb2a31543b50a5e14c2f081eb56a515f4c69d8d945cd2e3077cfae09485fe279fd1ad6d9a34");
+    url(${({ UBD }) => UBD});
   background-position: center center;
   background-size: cover;
 `;
@@ -319,7 +320,7 @@ export default class DailyBoxOfficeChart extends React.Component<Props, State> {
           style={{ width: "100%" }}
           href="https://namu.wiki/w/UBD"
         >
-          <UBDImage showUBD={showUBD} />
+          <UBDImage showUBD={showUBD} UBD={UBD} />
         </a>
         <ChartContainer>
           {boxOfficeResult && (
