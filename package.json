@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.18.1",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "billboard.js": "1.8.1",
     "chart.js": "^2.8.0",
     "d3": "^5.9.2",
